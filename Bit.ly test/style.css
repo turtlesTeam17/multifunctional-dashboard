@@ -1,0 +1,18 @@
+body {
+    background: teal;
+    width: 300px;
+    height: 400px;
+    border: 3px double black;
+    text-align: center;
+}
+input {
+    margin-top: 40%;
+    width: 90%;
+}
+button {
+    width: 50%;
+    margin-top: 20px;
+}
+a {
+    color: crimson; 
+}
