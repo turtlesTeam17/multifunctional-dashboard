@@ -1,4 +1,4 @@
-Multifunctional dashboard
+## Multifunctional dashboard
 
 Authors:
 
