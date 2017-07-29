@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+
+  "name": "Dashboard",
+  "description": "This extensions opens new tab with several apps (ColorPicker, ColorPalette, URLshortener",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "Turtle-icon.png"
+    
+  },
+  "permissions": [
+    "tabs"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
