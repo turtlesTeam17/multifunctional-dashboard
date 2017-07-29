@@ -1,8 +1,7 @@
 Multifunctional dashboard
-=========================
 
 Authors:
---------
+
 * Mihai Veronica
 * Tudor Florea
 * Darko Tasevski
@@ -20,4 +19,7 @@ Authors:
 	* `Turtle-icon.png`
 	* `tmnt.gif`
 
+
 Note that after every change in `manifest.json` you need to reload extension via `chrome://extensions` page. 
+
+
