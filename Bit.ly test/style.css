@@ -1,18 +1,21 @@
 body {
-    background: teal;
-    width: 300px;
-    height: 400px;
-    border: 3px double black;
+    margin: 0;
+    min-width: 200px;
+    min-height: 170px;
+    text-align: center;
+    background: #0091ea;
+}
+.shortLink {
+    font-size: 19px;
     text-align: center;
 }
-input {
-    margin-top: 40%;
-    width: 90%;
-}
-button {
-    width: 50%;
-    margin-top: 20px;
-}
 a {
-    color: crimson; 
+    text-decoration: none;
+    color: darkblue;
+    font-family: 'PT Sans', sans-serif;
+}
+
+qrCode {
+    width: 100%;
+    margin-bottom: 30px;
 }

@@ -29,6 +29,16 @@
                             "storage",
                             "notifications",
                             "contextMenus",
-                            "tabs"
-    ]
+		                    "clipboardWrite",
+                            "activeTab"
+    ],
+
+    "content_scripts": 
+	[
+		{
+			"matches": 			["http://*/*", "https://*/*"],
+			"js": 				["content_script.js"],
+			"all_frames": 		true
+		}
+	]
 }
