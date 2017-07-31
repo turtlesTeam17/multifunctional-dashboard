@@ -1,27 +1,18 @@
 {
   "manifest_version": 2,
-  "name": "ColorPicker",
-  "description": "Chrome extension analyser",
+
+  "name": "Dashboard",
+  "description": "This extensions opens new tab with several apps (ColorPicker, ColorPalette, URLshortener",
   "version": "1.0",
 
-  "content_security_policy": "script-src 'self'; object-src 'self'",
-  "background": {
-    "scripts": ["background.js"]
-  },
-
-  "content_scripts": [{
-    "matches": ["file:///*/*", "http://*/*", "https://*/*"],
-    "js": ["content_script.js"],
-    "run_at": "document_end",
-    "all_frames": true
-  }],
-
   "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_icon": "Turtle-icon.png"
+    
   },
   "permissions": [
-    "activeTab",
     "tabs"
-  ]
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  }
 }
