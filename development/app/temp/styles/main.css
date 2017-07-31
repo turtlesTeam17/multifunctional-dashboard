@@ -1,169 +1,157 @@
+.group .Url-Shortener__input input[type="text"]:focus {
+            outline: none;
+}
+
+.group .Url-Shortener__history {
+        width: 100%;
+        height: calc(99.9% * 1/2 - (10px - 10px * 1/2));
+        margin-bottom: 10px;
+        border: 1px solid black;
+}
+
+.group .Url-Shortener__history:last-child {
+            margin-bottom: 0;
+}
+
+.group .Url-Shortener__qrcode {
+        width: 100%;
+        height: calc(99.9% * 1/4 - (10px - 10px * 1/4));
+        margin-bottom: 10px;
+        border: 1px solid black;
+}
+
+.group .Url-Shortener__qrcode:last-child {
+            margin-bottom: 0;
+}
+
+.group .Url-Shortener__input {
+        width: 100%;
+        height: calc(99.9% * 1/8 - (10px - 10px * 1/8));
+        margin-bottom: 10px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        display: block;
+        border: 1px solid black;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+}
+
+.group .Url-Shortener__input:last-child {
+            margin-bottom: 0;
+}
+
+.group .Url-Shortener__input input[type="text"] {
+            background: rgba(0, 0, 0, .2);
+            border: none;
+            width: 60%;
+            height: 45%;
+            margin-left: 8px;
+            margin-left: .5rem;
+            padding-left: 5px;
+}
+
 .group .title {
-        font-size: 30px;
-        font-family: 'Roboto', sans-serif;
+        width: 100%;
+        height: calc(99.9% * 1/9 - (5px - 5px * 1/9));
+        margin-bottom: 5px;
+        font-size: 20px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; // font-family: 'Roboto', sans-serif;
         font-weight: 400;
-        text-align: center;
+        border: 1px solid black; // center verticaly and horizontaly
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+}
+
+.group .title:last-child {
+            margin-bottom: 0;
 }
 
 @font-face {
-        font-family: Roboto;
-        font-style: italic;
-        font-weight: 100;
-        src: local("Roboto Thin Italic"),local(Roboto-ThinItalic),url(//fonts.gstatic.com/s/roboto/v15/12mE4jfMSBTmg-81EiS-YVQlYEbsez9cZjKsNMjLOwM.eot?#) format("eot"),url(//fonts.gstatic.com/s/roboto/v15/12mE4jfMSBTmg-81EiS-Yfk_vArhqVIZ0nv9q090hN8.woff2) format("woff2"),url(//fonts.gstatic.com/s/roboto/v15/12mE4jfMSBTmg-81EiS-YRsxEYwM7FgeyaSgU71cLG0.woff) format("woff");
+            font-family: Alice;
+            font-style: normal;
+            font-weight: 400;
+            src: local("Alice Regular"),local(Alice-Regular),url(//fonts.gstatic.com/s/alice/v8/sZyKh5NKrCk1xkCk_F1S8A.eot?#) format("eot"),url(//fonts.gstatic.com/s/alice/v8/l5RFQT5MQiajQkFxjDLySg.woff2) format("woff2"),url(//fonts.gstatic.com/s/alice/v8/_H4kMcdhHr0B8RDaQcqpTA.woff) format("woff");
 }
 
 @font-face {
-        font-family: Roboto;
-        font-style: italic;
-        font-weight: 300;
-        src: local("Roboto Light Italic"),local(Roboto-LightItalic),url(//fonts.gstatic.com/s/roboto/v15/7m8l7TlFO-S3VkhHuR0at2fQcKutQXcIrRfyR5jdjY8.eot?#) format("eot"),url(//fonts.gstatic.com/s/roboto/v15/7m8l7TlFO-S3VkhHuR0at44P5ICox8Kq3LLUNMylGO4.woff2) format("woff2"),url(//fonts.gstatic.com/s/roboto/v15/7m8l7TlFO-S3VkhHuR0at4bN6UDyHWBl620a-IRfuBk.woff) format("woff");
+            font-family: monospace;
+            font-style: italic;
+            font-weight: 400;
+            src: local("Menlo Italic"),local(Menlo-Italic),local("Consolas Italic"),local(Consolas-Italic),local("Courier New Italic");
 }
 
 @font-face {
-        font-family: Roboto;
-        font-style: italic;
-        font-weight: 400;
-        src: local("Roboto Italic"),local(Roboto-Italic),url(//fonts.gstatic.com/s/roboto/v15/OiNnAEwKzzJkQCr4qZmeq_esZW2xOQ-xsNqO47m55DA.eot?#) format("eot"),url(//fonts.gstatic.com/s/roboto/v15/vPcynSL0qHq_6dX7lKVByfesZW2xOQ-xsNqO47m55DA.woff2) format("woff2"),url(//fonts.gstatic.com/s/roboto/v15/1pO9eUAp8pSF8VnRTP3xnvesZW2xOQ-xsNqO47m55DA.woff) format("woff");
+            font-family: monospace;
+            font-style: italic;
+            font-weight: 700;
+            src: local("Menlo Bold Italic"),local(Menlo-BoldItalic),local(Monaco),local("Consolas Bold Italic"),local(Consolas-BoldItalic),local("Courier New Bold Italic");
 }
 
 @font-face {
-        font-family: Roboto;
-        font-style: italic;
-        font-weight: 500;
-        src: local("Roboto Medium Italic"),local(Roboto-MediumItalic),url(//fonts.gstatic.com/s/roboto/v15/OLffGBTaF0XFOW1gnuHF0WfQcKutQXcIrRfyR5jdjY8.eot?#) format("eot"),url(//fonts.gstatic.com/s/roboto/v15/OLffGBTaF0XFOW1gnuHF0Y4P5ICox8Kq3LLUNMylGO4.woff2) format("woff2"),url(//fonts.gstatic.com/s/roboto/v15/OLffGBTaF0XFOW1gnuHF0YbN6UDyHWBl620a-IRfuBk.woff) format("woff");
+            font-family: monospace;
+            font-style: normal;
+            font-weight: 400;
+            src: local("Menlo Regular"),local(Menlo-Regular),local(Monaco),local(Consolas),local("Courier New");
 }
 
 @font-face {
-        font-family: Roboto;
-        font-style: italic;
-        font-weight: 700;
-        src: local("Roboto Bold Italic"),local(Roboto-BoldItalic),url(//fonts.gstatic.com/s/roboto/v15/t6Nd4cfPRhZP44Q5QAjcC2fQcKutQXcIrRfyR5jdjY8.eot?#) format("eot"),url(//fonts.gstatic.com/s/roboto/v15/t6Nd4cfPRhZP44Q5QAjcC44P5ICox8Kq3LLUNMylGO4.woff2) format("woff2"),url(//fonts.gstatic.com/s/roboto/v15/t6Nd4cfPRhZP44Q5QAjcC4bN6UDyHWBl620a-IRfuBk.woff) format("woff");
+            font-family: monospace;
+            font-style: normal;
+            font-weight: 700;
+            src: local("Menlo Bold"),local(Menlo-Bold),local(Monaco),local("Consolas Bold"),local(Consolas-Bold),local("Courier New Bold");
 }
 
 @font-face {
-        font-family: Roboto;
-        font-style: italic;
-        font-weight: 900;
-        src: local("Roboto Black Italic"),local(Roboto-BlackItalic),url(//fonts.gstatic.com/s/roboto/v15/bmC0pGMXrhphrZJmniIZpWfQcKutQXcIrRfyR5jdjY8.eot?#) format("eot"),url(//fonts.gstatic.com/s/roboto/v15/bmC0pGMXrhphrZJmniIZpY4P5ICox8Kq3LLUNMylGO4.woff2) format("woff2"),url(//fonts.gstatic.com/s/roboto/v15/bmC0pGMXrhphrZJmniIZpYbN6UDyHWBl620a-IRfuBk.woff) format("woff");
+            font-family: sans-serif;
+            font-style: italic;
+            font-weight: 300;
+            src: local("Helvetica Neue Light Italic"),local(HelveticaNeue-LightItalic),local("Helvetica Light Oblique"),local(Helvetica-LightOblique);
 }
 
 @font-face {
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 100;
-        src: local("Roboto Thin"),local(Roboto-Thin),url(//fonts.gstatic.com/s/roboto/v15/PP2U5prMl9yvKSWVu6DtvPesZW2xOQ-xsNqO47m55DA.eot?#) format("eot"),url(//fonts.gstatic.com/s/roboto/v15/2tsd397wLxj96qwHyNIkxPesZW2xOQ-xsNqO47m55DA.woff2) format("woff2"),url(//fonts.gstatic.com/s/roboto/v15/vzIUHo9z-oJ4WgkpPOtg1_esZW2xOQ-xsNqO47m55DA.woff) format("woff");
+            font-family: sans-serif;
+            font-style: italic;
+            font-weight: 400;
+            src: local("Helvetica Neue Italic"),local(HelveticaNeue-Italic),local("Helvetica Oblique"),local(Helvetica-Oblique);
 }
 
 @font-face {
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 300;
-        src: local("Roboto Light"),local(Roboto-Light),url(//fonts.gstatic.com/s/roboto/v15/Hgo13k-tfSpn0qi1SFdUffY6323mHUZFJMgTvxaG2iE.eot?#) format("eot"),url(//fonts.gstatic.com/s/roboto/v15/Hgo13k-tfSpn0qi1SFdUfVtXRa8TVwTICgirnJhmVJw.woff2) format("woff2"),url(//fonts.gstatic.com/s/roboto/v15/Hgo13k-tfSpn0qi1SFdUfT8E0i7KZn-EPnyo3HZu7kw.woff) format("woff");
+            font-family: sans-serif;
+            font-style: italic;
+            font-weight: 700;
+            src: local("Helvetica Neue Bold Italic"),local(HelveticaNeue-BoldItalic),local("Helvetica Bold Oblique"),local(Helvetica-BoldOblique);
 }
 
 @font-face {
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 400;
-        src: local(Roboto),local(Roboto-Regular),url(//fonts.gstatic.com/s/roboto/v15/5YB-ifwqHP20Yn46l_BDhA.eot?#) format("eot"),url(//fonts.gstatic.com/s/roboto/v15/CWB0XYA8bzo0kSThX0UTuA.woff2) format("woff2"),url(//fonts.gstatic.com/s/roboto/v15/2UX7WLTfW3W8TclTUvlFyQ.woff) format("woff");
+            font-family: sans-serif;
+            font-style: normal;
+            font-weight: 300;
+            src: local("Helvetica Neue Light"),local(HelveticaNeue-Light),local("Helvetica Light"),local(Helvetica-Light);
 }
 
 @font-face {
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 500;
-        src: local("Roboto Medium"),local(Roboto-Medium),url(//fonts.gstatic.com/s/roboto/v15/RxZJdnzeo3R5zSexge8UUfY6323mHUZFJMgTvxaG2iE.eot?#) format("eot"),url(//fonts.gstatic.com/s/roboto/v15/RxZJdnzeo3R5zSexge8UUVtXRa8TVwTICgirnJhmVJw.woff2) format("woff2"),url(//fonts.gstatic.com/s/roboto/v15/RxZJdnzeo3R5zSexge8UUT8E0i7KZn-EPnyo3HZu7kw.woff) format("woff");
+            font-family: sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            src: local(HelveticaNeue),local(Helvetica);
 }
 
 @font-face {
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 700;
-        src: local("Roboto Bold"),local(Roboto-Bold),url(//fonts.gstatic.com/s/roboto/v15/d-6IYplOFocCacKzxwXSOPY6323mHUZFJMgTvxaG2iE.eot?#) format("eot"),url(//fonts.gstatic.com/s/roboto/v15/d-6IYplOFocCacKzxwXSOFtXRa8TVwTICgirnJhmVJw.woff2) format("woff2"),url(//fonts.gstatic.com/s/roboto/v15/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff) format("woff");
-}
-
-@font-face {
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 900;
-        src: local("Roboto Black"),local(Roboto-Black),url(//fonts.gstatic.com/s/roboto/v15/mnpfi9pxYH-Go5UiibESIvY6323mHUZFJMgTvxaG2iE.eot?#) format("eot"),url(//fonts.gstatic.com/s/roboto/v15/mnpfi9pxYH-Go5UiibESIltXRa8TVwTICgirnJhmVJw.woff2) format("woff2"),url(//fonts.gstatic.com/s/roboto/v15/mnpfi9pxYH-Go5UiibESIj8E0i7KZn-EPnyo3HZu7kw.woff) format("woff");
-}
-
-@font-face {
-        font-family: Alice;
-        font-style: normal;
-        font-weight: 400;
-        src: local("Alice Regular"),local(Alice-Regular),url(//fonts.gstatic.com/s/alice/v8/sZyKh5NKrCk1xkCk_F1S8A.eot?#) format("eot"),url(//fonts.gstatic.com/s/alice/v8/l5RFQT5MQiajQkFxjDLySg.woff2) format("woff2"),url(//fonts.gstatic.com/s/alice/v8/_H4kMcdhHr0B8RDaQcqpTA.woff) format("woff");
-}
-
-@font-face {
-        font-family: monospace;
-        font-style: italic;
-        font-weight: 400;
-        src: local("Menlo Italic"),local(Menlo-Italic),local("Consolas Italic"),local(Consolas-Italic),local("Courier New Italic");
-}
-
-@font-face {
-        font-family: monospace;
-        font-style: italic;
-        font-weight: 700;
-        src: local("Menlo Bold Italic"),local(Menlo-BoldItalic),local(Monaco),local("Consolas Bold Italic"),local(Consolas-BoldItalic),local("Courier New Bold Italic");
-}
-
-@font-face {
-        font-family: monospace;
-        font-style: normal;
-        font-weight: 400;
-        src: local("Menlo Regular"),local(Menlo-Regular),local(Monaco),local(Consolas),local("Courier New");
-}
-
-@font-face {
-        font-family: monospace;
-        font-style: normal;
-        font-weight: 700;
-        src: local("Menlo Bold"),local(Menlo-Bold),local(Monaco),local("Consolas Bold"),local(Consolas-Bold),local("Courier New Bold");
-}
-
-@font-face {
-        font-family: sans-serif;
-        font-style: italic;
-        font-weight: 300;
-        src: local("Helvetica Neue Light Italic"),local(HelveticaNeue-LightItalic),local("Helvetica Light Oblique"),local(Helvetica-LightOblique);
-}
-
-@font-face {
-        font-family: sans-serif;
-        font-style: italic;
-        font-weight: 400;
-        src: local("Helvetica Neue Italic"),local(HelveticaNeue-Italic),local("Helvetica Oblique"),local(Helvetica-Oblique);
-}
-
-@font-face {
-        font-family: sans-serif;
-        font-style: italic;
-        font-weight: 700;
-        src: local("Helvetica Neue Bold Italic"),local(HelveticaNeue-BoldItalic),local("Helvetica Bold Oblique"),local(Helvetica-BoldOblique);
-}
-
-@font-face {
-        font-family: sans-serif;
-        font-style: normal;
-        font-weight: 300;
-        src: local("Helvetica Neue Light"),local(HelveticaNeue-Light),local("Helvetica Light"),local(Helvetica-Light);
-}
-
-@font-face {
-        font-family: sans-serif;
-        font-style: normal;
-        font-weight: 400;
-        src: local(HelveticaNeue),local(Helvetica);
-}
-
-@font-face {
-        font-family: sans-serif;
-        font-style: normal;
-        font-weight: 700;
-        src: local("Helvetica Neue Bold"),local(HelveticaNeue-Bold),local("Helvetica Bold"),local(Helvetica-Bold);
+            font-family: sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            src: local("Helvetica Neue Bold"),local(HelveticaNeue-Bold),local("Helvetica Bold"),local(Helvetica-Bold);
 }
 
 /*Variables*/
@@ -716,16 +704,16 @@ textarea {
 
 @media screen and (min-width: 1280px) {
 
-        .responsive {
-                font-size: 36px;
-        }
+            .responsive {
+                        font-size: 36px;
+            }
 }
 
 @media screen and (max-width: 420px) {
 
-        .responsive {
-                font-size: 16px;
-        }
+            .responsive {
+                        font-size: 16px;
+            }
 }
 
 /*
@@ -757,100 +745,100 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .grid-one div:nth-child(1n) {
-        float: left;
-        margin-right: 30px;
-        clear: none
+            float: left;
+            margin-right: 30px;
+            clear: none
 }
 
 .grid-one div:last-child {
-        margin-right: 0
+            margin-right: 0
 }
 
 .grid-one div:nth-child(1n) {
-        margin-right: 0;
-        float: right
+            margin-right: 0;
+            float: right
 }
 
 .grid-one div:nth-child(1n + 1) {
-        clear: both
+            clear: both
 }
 
 @media (min-width: 576px) {
 
-        .grid-one div {
+            .grid-one div {
 		width: calc(99.9% * 1/2 - (30px - 30px * 1/2));
-        }
+            }
 
-        .grid-one div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
+            .grid-one div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
 
-        .grid-one div:last-child {
-                margin-right: 0;
-        }
+            .grid-one div:last-child {
+                        margin-right: 0;
+            }
 
-        .grid-one div:nth-child(2n) {
-                margin-right: 0;
-                float: right;
-        }
+            .grid-one div:nth-child(2n) {
+                        margin-right: 0;
+                        float: right;
+            }
 
-        .grid-one div:nth-child(2n + 1) {
-                clear: both;
-        }
+            .grid-one div:nth-child(2n + 1) {
+                        clear: both;
+            }
 	}
 
 @media (min-width: 768px) {
 
-        .grid-one div {
+            .grid-one div {
 		width: calc(99.9% * 1/3 - (30px - 30px * 1/3));
-        }
+            }
 
-        .grid-one div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
+            .grid-one div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
 
-        .grid-one div:last-child {
-                margin-right: 0;
-        }
+            .grid-one div:last-child {
+                        margin-right: 0;
+            }
 
-        .grid-one div:nth-child(3n) {
-                margin-right: 0;
-                float: right;
-        }
+            .grid-one div:nth-child(3n) {
+                        margin-right: 0;
+                        float: right;
+            }
 
-        .grid-one div:nth-child(3n + 1) {
-                clear: both;
-        }
+            .grid-one div:nth-child(3n + 1) {
+                        clear: both;
+            }
 	}
 
 @media (min-width: 992px) {
 
-        .grid-one div {
+            .grid-one div {
 		width: calc(99.9% * 1/6 - (30px - 30px * 1/6));
-        }
+            }
 
-        .grid-one div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
+            .grid-one div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
 
-        .grid-one div:last-child {
-                margin-right: 0;
-        }
+            .grid-one div:last-child {
+                        margin-right: 0;
+            }
 
-        .grid-one div:nth-child(6n) {
-                margin-right: 0;
-                float: right;
-        }
+            .grid-one div:nth-child(6n) {
+                        margin-right: 0;
+                        float: right;
+            }
 
-        .grid-one div:nth-child(6n + 1) {
-                clear: both;
-        }
+            .grid-one div:nth-child(6n + 1) {
+                        clear: both;
+            }
 	}
 
 .nested-grid {
@@ -951,25 +939,25 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .grid-three:before {
-        content: '';
-        display: table;
+            content: '';
+            display: table;
 }
 
 .grid-three:after {
-        content: '';
-        display: table;
-        clear: both;
+            content: '';
+            display: table;
+            clear: both;
 }
 
 .grid-three:before {
-        content: '';
-        display: table;
+            content: '';
+            display: table;
 }
 
 .grid-three:after {
-        content: '';
-        display: table;
-        clear: both;
+            content: '';
+            display: table;
+            clear: both;
 }
 
 .grid-three div {
@@ -979,106 +967,106 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .grid-three div:nth-child(1n) {
-        float: left;
-        margin-right: 30px;
-        clear: none
+            float: left;
+            margin-right: 30px;
+            clear: none
 }
 
 .grid-three div:last-child {
-        margin-right: 0
+            margin-right: 0
 }
 
 .grid-three div:nth-child(1n) {
-        margin-right: 0;
-        float: right
+            margin-right: 0;
+            float: right
 }
 
 .grid-three div:nth-child(1n + 1) {
-        clear: both
+            clear: both
 }
 
 @media (min-width: 576px) {
 
-        .grid-three div {
+            .grid-three div {
 		width: calc(99.9% * 1/2 - (30px - 30px * 1/2));
-        }
+            }
 
-        .grid-three div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
+            .grid-three div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
 
-        .grid-three div:last-child {
-                margin-right: 0;
-        }
+            .grid-three div:last-child {
+                        margin-right: 0;
+            }
 
-        .grid-three div:nth-child(2n) {
-                margin-right: 0;
-                float: right;
-        }
+            .grid-three div:nth-child(2n) {
+                        margin-right: 0;
+                        float: right;
+            }
 
-        .grid-three div:nth-child(2n + 1) {
-                clear: both;
-        }
+            .grid-three div:nth-child(2n + 1) {
+                        clear: both;
+            }
 	}
 
 @media (min-width: 768px) {
 
-        .grid-three div {
+            .grid-three div {
 		width: calc(99.9% * 1/3 - (30px - 30px * 1/3));
-        }
+            }
 
-        .grid-three div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
+            .grid-three div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
 
-        .grid-three div:last-child {
-                margin-right: 0;
-        }
+            .grid-three div:last-child {
+                        margin-right: 0;
+            }
 
-        .grid-three div:nth-child(3n) {
-                margin-right: 0;
-                float: right;
-        }
+            .grid-three div:nth-child(3n) {
+                        margin-right: 0;
+                        float: right;
+            }
 
-        .grid-three div:nth-child(3n + 1) {
-                clear: both;
-        }
+            .grid-three div:nth-child(3n + 1) {
+                        clear: both;
+            }
 	}
 
 @media (min-width: 992px) {
 
-        .grid-three div {
+            .grid-three div {
 		width: calc(99.9% * 1/4 - (30px - 30px * 1/4));
 		height: calc(99.9% * 1/4 - (30px - 30px * 1/4));
-        }
+            }
 
-        .grid-three div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                margin-bottom: 30px;
-                clear: none;
-        }
+            .grid-three div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        margin-bottom: 30px;
+                        clear: none;
+            }
 
-        .grid-three div:last-child {
-                margin-right: 0;
-                margin-bottom: 0;
-        }
+            .grid-three div:last-child {
+                        margin-right: 0;
+                        margin-bottom: 0;
+            }
 
-        .grid-three div:nth-child(4n) {
-                margin-right: 0;
-        }
+            .grid-three div:nth-child(4n) {
+                        margin-right: 0;
+            }
 
-        .grid-three div:nth-child(4n + 1) {
-                clear: both;
-        }
+            .grid-three div:nth-child(4n + 1) {
+                        clear: both;
+            }
 
-        .grid-three div:nth-last-child(-n + 4) {
-                margin-bottom: 0;
-        }
+            .grid-three div:nth-last-child(-n + 4) {
+                        margin-bottom: 0;
+            }
 	}
 
 /*  Flexbox Grid  */
@@ -1109,98 +1097,98 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .grid-four div:nth-child(1n) {
-        float: left;
-        margin-right: 30px;
-        clear: none
+            float: left;
+            margin-right: 30px;
+            clear: none
 }
 
 .grid-four div:last-child {
-        margin-right: 0
+            margin-right: 0
 }
 
 .grid-four div:nth-child(1n) {
-        margin-right: 0;
-        float: right
+            margin-right: 0;
+            float: right
 }
 
 .grid-four div:nth-child(1n + 1) {
-        clear: both
+            clear: both
 }
 
 @media (min-width: 576px) {
 
-        .grid-four div {
+            .grid-four div {
 		width: calc(99.9% * 1/2 - (30px - 30px * 1/2));
-        }
+            }
 
-        .grid-four div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
+            .grid-four div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
 
-        .grid-four div:last-child {
-                margin-right: 0;
-        }
+            .grid-four div:last-child {
+                        margin-right: 0;
+            }
 
-        .grid-four div:nth-child(2n) {
-                margin-right: 0;
-                float: right;
-        }
+            .grid-four div:nth-child(2n) {
+                        margin-right: 0;
+                        float: right;
+            }
 
-        .grid-four div:nth-child(2n + 1) {
-                clear: both;
-        }
+            .grid-four div:nth-child(2n + 1) {
+                        clear: both;
+            }
 	}
 
 @media (min-width: 768px) {
 
-        .grid-four div {
+            .grid-four div {
 		width: calc(99.9% * 1/3 - (30px - 30px * 1/3));
-        }
+            }
 
-        .grid-four div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
+            .grid-four div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
 
-        .grid-four div:last-child {
-                margin-right: 0;
-        }
+            .grid-four div:last-child {
+                        margin-right: 0;
+            }
 
-        .grid-four div:nth-child(3n) {
-                margin-right: 0;
-                float: right;
-        }
+            .grid-four div:nth-child(3n) {
+                        margin-right: 0;
+                        float: right;
+            }
 
-        .grid-four div:nth-child(3n + 1) {
-                clear: both;
-        }
+            .grid-four div:nth-child(3n + 1) {
+                        clear: both;
+            }
 	}
 
 @media (min-width: 992px) {
 
-        .grid-four div {
+            .grid-four div {
 		flex-grow: 0;
 		flex-shrink: 0;
 		flex-basis: calc(99.9% * 1/4 - (30px - 30px * 1/4));
 		width: calc(99.9% * 1/4 - (30px - 30px * 1/4));
-        }
+            }
 
-        .grid-four div:nth-child(1n) {
-                margin-right: 30px;
-                margin-left: 0;
-        }
+            .grid-four div:nth-child(1n) {
+                        margin-right: 30px;
+                        margin-left: 0;
+            }
 
-        .grid-four div:last-child {
-                margin-right: 0;
-        }
+            .grid-four div:last-child {
+                        margin-right: 0;
+            }
 
-        .grid-four div:nth-child(4n) {
-                margin-right: 0;
-                margin-left: auto;
-        }
+            .grid-four div:nth-child(4n) {
+                        margin-right: 0;
+                        margin-left: auto;
+            }
 	}
 
 /* html setup */
@@ -1277,75 +1265,80 @@ we can specify global variable to use flexbox as default instead of floats
     </div>*/
 
 body {
-	background-color: #222222;  
-	background-repeat: no-repeat;
+    background-color: #222222;
+    background-repeat: no-repeat;
     background-attachment: fixed;
-    background-position: center; 
-	margin: 0;
+    background-position: center;
+    margin: 0;
 }
 
 .group {
-	width: 100%;
+    width: 100%;
     height: 80vh;
-	display:flex;
-	flex-flow:row wrap;
-	max-width:90%;
-	margin-left:auto;
-	margin-right:auto;
-	padding-left:48px;
-	padding-right:48px;
-	display:flex;
-	flex-flow:row wrap;
-	max-width:90%;
-	margin-left:auto;
-	margin-right:auto;
-	padding-left:3rem;
-	padding-right:3rem;
-	padding-top: 72px;
-	padding-top: 4.5rem;
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 48px;
+    padding-right: 48px;
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 72px;
+    padding-top: 4.5rem;
     margin-top: 80px;
     margin-top: 5rem;
-	background: rgb(166, 166, 166);
+    background: rgb(166, 166, 166);
     border-radius: 1rem
 }
 
 .group .container {
-        width: calc(99.9% * 1/3 - (30px - 30px * 1/3));
-	    position: relative;
-	    background: rgb(107, 120, 133);
-	    height: 90%;
-        border-radius: 1rem; 
-        display: -webkit-box; 
-        display: -ms-flexbox; 
+        width: calc(99.9% * 1/3 - (30px - 30px * 1/3)); // lost-align: center;
+        background: rgb(107, 120, 133);
+        height: 90%;
+        border-radius: 1rem;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
+        text-align: center;
+        display: flex;
+        flex-flow: row wrap;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 32px;
+        padding-right: 32px;
+        display: flex;
+        flex-flow: row wrap;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 2rem;
+        padding-right: 2rem;
 }
 
 .group .container:nth-child(1n) {
-        float: left;
-        margin-right: 30px;
-        clear: none;
+            float: left;
+            margin-right: 30px;
+            clear: none;
 }
 
 .group .container:last-child {
-        margin-right: 0;
+            margin-right: 0;
 }
 
 .group .container:nth-child(3n) {
-        margin-right: 0;
-        float: right;
+            margin-right: 0;
+            float: right;
 }
 
 .group .container:nth-child(3n + 1) {
-        clear: both;
-}
-
-.group .container > * {
-        position: absolute;
-        top: 50%;
-        right: auto;
-        bottom: auto;
-        left: 50%;
-        transform: translate(-50%, -50%);
+            clear: both;
 }
 
 /* ==========================================================================
