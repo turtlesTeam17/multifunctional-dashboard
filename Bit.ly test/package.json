@@ -1,0 +1,15 @@
+{
+  "name": "bitlytest",
+  "version": "0.2.0",
+  "description": "url shortener using bit.ly",
+  "main": "eventpage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Puritanic",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "dotenv": "^4.0.0"
+  }
+}

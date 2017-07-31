@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    min-width: 200px;
+    min-height: 170px;
+    text-align: center;
+    background: #0091ea;
+}
+.shortLink {
+    font-size: 19px;
+    text-align: center;
+}
+a {
+    text-decoration: none;
+    color: darkblue;
+    font-family: 'PT Sans', sans-serif;
+}
+
+qrCode {
+    width: 100%;
+    margin-bottom: 30px;
+}
