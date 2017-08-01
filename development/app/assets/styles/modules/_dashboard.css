@@ -1,64 +1,91 @@
 body {
-    background-color: #222222;
+    background: #222222 url('http://res.cloudinary.com/puritanic/image/upload/v1501580960/early_sunrise-1920x1080_vhekiy.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
     margin: 0;
+    position: relative;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
-.group {
+.container {
     width: 100%;
     height: 80vh;
-    lost-center: 90% 3rem flex;
-    padding-top: 4.5rem;
+    lost-center: 70% 6rem flex;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
     margin-top: 5rem;
-    background: color(white shade(35%));
+    background: color(black alpha(55%));
     border-radius: 1rem;
-    & .container {
-        lost-column: 1/3; // lost-align: center;
-        background: color(#2c3e50 tint(30%));
-        height: 90%;
-        border-radius: 1rem;
-        display: flex;
-        text-align: center;
-        lost-center: 90% 2rem flex;
-    }
-    & .title {
-        lost-row: 1/9 5px;
-        font-size: 20px;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; // font-family: 'Roboto', sans-serif;
-        font-weight: 400;
-        border: 1px solid black; // center verticaly and horizontaly
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
     & .Url-Shortener__input {
-        lost-row: 1/8 10px;
+        border-radius: .5rem .5rem 0 0;    
+        lost-row: 1/3 10px;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        display: block;
         border: 1px solid black;
         display: flex;
-        align-items: center;
+        padding-top: 2rem;
+        align-items: top;
         justify-content: center;
+        background: color(white alpha(55%));
         & input[type="text"] {
             background: rgba(0, 0, 0, .2);
             border: none;
             width: 60%;
-            height: 45%;
+            height: 45px;
             margin-left: .5rem;
             padding-left: 5px;
         }
         & input[type="text"]:focus {
             outline: none;
         }
+        & input[type="submit"] {
+            height: 45px;
+            width: 10%;
+        }
     }
-    & .Url-Shortener__qrcode {
-        lost-row: 1/4 10px;
-        border: 1px solid black;
-    }
+    & .Url-Shortener__qrcode {}
     & .Url-Shortener__history {
-        lost-row: 1/2 10px;
+        border-radius: 0 0 .5rem .5rem;
+        lost-row: 2/3 10px;
         border: 1px solid black;
+        background: color(white alpha(55%));
+    }
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+
+.tab{
+    position: absolute;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color(black alpha(55%));
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+    width: 120px;
+    height: 50px;
+
+    &__color-picker {
+        top: 0;
+    }
+    &__url-shortener{
+        top: 55px;
     }
 }
