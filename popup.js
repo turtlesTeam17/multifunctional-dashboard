@@ -92,29 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
         });
-
-        //chrome.tabs.getSelected(null, function(tab){
-        //
-        //    d = document;
-        //
-        //    var form = d.createElement('form');
-        //    form.action = 'http://gtmetrix.com/analyze.html?bm';
-        //    form.method = 'post';
-        //
-        //    var input = d.createElement("input");
-        //    input.type = 'hidden';
-        //    input.name = 'url';
-        //    input.value = tab.url;
-        //
-        //    form.appendChild(input);
-        //    d.body.appendChild(form);
-        //
-        //    form.submit();
-        //
-        //    checkButton.innerHTML = input.value = tab.url;;
-        //
-        //});
-
+        
     }, false);
 
 
