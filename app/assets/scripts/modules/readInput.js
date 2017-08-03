@@ -2,8 +2,8 @@
 
 function readInput() {
     // init variables and API keys
-    var login = LOGIN;
-    var api_key = API;
+    var login = "o_2p4gsm6h6i";
+    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
     var input;
     var long_UrlInput = $("#longUrl_input");
 
@@ -48,11 +48,13 @@ function readInput() {
         if(short){
             var shortUrl_text = '<p>Short url: <a href="' + short + '" target="_blank">' + short + '</a></p>';
             $('.shortUrlInfo').append(shortUrl_text);
+            $('.url-shortener__qrcode').qrcode({width: 100,height: 100,text: short});
         }
     }
     // clears long and short infobox urls
     function clearUrls() {
         $('.shortUrlInfo').empty();
+        $('.url-shortener__qrcode').empty();
     }
 
     $('#shortenButton').on('click', function () {

@@ -55,6 +55,7 @@ html {
             flex-flow: column wrap;
             text-align: center;
             font-size: .85rem;
+            margin-right: 1rem;
         }
     }
     &__history {

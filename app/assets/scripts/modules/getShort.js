@@ -1,8 +1,8 @@
 
 
 function getShortUrl() {
-    var login = LOGIN;
-    var api_key = API;
+    var login = "o_2p4gsm6h6i";
+    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
     var long_url;
     var tabLink;
 
@@ -19,30 +19,6 @@ function getShortUrl() {
             }
         );
     }
-    // getting the URL of the current tab 
-    // chrome.tabs.query({
-    //     'active': true,
-    //     'currentWindow': true
-    // }, function (tabs) {
-    //     tabLink = tabs[0].url;
-    //     long_url = tabLink;
-
-    //     console.log(tabLink);
-
-    //     get_short_url(long_url, login, api_key, function (short_url) {
-    //         console.log(short_url);
-    //         if (short_url) {
-    //             $('.url-shortener__info').append('<a class="shortLink" href="' + short_url + '" target="_blank">' + short_url + '</a>');
-    //             // $('.url-shortener__qrcode').qrcode({
-    //             //     width: 100,
-    //             //     height: 100,
-    //             //     text: short_url
-    //             // });
-    //         } else {
-    //             $('.url-shortener__info').append('<p class="shortLink"> Invalid value </p>');
-    //         }
-    //     });
-    // });
 }
 
 export default getShortUrl;
