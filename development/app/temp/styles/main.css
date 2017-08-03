@@ -1,7 +1,13 @@
+.url-shortener__history td:first-of-type {
+            width: 72%;
+            text-indent: 5px;
+}
+.url-shortener__history tr:nth-child(even) {
+            background-color: #dddddd;
+}
 .tab__url-shortener {
         top: 55px;
 }
-
 .url-shortener__input .url-shortener__info {
             display: -webkit-box;
             display: -ms-flexbox;
@@ -14,16 +20,15 @@
             font-size: 13.6px;
             font-size: .85rem;
 }
-
 .url-shortener__input input[type="submit"] {
-            height: 45px;
-            width: 10%;
+            height: 30px;
+            width: 15%;
+            border: none;
+            border-radius: 0 .5rem .5rem 0;
 }
-
 .url-shortener__input input[type="text"]:focus {
             outline: none;
 }
-
 .url-shortener__history {
         border-radius: 0 0 .5rem .5rem;
         width: 100%;
@@ -31,87 +36,91 @@
         margin-bottom: 10px;
         border: 1px solid black;
         background: rgba(255, 255, 255, 0.55);
+        font-size: 16px;
+        font-size: 1rem;
+        & td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 3px;
+        }
 }
-
 .url-shortener__history:last-child {
+        & td,
+        th {
+        }
         margin-bottom: 0;
 }
-
-@font-face {
-        font-family: Alice;
-        font-style: normal;
-        font-weight: 400;
-        src: local("Alice Regular"),local(Alice-Regular),url(//fonts.gstatic.com/s/alice/v8/sZyKh5NKrCk1xkCk_F1S8A.eot?#) format("eot"),url(//fonts.gstatic.com/s/alice/v8/l5RFQT5MQiajQkFxjDLySg.woff2) format("woff2"),url(//fonts.gstatic.com/s/alice/v8/_H4kMcdhHr0B8RDaQcqpTA.woff) format("woff");
+.url-shortener__history table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
 }
-
 @font-face {
-        font-family: monospace;
-        font-style: italic;
-        font-weight: 400;
-        src: local("Menlo Italic"),local(Menlo-Italic),local("Consolas Italic"),local(Consolas-Italic),local("Courier New Italic");
+            font-family: Alice;
+            font-style: normal;
+            font-weight: 400;
+            src: local("Alice Regular"),local(Alice-Regular),url(//fonts.gstatic.com/s/alice/v8/sZyKh5NKrCk1xkCk_F1S8A.eot?#) format("eot"),url(//fonts.gstatic.com/s/alice/v8/l5RFQT5MQiajQkFxjDLySg.woff2) format("woff2"),url(//fonts.gstatic.com/s/alice/v8/_H4kMcdhHr0B8RDaQcqpTA.woff) format("woff");
 }
-
 @font-face {
-        font-family: monospace;
-        font-style: italic;
-        font-weight: 700;
-        src: local("Menlo Bold Italic"),local(Menlo-BoldItalic),local(Monaco),local("Consolas Bold Italic"),local(Consolas-BoldItalic),local("Courier New Bold Italic");
+            font-family: monospace;
+            font-style: italic;
+            font-weight: 400;
+            src: local("Menlo Italic"),local(Menlo-Italic),local("Consolas Italic"),local(Consolas-Italic),local("Courier New Italic");
 }
-
 @font-face {
-        font-family: monospace;
-        font-style: normal;
-        font-weight: 400;
-        src: local("Menlo Regular"),local(Menlo-Regular),local(Monaco),local(Consolas),local("Courier New");
+            font-family: monospace;
+            font-style: italic;
+            font-weight: 700;
+            src: local("Menlo Bold Italic"),local(Menlo-BoldItalic),local(Monaco),local("Consolas Bold Italic"),local(Consolas-BoldItalic),local("Courier New Bold Italic");
 }
-
 @font-face {
-        font-family: monospace;
-        font-style: normal;
-        font-weight: 700;
-        src: local("Menlo Bold"),local(Menlo-Bold),local(Monaco),local("Consolas Bold"),local(Consolas-Bold),local("Courier New Bold");
+            font-family: monospace;
+            font-style: normal;
+            font-weight: 400;
+            src: local("Menlo Regular"),local(Menlo-Regular),local(Monaco),local(Consolas),local("Courier New");
 }
-
 @font-face {
-        font-family: sans-serif;
-        font-style: italic;
-        font-weight: 300;
-        src: local("Helvetica Neue Light Italic"),local(HelveticaNeue-LightItalic),local("Helvetica Light Oblique"),local(Helvetica-LightOblique);
+            font-family: monospace;
+            font-style: normal;
+            font-weight: 700;
+            src: local("Menlo Bold"),local(Menlo-Bold),local(Monaco),local("Consolas Bold"),local(Consolas-Bold),local("Courier New Bold");
 }
-
 @font-face {
-        font-family: sans-serif;
-        font-style: italic;
-        font-weight: 400;
-        src: local("Helvetica Neue Italic"),local(HelveticaNeue-Italic),local("Helvetica Oblique"),local(Helvetica-Oblique);
+            font-family: sans-serif;
+            font-style: italic;
+            font-weight: 300;
+            src: local("Helvetica Neue Light Italic"),local(HelveticaNeue-LightItalic),local("Helvetica Light Oblique"),local(Helvetica-LightOblique);
 }
-
 @font-face {
-        font-family: sans-serif;
-        font-style: italic;
-        font-weight: 700;
-        src: local("Helvetica Neue Bold Italic"),local(HelveticaNeue-BoldItalic),local("Helvetica Bold Oblique"),local(Helvetica-BoldOblique);
+            font-family: sans-serif;
+            font-style: italic;
+            font-weight: 400;
+            src: local("Helvetica Neue Italic"),local(HelveticaNeue-Italic),local("Helvetica Oblique"),local(Helvetica-Oblique);
 }
-
 @font-face {
-        font-family: sans-serif;
-        font-style: normal;
-        font-weight: 300;
-        src: local("Helvetica Neue Light"),local(HelveticaNeue-Light),local("Helvetica Light"),local(Helvetica-Light);
+            font-family: sans-serif;
+            font-style: italic;
+            font-weight: 700;
+            src: local("Helvetica Neue Bold Italic"),local(HelveticaNeue-BoldItalic),local("Helvetica Bold Oblique"),local(Helvetica-BoldOblique);
 }
-
 @font-face {
-        font-family: sans-serif;
-        font-style: normal;
-        font-weight: 400;
-        src: local(HelveticaNeue),local(Helvetica);
+            font-family: sans-serif;
+            font-style: normal;
+            font-weight: 300;
+            src: local("Helvetica Neue Light"),local(HelveticaNeue-Light),local("Helvetica Light"),local(Helvetica-Light);
 }
-
 @font-face {
-        font-family: sans-serif;
-        font-style: normal;
-        font-weight: 700;
-        src: local("Helvetica Neue Bold"),local(HelveticaNeue-Bold),local("Helvetica Bold"),local(Helvetica-Bold);
+            font-family: sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            src: local(HelveticaNeue),local(Helvetica);
+}
+@font-face {
+            font-family: sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            src: local("Helvetica Neue Bold"),local(HelveticaNeue-Bold),local("Helvetica Bold"),local(Helvetica-Bold);
 }
 
 /*Variables*/
@@ -663,17 +672,15 @@ textarea {
    }
 
 @media screen and (min-width: 1280px) {
-
-        .responsive {
-                font-size: 36px;
-        }
+            .responsive {
+                        font-size: 36px;
+            }
 }
 
 @media screen and (max-width: 420px) {
-
-        .responsive {
-                font-size: 16px;
-        }
+            .responsive {
+                        font-size: 16px;
+            }
 }
 
 /*
@@ -705,100 +712,85 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .grid-one div:nth-child(1n) {
-        float: left;
-        margin-right: 30px;
-        clear: none
+            float: left;
+            margin-right: 30px;
+            clear: none
 }
 
 .grid-one div:last-child {
-        margin-right: 0
+            margin-right: 0
 }
 
 .grid-one div:nth-child(1n) {
-        margin-right: 0;
-        float: right
+            margin-right: 0;
+            float: right
 }
 
 .grid-one div:nth-child(1n + 1) {
-        clear: both
+            clear: both
 }
 
 @media (min-width: 576px) {
-
-        .grid-one div {
+            .grid-one div {
 		width: calc(99.9% * 1/2 - (30px - 30px * 1/2));
-        }
-
-        .grid-one div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
-
-        .grid-one div:last-child {
-                margin-right: 0;
-        }
-
-        .grid-one div:nth-child(2n) {
-                margin-right: 0;
-                float: right;
-        }
-
-        .grid-one div:nth-child(2n + 1) {
-                clear: both;
-        }
+            }
+            .grid-one div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
+            .grid-one div:last-child {
+                        margin-right: 0;
+            }
+            .grid-one div:nth-child(2n) {
+                        margin-right: 0;
+                        float: right;
+            }
+            .grid-one div:nth-child(2n + 1) {
+                        clear: both;
+            }
 	}
 
 @media (min-width: 768px) {
-
-        .grid-one div {
+            .grid-one div {
 		width: calc(99.9% * 1/3 - (30px - 30px * 1/3));
-        }
-
-        .grid-one div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
-
-        .grid-one div:last-child {
-                margin-right: 0;
-        }
-
-        .grid-one div:nth-child(3n) {
-                margin-right: 0;
-                float: right;
-        }
-
-        .grid-one div:nth-child(3n + 1) {
-                clear: both;
-        }
+            }
+            .grid-one div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
+            .grid-one div:last-child {
+                        margin-right: 0;
+            }
+            .grid-one div:nth-child(3n) {
+                        margin-right: 0;
+                        float: right;
+            }
+            .grid-one div:nth-child(3n + 1) {
+                        clear: both;
+            }
 	}
 
 @media (min-width: 992px) {
-
-        .grid-one div {
+            .grid-one div {
 		width: calc(99.9% * 1/6 - (30px - 30px * 1/6));
-        }
-
-        .grid-one div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
-
-        .grid-one div:last-child {
-                margin-right: 0;
-        }
-
-        .grid-one div:nth-child(6n) {
-                margin-right: 0;
-                float: right;
-        }
-
-        .grid-one div:nth-child(6n + 1) {
-                clear: both;
-        }
+            }
+            .grid-one div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
+            .grid-one div:last-child {
+                        margin-right: 0;
+            }
+            .grid-one div:nth-child(6n) {
+                        margin-right: 0;
+                        float: right;
+            }
+            .grid-one div:nth-child(6n + 1) {
+                        clear: both;
+            }
 	}
 
 .nested-grid {
@@ -899,25 +891,25 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .grid-three:before {
-        content: '';
-        display: table;
+            content: '';
+            display: table;
 }
 
 .grid-three:after {
-        content: '';
-        display: table;
-        clear: both;
+            content: '';
+            display: table;
+            clear: both;
 }
 
 .grid-three:before {
-        content: '';
-        display: table;
+            content: '';
+            display: table;
 }
 
 .grid-three:after {
-        content: '';
-        display: table;
-        clear: both;
+            content: '';
+            display: table;
+            clear: both;
 }
 
 .grid-three div {
@@ -927,106 +919,90 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .grid-three div:nth-child(1n) {
-        float: left;
-        margin-right: 30px;
-        clear: none
+            float: left;
+            margin-right: 30px;
+            clear: none
 }
 
 .grid-three div:last-child {
-        margin-right: 0
+            margin-right: 0
 }
 
 .grid-three div:nth-child(1n) {
-        margin-right: 0;
-        float: right
+            margin-right: 0;
+            float: right
 }
 
 .grid-three div:nth-child(1n + 1) {
-        clear: both
+            clear: both
 }
 
 @media (min-width: 576px) {
-
-        .grid-three div {
+            .grid-three div {
 		width: calc(99.9% * 1/2 - (30px - 30px * 1/2));
-        }
-
-        .grid-three div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
-
-        .grid-three div:last-child {
-                margin-right: 0;
-        }
-
-        .grid-three div:nth-child(2n) {
-                margin-right: 0;
-                float: right;
-        }
-
-        .grid-three div:nth-child(2n + 1) {
-                clear: both;
-        }
+            }
+            .grid-three div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
+            .grid-three div:last-child {
+                        margin-right: 0;
+            }
+            .grid-three div:nth-child(2n) {
+                        margin-right: 0;
+                        float: right;
+            }
+            .grid-three div:nth-child(2n + 1) {
+                        clear: both;
+            }
 	}
 
 @media (min-width: 768px) {
-
-        .grid-three div {
+            .grid-three div {
 		width: calc(99.9% * 1/3 - (30px - 30px * 1/3));
-        }
-
-        .grid-three div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
-
-        .grid-three div:last-child {
-                margin-right: 0;
-        }
-
-        .grid-three div:nth-child(3n) {
-                margin-right: 0;
-                float: right;
-        }
-
-        .grid-three div:nth-child(3n + 1) {
-                clear: both;
-        }
+            }
+            .grid-three div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
+            .grid-three div:last-child {
+                        margin-right: 0;
+            }
+            .grid-three div:nth-child(3n) {
+                        margin-right: 0;
+                        float: right;
+            }
+            .grid-three div:nth-child(3n + 1) {
+                        clear: both;
+            }
 	}
 
 @media (min-width: 992px) {
-
-        .grid-three div {
+            .grid-three div {
 		width: calc(99.9% * 1/4 - (30px - 30px * 1/4));
 		height: calc(99.9% * 1/4 - (30px - 30px * 1/4));
-        }
-
-        .grid-three div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                margin-bottom: 30px;
-                clear: none;
-        }
-
-        .grid-three div:last-child {
-                margin-right: 0;
-                margin-bottom: 0;
-        }
-
-        .grid-three div:nth-child(4n) {
-                margin-right: 0;
-        }
-
-        .grid-three div:nth-child(4n + 1) {
-                clear: both;
-        }
-
-        .grid-three div:nth-last-child(-n + 4) {
-                margin-bottom: 0;
-        }
+            }
+            .grid-three div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        margin-bottom: 30px;
+                        clear: none;
+            }
+            .grid-three div:last-child {
+                        margin-right: 0;
+                        margin-bottom: 0;
+            }
+            .grid-three div:nth-child(4n) {
+                        margin-right: 0;
+            }
+            .grid-three div:nth-child(4n + 1) {
+                        clear: both;
+            }
+            .grid-three div:nth-last-child(-n + 4) {
+                        margin-bottom: 0;
+            }
 	}
 
 /*  Flexbox Grid  */
@@ -1057,98 +1033,84 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .grid-four div:nth-child(1n) {
-        float: left;
-        margin-right: 30px;
-        clear: none
+            float: left;
+            margin-right: 30px;
+            clear: none
 }
 
 .grid-four div:last-child {
-        margin-right: 0
+            margin-right: 0
 }
 
 .grid-four div:nth-child(1n) {
-        margin-right: 0;
-        float: right
+            margin-right: 0;
+            float: right
 }
 
 .grid-four div:nth-child(1n + 1) {
-        clear: both
+            clear: both
 }
 
 @media (min-width: 576px) {
-
-        .grid-four div {
+            .grid-four div {
 		width: calc(99.9% * 1/2 - (30px - 30px * 1/2));
-        }
-
-        .grid-four div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
-
-        .grid-four div:last-child {
-                margin-right: 0;
-        }
-
-        .grid-four div:nth-child(2n) {
-                margin-right: 0;
-                float: right;
-        }
-
-        .grid-four div:nth-child(2n + 1) {
-                clear: both;
-        }
+            }
+            .grid-four div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
+            .grid-four div:last-child {
+                        margin-right: 0;
+            }
+            .grid-four div:nth-child(2n) {
+                        margin-right: 0;
+                        float: right;
+            }
+            .grid-four div:nth-child(2n + 1) {
+                        clear: both;
+            }
 	}
 
 @media (min-width: 768px) {
-
-        .grid-four div {
+            .grid-four div {
 		width: calc(99.9% * 1/3 - (30px - 30px * 1/3));
-        }
-
-        .grid-four div:nth-child(1n) {
-                float: left;
-                margin-right: 30px;
-                clear: none;
-        }
-
-        .grid-four div:last-child {
-                margin-right: 0;
-        }
-
-        .grid-four div:nth-child(3n) {
-                margin-right: 0;
-                float: right;
-        }
-
-        .grid-four div:nth-child(3n + 1) {
-                clear: both;
-        }
+            }
+            .grid-four div:nth-child(1n) {
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
+            }
+            .grid-four div:last-child {
+                        margin-right: 0;
+            }
+            .grid-four div:nth-child(3n) {
+                        margin-right: 0;
+                        float: right;
+            }
+            .grid-four div:nth-child(3n + 1) {
+                        clear: both;
+            }
 	}
 
 @media (min-width: 992px) {
-
-        .grid-four div {
+            .grid-four div {
 		flex-grow: 0;
 		flex-shrink: 0;
 		flex-basis: calc(99.9% * 1/4 - (30px - 30px * 1/4));
 		width: calc(99.9% * 1/4 - (30px - 30px * 1/4));
-        }
-
-        .grid-four div:nth-child(1n) {
-                margin-right: 30px;
-                margin-left: 0;
-        }
-
-        .grid-four div:last-child {
-                margin-right: 0;
-        }
-
-        .grid-four div:nth-child(4n) {
-                margin-right: 0;
-                margin-left: auto;
-        }
+            }
+            .grid-four div:nth-child(1n) {
+                        margin-right: 30px;
+                        margin-left: 0;
+            }
+            .grid-four div:last-child {
+                        margin-right: 0;
+            }
+            .grid-four div:nth-child(4n) {
+                        margin-right: 0;
+                        margin-left: auto;
+            }
 	}
 
 /* html setup */
@@ -1224,7 +1186,13 @@ we can specify global variable to use flexbox as default instead of floats
     </section>
     </div>*/
 
-body {
+body,
+html {
+    min-height: 600px;
+    min-width: 600px;
+    max-height: 600px;
+    max-width: 600px;
+    overflow: hidden;
     background: #222222 url('http://res.cloudinary.com/puritanic/image/upload/v1501580960/early_sunrise-1920x1080_vhekiy.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -1236,27 +1204,27 @@ body {
 
 .url-shortener {
     width: 100%;
-    height: 80vh;
+    height: 90vh;
     display: flex;
     flex-flow: row wrap;
-    max-width: 70%;
+    max-width: 98%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 96px;
-    padding-right: 96px;
+    padding-left: 16px;
+    padding-right: 16px;
     display: flex;
     flex-flow: row wrap;
-    max-width: 70%;
+    max-width: 98%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 6rem;
-    padding-right: 6rem;
-    padding-top: 64px;
-    padding-top: 4rem;
-    padding-bottom: 32px;
-    padding-bottom: 2rem;
-    margin-top: 80px;
-    margin-top: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 16px;
+    padding-top: 1rem;
+    padding-bottom: 16px;
+    padding-bottom: 1rem;
+    margin-top: 32px;
+    margin-top: 2rem;
     background: rgba(0, 0, 0, 0.55);
     border-radius: 1rem
 }
@@ -1273,8 +1241,8 @@ body {
         display: flex;
         -ms-flex-wrap: wrap;
             flex-wrap: wrap;
-        padding-top: 32px;
-        padding-top: 2rem;
+        padding-top: 16px;
+        padding-top: 1rem;
         -webkit-box-align: top;
             -ms-flex-align: top;
                 align-items: top;
@@ -1285,32 +1253,15 @@ body {
 }
 
 .url-shortener__input:last-child {
-        margin-bottom: 0;
+            margin-bottom: 0;
 }
 
 .url-shortener__input input[type="text"] {
             background: rgba(0, 0, 0, .2);
             border: none;
-            width: 60%;
-            height: 45px;
+            width: 75%;
+            height: 30px;
             padding-left: 5px;
-}
-
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td,
-th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
 }
 
 .tab {
@@ -1330,13 +1281,13 @@ tr:nth-child(even) {
     border-top-right-radius: .5rem;
     border-bottom-right-radius: 8px;
     border-bottom-right-radius: .5rem;
-    width: 120px;
+    width: 60px;
     height: 50px;
     cursor: pointer
 }
 
 .tab__color-picker {
-        top: 0;
+        top: -100;
 }
 
 /* ==========================================================================
