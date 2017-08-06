@@ -1,9 +1,10 @@
+// Bit.ly API call
+import get_short_url from './bitlyAPIcall';
+
 // reads value from input field and shorten it
 
 function readInput() {
     // init variables and API keys
-    var login = "o_2p4gsm6h6i";
-    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
     var input;
     var long_UrlInput = $("#longUrl_input");
 
@@ -25,23 +26,7 @@ function readInput() {
             return true;
         }
     }
-    // Bit.ly API call
-    function get_short_url(longUrl, login, api_key, func) {
-        $.getJSON(
-            "http://api.bitly.com/v3/shorten?", {
-                "format": "json",
-                "apiKey": api_key,
-                "login": login,
-                "longUrl": longUrl
-            },
-            function (response) {
-                if (!response)
-                    console.log('Error happened :(');
-                else
-                    func(response.data.url);
-            }
-        );
-    }
+
     // writes original and short url to infobox
     function writeUrls(long, short) {
         // checks if there is valid short url(otherwise it would print Short url: undefined)
@@ -63,7 +48,7 @@ function readInput() {
         // check if valid url 
         isUrlValid(long_UrlInput.val());
         // then shorten it
-        get_short_url(input, login, api_key, function (short_url) {
+        get_short_url(input, function (short_url) {
             console.log(short_url);
             writeUrls(input, short_url);
         });

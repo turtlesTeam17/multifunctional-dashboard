@@ -74,11 +74,7 @@ var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _getShort = __webpack_require__(4);
-
-var _getShort2 = _interopRequireDefault(_getShort);
-
-var _readInput = __webpack_require__(5);
+var _readInput = __webpack_require__(4);
 
 var _readInput2 = _interopRequireDefault(_readInput);
 
@@ -86,7 +82,6 @@ __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _getShort2.default)();
 (0, _readInput2.default)();
 
 /***/ }),
@@ -2427,43 +2422,16 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _bitlyAPIcall = __webpack_require__(5);
 
-function getShortUrl() {
-    var login = "o_2p4gsm6h6i";
-    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
-    var long_url;
-    var tabLink;
+var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
 
-    function get_short_url(long_url, login, api_key, func) {
-        $.getJSON("http://api.bitly.com/v3/shorten?", {
-            "format": "json",
-            "apiKey": api_key,
-            "login": login,
-            "longUrl": long_url
-        }, function (response) {
-            func(response.data.url);
-        });
-    }
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = getShortUrl;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 // reads value from input field and shorten it
 
 function readInput() {
     // init variables and API keys
-    var login = "o_2p4gsm6h6i";
-    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
     var input;
     var long_UrlInput = $("#longUrl_input");
 
@@ -2485,17 +2453,7 @@ function readInput() {
             return true;
         }
     }
-    // Bit.ly API call
-    function get_short_url(longUrl, login, api_key, func) {
-        $.getJSON("http://api.bitly.com/v3/shorten?", {
-            "format": "json",
-            "apiKey": api_key,
-            "login": login,
-            "longUrl": longUrl
-        }, function (response) {
-            if (!response) console.log('Error happened :(');else func(response.data.url);
-        });
-    }
+
     // writes original and short url to infobox
     function writeUrls(long, short) {
         // checks if there is valid short url(otherwise it would print Short url: undefined)
@@ -2517,7 +2475,7 @@ function readInput() {
         // check if valid url 
         isUrlValid(long_UrlInput.val());
         // then shorten it
-        get_short_url(input, login, api_key, function (short_url) {
+        (0, _bitlyAPIcall2.default)(input, function (short_url) {
             console.log(short_url);
             writeUrls(input, short_url);
         });
@@ -2526,9 +2484,36 @@ function readInput() {
         // reset longurl value
         long_UrlInput.val('');
     });
+} // Bit.ly API call
+exports.default = readInput;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function get_short_url(longUrl, func) {
+
+    var login = "o_2p4gsm6h6i";
+    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
+
+    $.getJSON("http://api.bitly.com/v3/shorten?", {
+        "format": "json",
+        "apiKey": api_key,
+        "login": login,
+        "longUrl": longUrl
+    }, function (response) {
+        if (!response) console.log('Error happened :(');else func(response.data.url);
+    });
 }
 
-exports.default = readInput;
+exports.default = get_short_url;
 
 /***/ }),
 /* 6 */
