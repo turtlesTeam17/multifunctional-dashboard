@@ -5,8 +5,21 @@
 .url-shortener__history tr:nth-child(even) {
             background-color: #dddddd;
 }
-.tab__url-shortener {
-        top: 55px;
+.url-shortener__input .url-shortener__qrcode {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-flow: column wrap;
+                    flex-flow: column wrap;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            margin-top: 15px;
 }
 .url-shortener__input .url-shortener__info {
             display: -webkit-box;
@@ -17,10 +30,20 @@
                 -ms-flex-flow: column wrap;
                     flex-flow: column wrap;
             text-align: center;
-            font-size: 13.6px;
-            font-size: .85rem;
+            font-size: 15.2px;
+            font-size: .95rem;
             margin-right: 16px;
             margin-right: 1rem;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+}
+.url-shortener__input .url-shortener__info a {
+                text-decoration: none;
+                color: #022933;
 }
 .url-shortener__input input[type="submit"] {
             height: 30px;
@@ -34,7 +57,7 @@
 .url-shortener__history {
         border-radius: 0 0 .5rem .5rem;
         width: 100%;
-        height: calc(99.9% * 2/3 - (10px - 10px * 2/3));
+        height: calc(99.9% * 5/8 - (10px - 10px * 5/8));
         margin-bottom: 10px;
         border: 1px solid black;
         background: rgba(255, 255, 255, 0.55);
@@ -1231,15 +1254,17 @@ html {
 .url-shortener__input {
         border-radius: .5rem .5rem 0 0;
         width: 100%;
-        height: calc(99.9% * 1/3 - (10px - 10px * 1/3));
+        height: calc(99.9% * 3/8 - (10px - 10px * 3/8));
         margin-bottom: 10px;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         border: 1px solid black;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
-        -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-flow: column wrap;
+                flex-flow: column wrap;
         padding-top: 16px;
         padding-top: 1rem;
         -webkit-box-align: top;
@@ -1261,32 +1286,6 @@ html {
             width: 75%;
             height: 30px;
             padding-left: 5px;
-}
-
-.tab {
-    position: absolute;
-    color: white;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    background: rgba(0, 0, 0, 0.55);
-    border-top-right-radius: 8px;
-    border-top-right-radius: .5rem;
-    border-bottom-right-radius: 8px;
-    border-bottom-right-radius: .5rem;
-    width: 60px;
-    height: 50px;
-    cursor: pointer
-}
-
-.tab__color-picker {
-        top: -100;
 }
 
 /* ==========================================================================

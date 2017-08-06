@@ -16,8 +16,8 @@ function shortenTabUrl() {
             if (short_url) {
                 $('.shortUrlInfo').append('<a href="' + short_url + '" target="_blank">' + short_url + '</a>');
                 $('.url-shortener__qrcode').qrcode({
-                    width: 100,
-                    height: 100,
+                    width: 120,
+                    height: 120,
                     text: short_url
                 });
             } else {

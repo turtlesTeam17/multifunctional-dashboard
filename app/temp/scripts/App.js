@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,55 +70,26 @@
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-function get_short_url(longUrl, func) {
-
-    var login = "o_2p4gsm6h6i";
-    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
-
-    $.getJSON("http://api.bitly.com/v3/shorten?", {
-        "format": "json",
-        "apiKey": api_key,
-        "login": login,
-        "longUrl": longUrl
-    }, function (response) {
-        if (!response) console.log('Error happened :(');else func(response.data.url);
-    });
-}
-
-exports.default = get_short_url;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _jquery = __webpack_require__(2);
+var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _readInput = __webpack_require__(5);
-
-var _readInput2 = _interopRequireDefault(_readInput);
-
-var _shortenTabUrl = __webpack_require__(6);
+var _shortenTabUrl = __webpack_require__(4);
 
 var _shortenTabUrl2 = _interopRequireDefault(_shortenTabUrl);
 
-__webpack_require__(7);
+__webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _readInput2.default)();
+// readInput();
+
+
+// import readInput from './modules/readInput';
 (0, _shortenTabUrl2.default)();
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2397,7 +2368,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return 1 === arguments.length ? this.off(a, "**") : this.off(b, a || "**", c);
     } }), r.holdReady = function (a) {
     a ? r.readyWait++ : r.ready(!0);
-  }, r.isArray = Array.isArray, r.parseJSON = JSON.parse, r.nodeName = B, "function" == "function" && __webpack_require__(4) && !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+  }, r.isArray = Array.isArray, r.parseJSON = JSON.parse, r.nodeName = B, "function" == "function" && __webpack_require__(3) && !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
     return r;
   }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));var Vb = a.jQuery,
@@ -2405,10 +2376,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return a.$ === r && (a.$ = Wb), b && a.jQuery === r && (a.jQuery = Vb), r;
   }, b || (a.jQuery = a.$ = r), r;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -2436,7 +2407,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -2445,7 +2416,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2455,83 +2426,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _bitlyAPIcall = __webpack_require__(0);
-
-var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// reads value from input field and shorten it
-
-function readInput() {
-    // init variables and API keys
-    var input;
-    var long_UrlInput = $("#longUrl_input");
-
-    // checking if the user input is a valid url
-    // https://stackoverflow.com/questions/30970068/js-regex-url-validation
-    function isUrlValid(userInput) {
-        // Regex ftw
-        var res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-        // if not valid, displays error message
-        if (res == null) {
-            console.log('Invalid input!');
-            var error_text = '<p>Invalid input!</p>';
-            $('.shortUrlInfo').append(error_text);
-            return false;
-        } else {
-            // otherwise sets input to long url value
-            input = userInput;
-            console.log(input);
-            return true;
-        }
-    }
-
-    // writes original and short url to infobox
-    function writeUrls(long, short) {
-        // checks if there is valid short url(otherwise it would print Short url: undefined)
-        if (short) {
-            var shortUrl_text = '<p>Short url: <a href="' + short + '" target="_blank">' + short + '</a></p>';
-            $('.shortUrlInfo').append(shortUrl_text);
-            $('.url-shortener__qrcode').qrcode({ width: 100, height: 100, text: short });
-        }
-    }
-    // clears long and short infobox urls
-    function clearUrls() {
-        $('.shortUrlInfo').empty();
-        $('.url-shortener__qrcode').empty();
-    }
-
-    $('#shortenButton').on('click', function () {
-        // clear infobox
-        clearUrls();
-        // check if valid url 
-        isUrlValid(long_UrlInput.val());
-        // then shorten it
-        (0, _bitlyAPIcall2.default)(input, function (short_url) {
-            console.log(short_url);
-            writeUrls(input, short_url);
-        });
-        // reset input value
-        input = '';
-        // reset longurl value
-        long_UrlInput.val('');
-    });
-} // Bit.ly API call
-exports.default = readInput;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _bitlyAPIcall = __webpack_require__(0);
+var _bitlyAPIcall = __webpack_require__(5);
 
 var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
 
@@ -2552,8 +2447,8 @@ function shortenTabUrl() {
             if (short_url) {
                 $('.shortUrlInfo').append('<a href="' + short_url + '" target="_blank">' + short_url + '</a>');
                 $('.url-shortener__qrcode').qrcode({
-                    width: 100,
-                    height: 100,
+                    width: 120,
+                    height: 120,
                     text: short_url
                 });
             } else {
@@ -2565,7 +2460,35 @@ function shortenTabUrl() {
 exports.default = shortenTabUrl;
 
 /***/ }),
-/* 7 */
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function get_short_url(longUrl, func) {
+
+    var login = "o_2p4gsm6h6i";
+    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
+
+    $.getJSON("http://api.bitly.com/v3/shorten?", {
+        "format": "json",
+        "apiKey": api_key,
+        "login": login,
+        "longUrl": longUrl
+    }, function (response) {
+        if (!response) console.log('Error happened :(');else func(response.data.url);
+    });
+}
+
+exports.default = get_short_url;
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
