@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,22 +70,55 @@
 "use strict";
 
 
-var _jquery = __webpack_require__(1);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function get_short_url(longUrl, func) {
+
+    var login = "o_2p4gsm6h6i";
+    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
+
+    $.getJSON("http://api.bitly.com/v3/shorten?", {
+        "format": "json",
+        "apiKey": api_key,
+        "login": login,
+        "longUrl": longUrl
+    }, function (response) {
+        if (!response) console.log('Error happened :(');else func(response.data.url);
+    });
+}
+
+exports.default = get_short_url;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _jquery = __webpack_require__(2);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _readInput = __webpack_require__(4);
+var _readInput = __webpack_require__(5);
 
 var _readInput2 = _interopRequireDefault(_readInput);
 
-__webpack_require__(6);
+var _shortenTabUrl = __webpack_require__(6);
+
+var _shortenTabUrl2 = _interopRequireDefault(_shortenTabUrl);
+
+__webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _readInput2.default)();
+(0, _shortenTabUrl2.default)();
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2364,7 +2397,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return 1 === arguments.length ? this.off(a, "**") : this.off(b, a || "**", c);
     } }), r.holdReady = function (a) {
     a ? r.readyWait++ : r.ready(!0);
-  }, r.isArray = Array.isArray, r.parseJSON = JSON.parse, r.nodeName = B, "function" == "function" && __webpack_require__(3) && !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+  }, r.isArray = Array.isArray, r.parseJSON = JSON.parse, r.nodeName = B, "function" == "function" && __webpack_require__(4) && !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
     return r;
   }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));var Vb = a.jQuery,
@@ -2372,10 +2405,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return a.$ === r && (a.$ = Wb), b && a.jQuery === r && (a.jQuery = Vb), r;
   }, b || (a.jQuery = a.$ = r), r;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -2403,7 +2436,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -2412,7 +2445,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2422,7 +2455,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _bitlyAPIcall = __webpack_require__(5);
+var _bitlyAPIcall = __webpack_require__(0);
 
 var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
 
@@ -2488,7 +2521,7 @@ function readInput() {
 exports.default = readInput;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2498,25 +2531,41 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-function get_short_url(longUrl, func) {
+var _bitlyAPIcall = __webpack_require__(0);
 
-    var login = "o_2p4gsm6h6i";
-    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
+var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
 
-    $.getJSON("http://api.bitly.com/v3/shorten?", {
-        "format": "json",
-        "apiKey": api_key,
-        "login": login,
-        "longUrl": longUrl
-    }, function (response) {
-        if (!response) console.log('Error happened :(');else func(response.data.url);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function shortenTabUrl() {
+
+    // getting the URL of the current tab 
+    chrome.tabs.query({
+        'active': true,
+        'currentWindow': true
+    }, function (tabs) {
+        var tabUrl = tabs[0].url;
+        console.log(tabUrl);
+
+        (0, _bitlyAPIcall2.default)(tabUrl, function (short_url) {
+            console.log(short_url);
+            if (short_url) {
+                $('.shortUrlInfo').append('<a href="' + short_url + '" target="_blank">' + short_url + '</a>');
+                $('.url-shortener__qrcode').qrcode({
+                    width: 100,
+                    height: 100,
+                    text: short_url
+                });
+            } else {
+                $('.shortUrlInfo').append('<p> Invalid value </p>');
+            }
+        });
     });
-}
-
-exports.default = get_short_url;
+} // Automagically gets current tab's urls and shorten it
+exports.default = shortenTabUrl;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
