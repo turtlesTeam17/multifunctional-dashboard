@@ -1,0 +1,102 @@
+body,
+html {
+    overflow: hidden;
+    background: #333538 url('http://res.cloudinary.com/puritanic/image/upload/a_90/v1501796811/drible_xrzwss.jpg');
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+.url-shortener {
+    min-height: 600px;
+    min-width: 600px;
+    max-height: 600px;
+    max-width: 600px;
+    width: 100%;
+    height: 90vh;
+    lost-center: 98% 1rem flex;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background: color(#607D8B alpha(15%));
+    &__input {
+        border-radius: .5rem .5rem 0 0;
+        lost-row: 3/8 10px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        border: 1px solid black;
+        display: flex;
+        flex-flow: column wrap;
+        padding-top: 1rem;
+        align-items: top;
+        justify-content: center;
+        background: color(white alpha(55%));
+        & input[type="text"] {
+            background: color(#455A64 alpha(45%));
+            border: none;
+            width: 75%;
+            height: 30px;
+            padding-left: 5px;
+        }
+        & input[type="text"]:focus {
+            outline: none;
+        }
+        & input[type="submit"] {
+            height: 30px;
+            width: 15%;
+            border: none;
+            border-radius: 0 .5rem .5rem 0;
+        }
+        & .url-shortener__info {
+            display: flex;
+            flex-flow: column wrap;
+            text-align: center;
+            font-size: .95rem;
+            margin-right: 1rem;
+            align-items: center;
+            justify-content: center;
+
+            & a {
+                text-decoration: none;
+                color: var(--darkblue);
+            }
+        }
+
+        & .url-shortener__qrcode {
+            display: flex;
+            flex-flow: column wrap;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+    }
+    &__history {
+        border-radius: 0 0 .5rem .5rem;
+        lost-row: 5/8 10px;
+        border: 1px solid black;
+        background: color(white alpha(55%));
+        font-size: 1rem;
+        & table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        & td {
+            line-height: 35px;
+        }
+        & td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 3px;
+        }
+        & tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        & td:first-of-type {
+            width: 72%;
+            text-indent: 5px;
+        }
+    }
+}   

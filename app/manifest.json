@@ -1,0 +1,55 @@
+{
+    "manifest_version":     2,
+
+    "name":                 "Multidash",
+    "description":          "A chrome extension with multiple features",
+    "version":              "0.1",
+
+    "browser_action": {
+        "default_icon":     "icons/icon48.png",
+        "default_title":    "Bit.ly url shortener",
+        "default_popup":    "index.html"
+    },
+
+    "icons": 
+	{ 
+		"16": 				          "icons/icon16.png",
+		"48": 				          "icons/icon48.png",
+		"128": 				          "icons/icon128.png"
+	},
+
+    "options_page":         "options.html",
+    
+    "background": {
+        "scripts":          ["eventpage.js"],
+        "persistent":       false
+    },
+
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default":          "Ctrl+Shift+E",
+        "linux":            "Ctrl+Shift+K",
+        "windows":          "Alt+Shift+P",
+        "mac":              "Alt+Shift+P"
+      }
+    }
+  },
+
+    "permissions": [
+                            "storage",
+                            "notifications",
+                            "contextMenus",
+		                        "clipboardWrite",
+                            "activeTab"
+    ],
+
+    "content_scripts": 
+	[
+		{
+			"matches": 			      ["http://*/*", "https://*/*"],
+			"js": 				        ["content_script.js"],
+			"all_frames": 		    true
+		}
+	]
+}
