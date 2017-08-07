@@ -2,7 +2,7 @@
     "manifest_version":     2,
 
     "name":                 "Multidash",
-    "description":          "Multidashboard with multiple features",
+    "description":          "A chrome extension with multiple features",
     "version":              "0.1",
 
     "browser_action": {
@@ -13,9 +13,9 @@
 
     "icons": 
 	{ 
-		"16": 				"icons/icon16.png",
-		"48": 				"icons/icon48.png",
-		"128": 				"icons/icon128.png"
+		"16": 				          "icons/icon16.png",
+		"48": 				          "icons/icon48.png",
+		"128": 				          "icons/icon128.png"
 	},
 
     "options_page":         "options.html",
@@ -40,16 +40,16 @@
                             "storage",
                             "notifications",
                             "contextMenus",
-		                    "clipboardWrite",
+		                        "clipboardWrite",
                             "activeTab"
     ],
 
     "content_scripts": 
 	[
 		{
-			"matches": 			["http://*/*", "https://*/*"],
-			"js": 				["content_script.js"],
-			"all_frames": 		true
+			"matches": 			      ["http://*/*", "https://*/*"],
+			"js": 				        ["content_script.js"],
+			"all_frames": 		    true
 		}
 	]
 }

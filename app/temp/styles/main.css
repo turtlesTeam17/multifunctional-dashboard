@@ -5,6 +5,9 @@
 .url-shortener__history tr:nth-child(even) {
             background-color: #dddddd;
 }
+.url-shortener__history td {
+            line-height: 35px;
+}
 .url-shortener__input .url-shortener__qrcode {
             display: -webkit-box;
             display: -ms-flexbox;
@@ -1214,7 +1217,7 @@ we can specify global variable to use flexbox as default instead of floats
 body,
 html {
     overflow: hidden;
-    background: #455A64 url('http://res.cloudinary.com/puritanic/image/upload/a_90/v1501796811/drible_xrzwss.jpg');
+    background: #333538 url('http://res.cloudinary.com/puritanic/image/upload/a_90/v1501796811/drible_xrzwss.jpg');
     margin: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
