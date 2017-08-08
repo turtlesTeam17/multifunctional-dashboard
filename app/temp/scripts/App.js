@@ -74,18 +74,16 @@ var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _shortenTabUrl = __webpack_require__(4);
+__webpack_require__(4);
+
+__webpack_require__(5);
+
+var _shortenTabUrl = __webpack_require__(6);
 
 var _shortenTabUrl2 = _interopRequireDefault(_shortenTabUrl);
 
-__webpack_require__(6);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// readInput();
-
-
-// import readInput from './modules/readInput';
 (0, _shortenTabUrl2.default)();
 
 /***/ }),
@@ -2422,78 +2420,6 @@ module.exports = __webpack_amd_options__;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _bitlyAPIcall = __webpack_require__(5);
-
-var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function shortenTabUrl() {
-
-    // getting the URL of the current tab 
-    chrome.tabs.query({
-        'active': true,
-        'currentWindow': true
-    }, function (tabs) {
-        var tabUrl = tabs[0].url;
-        console.log(tabUrl);
-
-        (0, _bitlyAPIcall2.default)(tabUrl, function (short_url) {
-            console.log(short_url);
-            if (short_url) {
-                $('.shortUrlInfo').append('<a href="' + short_url + '" target="_blank">' + short_url + '</a>');
-                $('.url-shortener__qrcode').qrcode({
-                    width: 120,
-                    height: 120,
-                    text: short_url
-                });
-            } else {
-                $('.shortUrlInfo').append('<p> Invalid value </p>');
-            }
-        });
-    });
-} // Automagically gets current tab's urls and shorten it
-exports.default = shortenTabUrl;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-function get_short_url(longUrl, func) {
-
-    var login = "o_2p4gsm6h6i";
-    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
-
-    $.getJSON("http://api.bitly.com/v3/shorten?", {
-        "format": "json",
-        "apiKey": api_key,
-        "login": login,
-        "longUrl": longUrl
-    }, function (response) {
-        if (!response) console.log('Error happened :(');else func(response.data.url);
-    });
-}
-
-exports.default = get_short_url;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 (function (r) {
   r.fn.qrcode = function (h) {
     var s;function u(a) {
@@ -2772,6 +2698,131 @@ exports.default = get_short_url;
     });
   };
 })(jQuery);
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var globalCount = 0;
+
+document.body.onload = function () {
+    chrome.storage.sync.get('urlData', function (items) {
+        if (!chrome.runtime.error) {
+            for (var item in items) {
+                $('#urlHistory').append('<tr><td>' + item.title + '</td><td>' + item.url + '</td></tr>');
+            }
+            console.log(items);
+        }
+    });
+};
+
+// Listen for change in short-url-info div with custom jQuery event
+$('.shortUrlInfo').on('contentChanged', function () {
+    globalCount++;
+    var tabTitle;
+    var dataObj = {
+        'url': $('.shortUrlInfo').text()
+    };
+    chrome.tabs.query({
+        'active': true,
+        'currentWindow': true
+    }, function (tabs) {
+        dataObj.title = tabs[0].title;
+        console.log(dataObj);
+        chrome.storage.sync.set({
+            'urlData': dataObj
+        }, function () {
+            if (chrome.runtime.error) {
+                console.log("Runtime error.");
+            }
+        });
+    });
+});
+
+// on dom ready get all stored urls in put them in the table
+// on change event set the new url and title to chrome sync database(check if there is no same url first)
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _bitlyAPIcall = __webpack_require__(7);
+
+var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function shortenTabUrl() {
+
+    var tabUrl;
+    var tabTitle;
+    var shortUrl;
+
+    // getting the URL of the current tab 
+    // https://developer.chrome.com/extensions/tabs#method-query
+    chrome.tabs.query({
+        'active': true,
+        'currentWindow': true
+    }, function (tabs) {
+        tabUrl = tabs[0].url;
+        tabTitle = tabs[0].title;
+        console.log(tabUrl);
+        console.log(tabTitle);
+
+        (0, _bitlyAPIcall2.default)(tabUrl, function (short_url) {
+            if (short_url) {
+                shortUrl = short_url;
+                $('.shortUrlInfo').append('<a href="' + short_url + '" target="_blank">' + short_url + '</a>').trigger('contentChanged');
+                $('.url-shortener__qrcode').qrcode({
+                    width: 120,
+                    height: 120,
+                    text: short_url
+                });
+            } else {
+                $('.shortUrlInfo').append('<p> Invalid value </p>');
+            }
+        });
+    });
+} // Automagically gets current tab's urls and shorten it
+exports.default = shortenTabUrl;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function get_short_url(longUrl, func) {
+
+    var login = "o_2p4gsm6h6i";
+    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
+
+    $.getJSON("http://api.bitly.com/v3/shorten?", {
+        "format": "json",
+        "apiKey": api_key,
+        "login": login,
+        "longUrl": longUrl
+    }, function (response) {
+        if (!response) console.log('Error happened :(');else func(response.data.url);
+    });
+}
+
+exports.default = get_short_url;
 
 /***/ })
 /******/ ]);

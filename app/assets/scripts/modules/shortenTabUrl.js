@@ -1,20 +1,28 @@
 // Automagically gets current tab's urls and shorten it
 import get_short_url from './bitlyAPIcall';
 
+
 function shortenTabUrl() {
 
+    var tabUrl;
+    var tabTitle;
+    var shortUrl;
+    
     // getting the URL of the current tab 
+    // https://developer.chrome.com/extensions/tabs#method-query
     chrome.tabs.query({
         'active': true,
         'currentWindow': true
     }, function (tabs) {
-        var tabUrl = tabs[0].url;
+        tabUrl = tabs[0].url;
+        tabTitle = tabs[0].title;
         console.log(tabUrl);
+        console.log(tabTitle);
 
         get_short_url(tabUrl, function (short_url) {
-            console.log(short_url);
             if (short_url) {
-                $('.shortUrlInfo').append('<a href="' + short_url + '" target="_blank">' + short_url + '</a>');
+                shortUrl = short_url;
+                $('.shortUrlInfo').append('<a href="' + short_url + '" target="_blank">' + short_url + '</a>').trigger('contentChanged');
                 $('.url-shortener__qrcode').qrcode({
                     width: 120,
                     height: 120,
@@ -27,4 +35,4 @@ function shortenTabUrl() {
     });
 }
 
-export default shortenTabUrl;   
+export default shortenTabUrl;
