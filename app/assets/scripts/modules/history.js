@@ -3,8 +3,10 @@ var tabTitle;
 var url;
 var title;
 
+// get count of stored items
 function readDataCount(val) {
     console.log(val);
+    getLoop();
 }
 
 function getDataCount(callback) {
@@ -17,6 +19,7 @@ function getDataCount(callback) {
     });
 }
 
+// get stored url and title data from chrome.sync
 function getData(callback) {
     chrome.storage.sync.get('urlData0', function (obj) {
         if (!chrome.runtime.error) {
@@ -35,15 +38,41 @@ function readData(val1, val2) {
     console.log(val1, val2);
 }
 
-document.body.onload = function () {
+function getLoop() {
+    for (var i = 0; i <= localCount; i++) {
+        // apiLooper(`urlData` + i, readData);
+        apiLooper(String.raw `urlData` + i, readData);
+    }
+}
 
-    getDataCount(readDataCount);
+function apiLooper(item, callback) {
 
-    getData(readData);
+    chrome.storage.sync.get(item, function (obj) {
+        if (!chrome.runtime.error) {
+            var stringified = JSON.stringify(obj);
+            var parsed = JSON.parse(stringified);
+            console.log("**************");
+            console.log(stringified);
+            console.log(parsed);
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    var val = obj[key];
+                    console.log(val);
+                    title = val.title;
+                    url = val.url;
+                }
+            }
+            console.log(url);
+            console.log(title);
+            console.log("**************");
+            callback(title, url);
+        } else {
+            console.log('Error happened!');
+        }
+    })
+}
 
-    // clearing whole chrome storage // debugging
-    // chrome.storage.sync.clear();
-    // this will display all items in chrome storage // debugging
+function showAllData() {
     chrome.storage.sync.get(null, function (items) {
         var allKeys = Object.keys(items);
         console.log('Items in storage: ' + allKeys);
@@ -63,9 +92,22 @@ function storeUrlData() {
     });
 }
 
+document.body.onload = function () {
+
+    getDataCount(readDataCount);
+
+    // getData(readData);
+
+    // clearing whole chrome storage // debugging
+    // chrome.storage.sync.clear();
+
+    // this will display all items in chrome storage // debugging
+    showAllData();
+}
+
 // Listen for change in short-url-info div with custom jQuery event
 $('.shortUrlInfo').on('contentChanged', function () {
-    // localCount++;
+    localCount++;
     chrome.tabs.query({
         'active': true,
         'currentWindow': true
