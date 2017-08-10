@@ -1,11 +1,12 @@
 import $ from './vendor/jquery-3.2.1.min';
 import './vendor/jquery.qrcode.min';
 
-import './modules/history';
 import printPalette from './modules/getPalette';
 import shortenTabUrl from './modules/shortenTabUrl';
+import urlHistory from './modules/history';
 
 shortenTabUrl();
+urlHistory();
 
 
 $("#colorPicker").on("change",function(e){
