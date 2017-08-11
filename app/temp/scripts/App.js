@@ -3010,7 +3010,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _templateObject = _taggedTemplateLiteral(['urlData'], ['urlData']);
+var _templateObject = _taggedTemplateLiteral(["urlData"], ["urlData"]);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -3018,9 +3018,9 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 
 function urlHistory() {
     var localCount = 1;
-    var tabTitle;
-    var url;
-    var title;
+    var objects = [];
+    var storage = chrome.storage.sync;
+    var tabTitle, url, title;
 
     // get count of stored items
     function readDataCount(val) {
@@ -3030,8 +3030,7 @@ function urlHistory() {
     }
     // get count of stored items // primary
     function getDataCount(callback) {
-
-        chrome.storage.sync.get('globalCount', function (items) {
+        storage.get('globalCount', function (items) {
             console.log(items.globalCount);
             localCount = items.globalCount;
             // callback for dealing with async
@@ -3039,21 +3038,7 @@ function urlHistory() {
         });
     }
 
-    // get single stored url and title data from chrome.sync // debugging
-    function getData(callback) {
-        chrome.storage.sync.get('urlData0', function (obj) {
-            if (!chrome.runtime.error) {
-                url = obj.urlData0.title;
-                title = obj.urlData0.url;
-                console.log(obj);
-                callback(url, title);
-            } else {
-                console.log('Error happened!');
-            }
-        });
-    }
-
-    // read recieved data from chrome.storage.get and print it to history table
+    // read received data from chrome.storage.get and print it to history table
     function readData(val1, val2) {
         // if values are not undefined 
         if (val1 && val2) {
@@ -3081,19 +3066,17 @@ function urlHistory() {
         // if not undefined
         if (item) {
             // call chrome API
-            chrome.storage.sync.get(item, function (obj) {
+            storage.get(item, function (obj) {
                 if (!chrome.runtime.error) {
-                    // stringify recieved data, and then parse it to JSON object.
+                    // stringify received data, and then parse it to JSON object.
                     // I had to do this because chrome.api call is looking for string-name in sync.get call, and then for 
                     // same name but as an object if I want to extract its keys and values, and I couldnt think of better way to access received information.
                     var stringified = JSON.stringify(obj);
                     var parsed = JSON.parse(stringified);
-                    console.log(stringified);
-                    console.log(parsed);
                     for (var key in obj) {
                         if (obj.hasOwnProperty(key)) {
                             var val = obj[key];
-                            console.log(val);
+                            // console.log(val);
                             title = val.title;
                             url = val.url;
                         }
@@ -3110,40 +3093,74 @@ function urlHistory() {
     }
 
     function showAllData() {
-        chrome.storage.sync.get(null, function (items) {
+        storage.get(null, function (items) {
             var allKeys = Object.keys(items);
             console.log('Items in storage: ' + allKeys);
         });
     }
 
     function storeUrlData() {
-        var _chrome$storage$sync$;
-
         var dataObj = {
             'url': $('.shortUrlInfo').text(),
             'title': tabTitle
         };
-        chrome.storage.sync.set((_chrome$storage$sync$ = {}, _defineProperty(_chrome$storage$sync$, 'urlData' + localCount, dataObj), _defineProperty(_chrome$storage$sync$, 'globalCount', localCount), _chrome$storage$sync$), function () {
-            console.log('Saved to storage: ', dataObj, localCount);
+        if (!checkForDuplicateKey(dataObj.url)) {
+            var _storage$set;
+
+            localCount++;
+            storage.set((_storage$set = {}, _defineProperty(_storage$set, 'urlData' + localCount, dataObj), _defineProperty(_storage$set, 'globalCount', localCount), _storage$set), function () {
+                console.log('Saved to storage: ', dataObj, localCount);
+            });
+        }
+    }
+    // create array from data received from storage
+    function createDataArray() {
+        var appendKeyPrefix = 'urlData';
+        var appendKeyCount = localCount;
+        var keys = [];
+        storage.get(function (e) {
+            $.each(e, function (key) {
+                if (key.startsWith(appendKeyPrefix)) {
+                    keys.push(key);
+                }
+            });
+            for (var i = 0; i < keys.length; i++) {
+                storage.get(keys[i], function (obj) {
+                    objects.push(obj);
+                });
+            }
+            console.log(objects);
         });
+    }
+
+    function checkForDuplicateKey(item) {
+        for (var i = 0; i < objects.length; i++) {
+            for (var x in objects[i]) {
+                if (objects[i][x].url == item) {
+                    console.log('Gotcha!');
+                    return true;
+                }
+            }
+        }
     }
 
     document.body.onload = function () {
 
         getDataCount(readDataCount);
-
-        // getData(readData);
+        createDataArray();
 
         // clearing whole chrome storage // debugging
         // chrome.storage.sync.clear();
 
         // this will display all items in chrome storage // debugging
         showAllData();
+
+        // getData(readData); // debugging
     };
 
     // Listen for change in short-url-info div with custom jQuery event
     $('.shortUrlInfo').on('contentChanged', function () {
-        // localCount++;
+
         chrome.tabs.query({
             'active': true,
             'currentWindow': true

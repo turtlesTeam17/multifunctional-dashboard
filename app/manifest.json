@@ -51,6 +51,5 @@
 			"js": 				        ["content_script.js"],
 			"all_frames": 		    true
 		}
-  ],
-  "content_security_policy":"script-src 'self' https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'"
+  ]
 }

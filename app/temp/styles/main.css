@@ -3,7 +3,8 @@
             text-indent: 5px;
 }
 .url-shortener__history tr:nth-child(even) {
-            background-color: #dddddd;
+            background-color: rgb(124, 127, 130); 
+            color: #dddddd;
 }
 .url-shortener__history td {
             line-height: 35px;
@@ -68,7 +69,7 @@
         height: calc(99.9% * 5/8 - (10px - 10px * 5/8));
         margin-bottom: 10px;
         border: 1px solid black;
-        background: rgba(255, 255, 255, 0.55);
+        background: rgba(255, 255, 255, 0.75);
         font-size: 16px;
         font-size: 1rem;
         overflow: scroll;

@@ -93,7 +93,7 @@ html {
         border-radius: 0 0 .5rem .5rem;
         lost-row: 5/8 10px;
         border: 1px solid black;
-        background: color(white alpha(55%));
+        background: color(white alpha(75%));
         font-size: 1rem;
         overflow: scroll;
         overflow-x: hidden;
@@ -118,7 +118,8 @@ html {
             padding: 3px;
         }
         & tr:nth-child(even) {
-            background-color: #dddddd;
+            background-color: color(#24292E tint(40%)); 
+            color: #dddddd;
         }
         & td:first-of-type {
             width: 72%;
