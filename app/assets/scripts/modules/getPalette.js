@@ -173,9 +173,7 @@ function printPalette(color){
 		
 	}
 	content+="</table>";
-	console.log($("#palette"));
 	$("#palette").append(content);
-	return content;
 }
 
 export default printPalette;
