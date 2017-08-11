@@ -158,6 +158,7 @@ function hexToRgb(hex) {
 }
 function printPalette(color){
 	var palette = getPallete(color);
+     $("#palette").empty();
 	var content = "<table style='background-color:white;'>";
 	var columns = NUM_COLUMNS;
 	for(var i=0;i < palette.length;i++){

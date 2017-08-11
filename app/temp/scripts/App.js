@@ -95,18 +95,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (0, _shortenTabUrl2.default)();
 
 (0, _jquery2.default)(document).ready(function () {
-  console.log("ready, should print color history here");
-  (0, _colorHistory.printHistoryColor)();
+    (0, _colorHistory.printHistoryColor)(onColorClick);
 });
 
 (0, _jquery2.default)("#colorPicker").on("change", function (e) {
-
-  (0, _jquery2.default)("#palette").empty();
-  var selectedColor = e.currentTarget.value;
-  (0, _colorHistory.storeColorPickerData)(selectedColor);
-  (0, _colorHistory.printNewHistoryColor)(selectedColor);
-  (0, _getPalette2.default)(selectedColor.substring(1));
+    var selectedColor = e.currentTarget.value;
+    (0, _colorHistory.storeColorPickerData)(selectedColor);
+    (0, _colorHistory.printNewHistoryColor)(selectedColor, onColorClick);
+    (0, _getPalette2.default)(selectedColor.substring(1));
 });
+
+function onColorClick(selectedColor) {
+    (0, _getPalette2.default)(selectedColor.substring(1));
+}
 
 /***/ }),
 /* 1 */
@@ -2980,6 +2981,7 @@ function hexToRgb(hex) {
 }
 function printPalette(color) {
     var palette = getPallete(color);
+    $("#palette").empty();
     var content = "<table style='background-color:white;'>";
     var columns = NUM_COLUMNS;
     for (var i = 0; i < palette.length; i++) {
@@ -3027,7 +3029,8 @@ function storeColorPickerData(color) {
         });
     });
 }
-function printHistoryColor() {
+function printHistoryColor(onColorClick) {
+    //get histoyColors array from chrome storage and print them to #color-history div
     chrome.storage.sync.get('historyColors', function (result) {
         var content = "<table id='color-history-elements'";
         var columns = NUM_COLUMNS;
@@ -3035,7 +3038,7 @@ function printHistoryColor() {
             if (columns == NUM_COLUMNS) {
                 content += "<tr>";
             }
-            content += "<td style='width:50px; height:50px; background-color:" + result.historyColors[i] + "'></td>";
+            content += "<td  color='" + result.historyColors[i] + "'style='width:50px; height:50px; background-color:" + result.historyColors[i] + "'></td>";
             columns--;
             if (columns == 0) {
                 content += "</tr>";
@@ -3044,20 +3047,30 @@ function printHistoryColor() {
         }
         content += "</table>";
         $("#color-history").append(content);
+        //add click events for every color history td element added to the history table
+        $("#color-history-elements td").on("click", function (e) {
+            onColorClick(e.currentTarget.attributes.color.value);
+        });
     });
 }
 
-function printNewHistoryColor(color) {
+function printNewHistoryColor(color, onColorClick) {
     var content = "";
+    //check if there are two elements in the row, if yes add new row, otherwise add column to existing row
     var checkcolumnSize = $("#color-history-elements tbody")[0] ? $("#color-history-elements tbody")[0].lastElementChild.children.length : 0;
-    console.log("checkcolumnSize", checkcolumnSize);
+
     if (checkcolumnSize == 2 || checkcolumnSize == 0) {
-        content = "<tr><td style='width:50px; height:50px; background-color:" + color + "'></td></tr>";
+        content = "<tr><td color='" + color + "'style='width:50px; height:50px; background-color:" + color + "'></td></tr>";
         $("#color-history-elements").append(content);
     } else if (checkcolumnSize == 1) {
-        content = "<td style='width:50px; height:50px; background-color:" + color + "'></td>";
+        content = "<td color='" + color + "' style='width:50px; height:50px; background-color:" + color + "'></td>";
         $($("#color-history-elements tbody")[0].lastElementChild).append(content);
     }
+
+    //add click handler to display color palette on the added element to the color history table
+    $("#color-history-elements tr:last-child td:last-child").on("click", function (e) {
+        onColorClick(e.currentTarget.attributes.color.value);
+    });
 }
 
 /***/ })
