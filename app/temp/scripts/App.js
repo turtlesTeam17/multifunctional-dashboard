@@ -3027,7 +3027,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 function urlHistory() {
-    var localCount = 1;
+    var localCount = 0;
     var objects = [];
     var storage = chrome.storage.sync;
     var tabTitle, url, title;
@@ -3042,7 +3042,12 @@ function urlHistory() {
     function getDataCount(callback) {
         storage.get('globalCount', function (items) {
             console.log(items.globalCount);
-            localCount = items.globalCount;
+            if (items.globalCount) {
+                localCount = items.globalCount;
+            }
+            if (items.globalCount === 50) {
+                resetCount();
+            }
             // callback for dealing with async
             callback(localCount);
         });
@@ -3102,6 +3107,21 @@ function urlHistory() {
         }
     }
 
+    function clearStorage(callback) {
+        // clearing whole chrome storage
+        chrome.storage.sync.clear();
+        resetCount();
+    }
+
+    function resetCount() {
+        storage.get('globalCount', function (items) {
+            storage.set({
+                'globalCount': 0
+            });
+        });
+        localCount = 0;
+    }
+
     function showAllData() {
         storage.get(null, function (items) {
             var allKeys = Object.keys(items);
@@ -3154,18 +3174,16 @@ function urlHistory() {
         }
     }
 
+    // -----------------------------------------------------------------
     document.body.onload = function () {
+
+        // clearStorage();
 
         getDataCount(readDataCount);
         createDataArray();
 
-        // clearing whole chrome storage // debugging
-        // chrome.storage.sync.clear();
-
         // this will display all items in chrome storage // debugging
         showAllData();
-
-        // getData(readData); // debugging
     };
 
     // Listen for change in short-url-info div with custom jQuery event
@@ -3215,25 +3233,29 @@ function storeColorPickerData(color) {
 function printHistoryColor(onColorClick) {
     //get histoyColors array from chrome storage and print them to #color-history div
     chrome.storage.sync.get('historyColors', function (result) {
-        var content = "<table id='color-history-elements'";
-        var columns = NUM_COLUMNS;
-        for (var i = 0; i < result.historyColors.length; i++) {
-            if (columns == NUM_COLUMNS) {
-                content += "<tr>";
+        if (result.historyColors) {
+            var content = "<table id='color-history-elements'";
+            var columns = NUM_COLUMNS;
+            for (var i = 0; i < result.historyColors.length; i++) {
+                if (columns == NUM_COLUMNS) {
+                    content += "<tr>";
+                }
+                content += "<td  color='" + result.historyColors[i] + "'style='background-color:" + result.historyColors[i] + "'></td>";
+                columns--;
+                if (columns == 0) {
+                    content += "</tr>";
+                    columns = NUM_COLUMNS;
+                }
             }
-            content += "<td  color='" + result.historyColors[i] + "'style='background-color:" + result.historyColors[i] + "'></td>";
-            columns--;
-            if (columns == 0) {
-                content += "</tr>";
-                columns = NUM_COLUMNS;
-            }
+            content += "</table>";
+            $("#color-history").append(content);
+            //add click events for every color history td element added to the history table
+            $("#color-history-elements td").on("click", function (e) {
+                onColorClick(e.currentTarget.attributes.color.value);
+            });
+        } else {
+            console.log('No colors saved in history!');
         }
-        content += "</table>";
-        $("#color-history").append(content);
-        //add click events for every color history td element added to the history table
-        $("#color-history-elements td").on("click", function (e) {
-            onColorClick(e.currentTarget.attributes.color.value);
-        });
     });
 }
 

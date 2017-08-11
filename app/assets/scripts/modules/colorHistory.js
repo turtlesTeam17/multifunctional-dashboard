@@ -16,26 +16,30 @@ const NUM_COLUMNS = 2;
 export  function printHistoryColor(onColorClick){
     //get histoyColors array from chrome storage and print them to #color-history div
         chrome.storage.sync.get('historyColors', function (result) {
-            var content = "<table id='color-history-elements'";
-            var columns = NUM_COLUMNS;
-            for(var i=0;i < result.historyColors.length;i++){
-                if(columns == NUM_COLUMNS){
-                    content+="<tr>"
+            if (result.historyColors) {
+                var content = "<table id='color-history-elements'";
+                var columns = NUM_COLUMNS;
+                for(var i=0;i < result.historyColors.length;i++){
+                    if(columns == NUM_COLUMNS){
+                        content+="<tr>"
+                    }
+                    content +="<td  color='"+result.historyColors[i]+"'style='background-color:"+result.historyColors[i]+"'></td>";
+                    columns--;
+                    if(columns == 0){
+                        content+="</tr>";
+                        columns = NUM_COLUMNS;
+                    }
+                    
                 }
-                content +="<td  color='"+result.historyColors[i]+"'style='background-color:"+result.historyColors[i]+"'></td>";
-                columns--;
-                if(columns == 0){
-                    content+="</tr>";
-                    columns = NUM_COLUMNS;
-                }
-                
+                content +="</table>";
+                $("#color-history").append(content);
+                //add click events for every color history td element added to the history table
+                $( "#color-history-elements td").on("click",function(e){
+                    onColorClick(e.currentTarget.attributes.color.value);
+                });
+            } else {
+                console.log('No colors saved in history!');
             }
-            content +="</table>";
-            $("#color-history").append(content);
-            //add click events for every color history td element added to the history table
-            $( "#color-history-elements td").on("click",function(e){
-                onColorClick(e.currentTarget.attributes.color.value);
-            });
         });
    }     
 

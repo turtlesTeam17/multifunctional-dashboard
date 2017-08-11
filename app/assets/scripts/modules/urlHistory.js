@@ -1,5 +1,5 @@
 function urlHistory() {
-    var localCount = 1;
+    var localCount = 0;
     var objects = [];
     var storage = chrome.storage.sync;
     var tabTitle, url, title;
@@ -14,7 +14,12 @@ function urlHistory() {
     function getDataCount(callback) {
         storage.get('globalCount', function (items) {
             console.log(items.globalCount);
-            localCount = items.globalCount;
+            if (items.globalCount) {
+                localCount = items.globalCount;
+            }
+            if(items.globalCount === 50){
+                resetCount();
+            }
             // callback for dealing with async
             callback(localCount);
         });
@@ -75,6 +80,21 @@ function urlHistory() {
 
     }
 
+    function clearStorage(callback){
+        // clearing whole chrome storage
+        chrome.storage.sync.clear();
+        resetCount();
+    }
+
+    function resetCount() {
+        storage.get('globalCount', function (items) {
+            storage.set({
+                'globalCount': 0
+            })
+        });
+        localCount = 0;
+    }
+
     function showAllData() {
         storage.get(null, function (items) {
             var allKeys = Object.keys(items);
@@ -128,18 +148,16 @@ function urlHistory() {
         }
     }
 
+    // -----------------------------------------------------------------
     document.body.onload = function () {
+
+        // clearStorage();
 
         getDataCount(readDataCount);
         createDataArray();
 
-        // clearing whole chrome storage // debugging
-        // chrome.storage.sync.clear();
-
         // this will display all items in chrome storage // debugging
         showAllData();
-
-        // getData(readData); // debugging
     }
 
     // Listen for change in short-url-info div with custom jQuery event
