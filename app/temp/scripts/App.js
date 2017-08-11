@@ -3017,7 +3017,7 @@ exports.printNewHistoryColor = printNewHistoryColor;
 
 var NUM_COLUMNS = 2;
 function storeColorPickerData(color) {
-    // by passing an object you can define default values e.g.: []
+
     chrome.storage.sync.get(null, function (result) {
         // the input argument is ALWAYS an object containing the queried keys
         // so we select the key we need
@@ -3038,7 +3038,7 @@ function printHistoryColor(onColorClick) {
             if (columns == NUM_COLUMNS) {
                 content += "<tr>";
             }
-            content += "<td  color='" + result.historyColors[i] + "'style='width:50px; height:50px; background-color:" + result.historyColors[i] + "'></td>";
+            content += "<td  color='" + result.historyColors[i] + "'style='background-color:" + result.historyColors[i] + "'></td>";
             columns--;
             if (columns == 0) {
                 content += "</tr>";
@@ -3060,10 +3060,10 @@ function printNewHistoryColor(color, onColorClick) {
     var checkcolumnSize = $("#color-history-elements tbody")[0] ? $("#color-history-elements tbody")[0].lastElementChild.children.length : 0;
 
     if (checkcolumnSize == 2 || checkcolumnSize == 0) {
-        content = "<tr><td color='" + color + "'style='width:50px; height:50px; background-color:" + color + "'></td></tr>";
+        content = "<tr><td color='" + color + "'style='background-color:" + color + "'></td></tr>";
         $("#color-history-elements").append(content);
     } else if (checkcolumnSize == 1) {
-        content = "<td color='" + color + "' style='width:50px; height:50px; background-color:" + color + "'></td>";
+        content = "<td color='" + color + "' style='background-color:" + color + "'></td>";
         $($("#color-history-elements tbody")[0].lastElementChild).append(content);
     }
 
