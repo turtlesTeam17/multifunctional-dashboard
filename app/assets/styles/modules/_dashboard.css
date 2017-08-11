@@ -21,13 +21,19 @@
 }
 #color-history{
     overflow-y:auto;
-    height: 350px;
+    height: 300px;
     margin-top: 20%;
 }
 #color-history-elements td{
     cursor: pointer;
     width:50px; 
     height:50px;
+}
+#historyTitle{
+    position: relative;
+    top: 10px;
+    font-size: 20px;
+    font-weight: bold;
 }
 body,
 html {
