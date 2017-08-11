@@ -23,10 +23,8 @@
                 <div class="shortUrlInfo"></div>
             </div>
             <div class="url-shortener__qrcode">
-
             </div>
         </div>
-
         <div class="url-shortener__history">
             <table>
                 <tr>
@@ -67,7 +65,49 @@
             </table>
         </div>
     </div>
-
+    <div class="color-picker-popup">
+        <div class="table">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <h2>Analyze page</h2>
+                        <p id="x">X: </p>
+                        <p id="y">Y: </p>
+                        <p id="hex">HEX: </p>
+                        <button id="checkPage">Check this page!</button>
+                        <!-- end for the color Picker -->
+                        <input type="color" id="colorPicker">
+                    </div>
+                    <div class="row">
+                        <div id="color-history">
+                            <table>
+                                <tr>
+                                    <td style="background-color:red;width: 50px;height: 50px"></td>
+                                    <td style="background-color:blue;width: 50px;height: 50px"></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color:green;width: 50px;height: 50px"></td>
+                                    <td style="background-color:pink;width: 50px;height: 50px"></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color:orange;width: 50px;height: 50px"></td>
+                                    <td style="background-color:lightblue;width: 50px;height: 50px"></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color:black;width: 50px;height: 50px"></td>
+                                    <td style="background-color:pink;width: 50px;height: 50px"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                    <div class="col">
+                        <div id="palette">
+                        </div>
+                    </div>
+                    </div>
+            </div>
+    </div>
     <!-- build:js assets/scripts/App.js -->
     <script type="text/javascript" src="./temp/scripts/App.js"></script>
     <!-- endbuild -->

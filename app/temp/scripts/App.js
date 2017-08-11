@@ -1,38 +1,41 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
+/******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/ 		}
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -43,7 +46,7 @@
 /******/ 			});
 /******/ 		}
 /******/ 	};
-/******/
+
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -52,15 +55,15 @@
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-/******/
+
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,26 +73,253 @@
 "use strict";
 
 
-var _jquery = __webpack_require__(1);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var NUM_COLUMNS = 4;
+var GRAY = "666666";
 
-var _jquery2 = _interopRequireDefault(_jquery);
+function getPallete(color) {
+    var palette = [];
+    //add shades
+    palette.push(ColorLuminance(color, 0.2)); // 20% lighter
+    palette.push(ColorLuminance(color, 0.4)); // 40% lighter
+    palette.push(ColorLuminance(color, -0.2)); // 20% darker
+    palette.push(ColorLuminance(color, -0.4)); // 40% darker 
+    //add tones 
+    palette.push(mix(color, GRAY, 90)); // 60% tone
+    palette.push(mix(color, GRAY, 60)); // 90% tone
+    palette.push(mix(color, GRAY, 40)); // 40% tone
+    palette.push(mix(color, GRAY, 30)); // 50% tone
+    //complementary color scheme
+    var complement = hexToComplimentary(color, 180);
+    palette.push("#" + color);
+    palette.push(complement); // 50% tone
+    palette.push(ColorLuminance(color, -0.1)); // 60% tone
+    palette.push(ColorLuminance(complement, -0.1)); // 90% tone
+    //analogous color scheme 
+    var analogue1 = hexToComplimentary(color, -40);
+    var analogue2 = hexToComplimentary(color, 40);
+    palette.push(analogue1); // 50% tone
+    palette.push("#" + color);
+    palette.push(analogue2); // 50% tone
+    palette.push(ColorLuminance(analogue2, 0.1));
+    return palette;
+}
+//to create shades
+function ColorLuminance(hex, lum) {
 
-var _shortenTabUrl = __webpack_require__(4);
+    // validate hex string
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+    lum = lum || 0;
 
-var _shortenTabUrl2 = _interopRequireDefault(_shortenTabUrl);
+    // convert to decimal and change luminosity
+    var rgb = "#",
+        c,
+        i;
+    for (i = 0; i < 3; i++) {
+        c = parseInt(hex.substr(i * 2, 2), 16);
+        c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
+        rgb += ("00" + c).substr(c.length);
+    }
 
-__webpack_require__(6);
+    return rgb;
+}
+function mix(color_1, color_2, weight) {
+    function d2h(d) {
+        return d.toString(16);
+    } // convert a decimal value to hex
+    function h2d(h) {
+        return parseInt(h, 16);
+    } // convert a hex value to decimal 
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+    weight = typeof weight !== 'undefined' ? weight : 50; // set the weight to 50%, if that argument is omitted
 
-// readInput();
+    var color = "#";
+
+    for (var i = 0; i <= 5; i += 2) {
+        // loop through each of the 3 hex pairs—red, green, and blue
+        var v1 = h2d(color_1.substr(i, 2)),
+            // extract the current pairs
+        v2 = h2d(color_2.substr(i, 2)),
 
 
-// import readInput from './modules/readInput';
-(0, _shortenTabUrl2.default)();
+        // combine the current pairs from each source color, according to the specified weight
+        val = d2h(Math.floor(v2 + (v1 - v2) * (weight / 100.0)));
+
+        while (val.length < 2) {
+            val = '0' + val;
+        } // prepend a '0' if val results in a single digit
+
+        color += val; // concatenate val to our new color string
+    }
+
+    return color; // PROFIT!
+}
+function hexToComplimentary(hex, shiftWheel) {
+
+    // Convert hex to rgb
+    // Credit to Denis http://stackoverflow.com/a/36253499/4939630
+    var rgb = 'rgb(' + (hex = hex.replace('#', '')).match(new RegExp('(.{' + hex.length / 3 + '})', 'g')).map(function (l) {
+        return parseInt(hex.length % 2 ? l + l : l, 16);
+    }).join(',') + ')';
+
+    // Get array of RGB values
+    rgb = rgb.replace(/[^\d,]/g, '').split(',');
+
+    var r = rgb[0],
+        g = rgb[1],
+        b = rgb[2];
+
+    // Convert RGB to HSL
+    // Adapted from answer by 0x000f http://stackoverflow.com/a/34946092/4939630
+    r /= 255.0;
+    g /= 255.0;
+    b /= 255.0;
+    var max = Math.max(r, g, b);
+    var min = Math.min(r, g, b);
+    var h,
+        s,
+        l = (max + min) / 2.0;
+
+    if (max == min) {
+        h = s = 0; //achromatic
+    } else {
+        var d = max - min;
+        s = l > 0.5 ? d / (2.0 - max - min) : d / (max + min);
+
+        if (max == r && g >= b) {
+            h = 1.0472 * (g - b) / d;
+        } else if (max == r && g < b) {
+            h = 1.0472 * (g - b) / d + 6.2832;
+        } else if (max == g) {
+            h = 1.0472 * (b - r) / d + 2.0944;
+        } else if (max == b) {
+            h = 1.0472 * (r - g) / d + 4.1888;
+        }
+    }
+
+    h = h / 6.2832 * 360.0 + 0;
+
+    // Shift hue to opposite side of wheel and convert to [0-1] value
+    h += shiftWheel;
+    if (h > 360) {
+        h -= 360;
+    }
+    h /= 360;
+
+    // Convert h s and l values into r g and b values
+    // Adapted from answer by Mohsen http://stackoverflow.com/a/9493060/4939630
+    if (s === 0) {
+        r = g = b = l; // achromatic
+    } else {
+        var hue2rgb = function hue2rgb(p, q, t) {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+        };
+
+        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        var p = 2 * l - q;
+
+        r = hue2rgb(p, q, h + 1 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1 / 3);
+    }
+
+    r = Math.round(r * 255);
+    g = Math.round(g * 255);
+    b = Math.round(b * 255);
+
+    // Convert r b and g values to hex
+    rgb = b | g << 8 | r << 16;
+    return "#" + (0x1000000 | rgb).toString(16).substring(1);
+}
+function hexToRgb(hex) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? "rgb(" + parseInt(result[1], 16) + "," + parseInt(result[2], 16) + "," + parseInt(result[3], 16) + ")" : null;
+}
+function printPalette(color) {
+    var palette = getPallete(color);
+    var content = "<table style='background-color:white;'>";
+    var columns = NUM_COLUMNS;
+    for (var i = 0; i < palette.length; i++) {
+        if (columns == NUM_COLUMNS) {
+            content += "<tr>";
+        }
+        content += "<td><div style='width:50px; height:20px; margin:10px;background-color:" + palette[i] + "'></div><div style='padding-left: 10px;'>" + palette[i] + ",<br>" + hexToRgb(palette[i]) + "</div></td>";
+        columns--;
+        if (columns == 0) {
+            content += "</tr>";
+            columns = NUM_COLUMNS;
+        }
+    }
+    content += "</table>";
+    console.log($("#palette"));
+    $("#palette").append(content);
+    return content;
+}
+
+exports.default = printPalette;
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _bitlyAPIcall = __webpack_require__(7);
+
+var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function shortenTabUrl() {
+
+    // getting the URL of the current tab 
+    chrome.tabs.query({
+        'active': true,
+        'currentWindow': true
+    }, function (tabs) {
+        var tabUrl = tabs[0].url;
+        console.log(tabUrl);
+
+        (0, _bitlyAPIcall2.default)(tabUrl, function (short_url) {
+            console.log(short_url);
+            if (short_url) {
+                $('.shortUrlInfo').append('<a href="' + short_url + '" target="_blank">' + short_url + '</a>');
+                $('.url-shortener__qrcode').qrcode({
+                    width: 120,
+                    height: 120,
+                    text: short_url
+                });
+            } else {
+                $('.shortUrlInfo').append('<p> Invalid value </p>');
+            }
+        });
+    });
+} // Automagically gets current tab's urls and shorten it
+exports.default = shortenTabUrl;
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2368,7 +2598,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return 1 === arguments.length ? this.off(a, "**") : this.off(b, a || "**", c);
     } }), r.holdReady = function (a) {
     a ? r.readyWait++ : r.ready(!0);
-  }, r.isArray = Array.isArray, r.parseJSON = JSON.parse, r.nodeName = B, "function" == "function" && __webpack_require__(3) && !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+  }, r.isArray = Array.isArray, r.parseJSON = JSON.parse, r.nodeName = B, "function" == "function" && __webpack_require__(5) && !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
     return r;
   }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));var Vb = a.jQuery,
@@ -2376,119 +2606,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return a.$ === r && (a.$ = Wb), b && a.jQuery === r && (a.jQuery = Vb), r;
   }, b || (a.jQuery = a.$ = r), r;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module)))
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
-module.exports = __webpack_amd_options__;
-
-/* WEBPACK VAR INJECTION */}.call(exports, {}))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _bitlyAPIcall = __webpack_require__(5);
-
-var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function shortenTabUrl() {
-
-    // getting the URL of the current tab 
-    chrome.tabs.query({
-        'active': true,
-        'currentWindow': true
-    }, function (tabs) {
-        var tabUrl = tabs[0].url;
-        console.log(tabUrl);
-
-        (0, _bitlyAPIcall2.default)(tabUrl, function (short_url) {
-            console.log(short_url);
-            if (short_url) {
-                $('.shortUrlInfo').append('<a href="' + short_url + '" target="_blank">' + short_url + '</a>');
-                $('.url-shortener__qrcode').qrcode({
-                    width: 120,
-                    height: 120,
-                    text: short_url
-                });
-            } else {
-                $('.shortUrlInfo').append('<p> Invalid value </p>');
-            }
-        });
-    });
-} // Automagically gets current tab's urls and shorten it
-exports.default = shortenTabUrl;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-function get_short_url(longUrl, func) {
-
-    var login = "o_2p4gsm6h6i";
-    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
-
-    $.getJSON("http://api.bitly.com/v3/shorten?", {
-        "format": "json",
-        "apiKey": api_key,
-        "login": login,
-        "longUrl": longUrl
-    }, function (response) {
-        if (!response) console.log('Error happened :(');else func(response.data.url);
-    });
-}
-
-exports.default = get_short_url;
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2772,6 +2893,107 @@ exports.default = get_short_url;
     });
   };
 })(jQuery);
+
+/***/ }),
+/* 4 */,
+/* 5 */
+/***/ (function(module, exports) {
+
+/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
+module.exports = __webpack_amd_options__;
+
+/* WEBPACK VAR INJECTION */}.call(exports, {}))
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function get_short_url(longUrl, func) {
+
+    var login = "o_2p4gsm6h6i";
+    var api_key = "R_0a45a9bb098641f19532ce1c36aabc0d";
+
+    $.getJSON("http://api.bitly.com/v3/shorten?", {
+        "format": "json",
+        "apiKey": api_key,
+        "login": login,
+        "longUrl": longUrl
+    }, function (response) {
+        if (!response) console.log('Error happened :(');else func(response.data.url);
+    });
+}
+
+exports.default = get_short_url;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _jquery = __webpack_require__(2);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _shortenTabUrl = __webpack_require__(1);
+
+var _shortenTabUrl2 = _interopRequireDefault(_shortenTabUrl);
+
+__webpack_require__(3);
+
+var _getPalette = __webpack_require__(0);
+
+var _getPalette2 = _interopRequireDefault(_getPalette);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// readInput();
+(0, _shortenTabUrl2.default)();
+
+// import readInput from './modules/readInput';
+
+
+(0, _jquery2.default)("#colorPicker").on("change", function (e) {
+    console.log("color", e.currentTarget.value);
+    (0, _jquery2.default)("#palette").empty();
+    var content = (0, _getPalette2.default)(e.currentTarget.value.substring(1));
+});
 
 /***/ })
 /******/ ]);

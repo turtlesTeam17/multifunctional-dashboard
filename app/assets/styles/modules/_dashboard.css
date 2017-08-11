@@ -1,3 +1,21 @@
+.color-picker-popup{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: white;
+    padding-left: 3%;
+    padding-top: 10%;
+    padding-right: 10%;
+}
+.color-picker-popup .table >.row:first-child{
+    display:flex;
+}
+ .color-picker-popup .table .col:nth-child(2){
+      width: 60%;
+}
+
 body,
 html {
     overflow: hidden;
