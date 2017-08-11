@@ -1223,6 +1223,53 @@ we can specify global variable to use flexbox as default instead of floats
     </section>
     </div>*/
 
+.color-picker-popup{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: white;
+    padding-left: 2%;
+    padding-top: 10%;
+    padding-right: 10%;
+    visibility: hidden;
+}
+
+.color-picker-popup .table >.row:first-child{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+}
+
+.color-picker-popup .table .col:nth-child(2){
+      width: 60%;
+}
+
+#color-history-elements {
+    border-spacing: 10px;
+    border-collapse: separate !important;
+}
+
+#color-history{
+    overflow-y:auto;
+    height: 300px;
+    margin-top: 20%;
+}
+
+#color-history-elements td{
+    cursor: pointer;
+    width:50px; 
+    height:50px;
+}
+
+#historyTitle{
+    position: relative;
+    top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 body,
 html {
     overflow: hidden;
@@ -1492,4 +1539,6 @@ html {
         page-break-after: avoid;
     }
 }
+
+
 /*# sourceMappingURL=main.css.map */

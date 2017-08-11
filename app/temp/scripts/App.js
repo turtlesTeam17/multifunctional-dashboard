@@ -84,20 +84,31 @@ var _shortenTabUrl = __webpack_require__(6);
 
 var _shortenTabUrl2 = _interopRequireDefault(_shortenTabUrl);
 
-var _history = __webpack_require__(8);
+var _urlHistory = __webpack_require__(8);
 
-var _history2 = _interopRequireDefault(_history);
+var _urlHistory2 = _interopRequireDefault(_urlHistory);
+
+var _colorHistory = __webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _shortenTabUrl2.default)();
-(0, _history2.default)();
+(0, _urlHistory2.default)();
+
+(0, _jquery2.default)(document).ready(function () {
+    (0, _colorHistory.printHistoryColor)(onColorClick);
+});
 
 (0, _jquery2.default)("#colorPicker").on("change", function (e) {
-  console.log("color", e.currentTarget.value);
-  (0, _jquery2.default)("#palette").empty();
-  var content = (0, _getPalette2.default)(e.currentTarget.value.substring(1));
+    var selectedColor = e.currentTarget.value;
+    (0, _colorHistory.storeColorPickerData)(selectedColor);
+    (0, _colorHistory.printNewHistoryColor)(selectedColor, onColorClick);
+    (0, _getPalette2.default)(selectedColor.substring(1));
 });
+
+function onColorClick(selectedColor) {
+    (0, _getPalette2.default)(selectedColor.substring(1));
+}
 
 /***/ }),
 /* 1 */
@@ -2899,6 +2910,7 @@ function hexToRgb(hex) {
 }
 function printPalette(color) {
     var palette = getPallete(color);
+    $("#palette").empty();
     var content = "<table style='background-color:white;'>";
     var columns = NUM_COLUMNS;
     for (var i = 0; i < palette.length; i++) {
@@ -2913,9 +2925,7 @@ function printPalette(color) {
         }
     }
     content += "</table>";
-    console.log($("#palette"));
     $("#palette").append(content);
-    return content;
 }
 
 exports.default = printPalette;
@@ -3173,6 +3183,78 @@ function urlHistory() {
 }
 
 exports.default = urlHistory;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.storeColorPickerData = storeColorPickerData;
+exports.printHistoryColor = printHistoryColor;
+exports.printNewHistoryColor = printNewHistoryColor;
+
+var NUM_COLUMNS = 2;
+function storeColorPickerData(color) {
+
+    chrome.storage.sync.get(null, function (result) {
+        // the input argument is ALWAYS an object containing the queried keys
+        // so we select the key we need
+        var historyColors = result.historyColors || [];
+        historyColors.push(color);
+        // set the new array value to the same key
+        chrome.storage.sync.set({ historyColors: historyColors }, function () {
+            console.log("storedColor", historyColors);
+        });
+    });
+}
+function printHistoryColor(onColorClick) {
+    //get histoyColors array from chrome storage and print them to #color-history div
+    chrome.storage.sync.get('historyColors', function (result) {
+        var content = "<table id='color-history-elements'";
+        var columns = NUM_COLUMNS;
+        for (var i = 0; i < result.historyColors.length; i++) {
+            if (columns == NUM_COLUMNS) {
+                content += "<tr>";
+            }
+            content += "<td  color='" + result.historyColors[i] + "'style='background-color:" + result.historyColors[i] + "'></td>";
+            columns--;
+            if (columns == 0) {
+                content += "</tr>";
+                columns = NUM_COLUMNS;
+            }
+        }
+        content += "</table>";
+        $("#color-history").append(content);
+        //add click events for every color history td element added to the history table
+        $("#color-history-elements td").on("click", function (e) {
+            onColorClick(e.currentTarget.attributes.color.value);
+        });
+    });
+}
+
+function printNewHistoryColor(color, onColorClick) {
+    var content = "";
+    //check if there are two elements in the row, if yes add new row, otherwise add column to existing row
+    var checkcolumnSize = $("#color-history-elements tbody")[0] ? $("#color-history-elements tbody")[0].lastElementChild.children.length : 0;
+
+    if (checkcolumnSize == 2 || checkcolumnSize == 0) {
+        content = "<tr><td color='" + color + "'style='background-color:" + color + "'></td></tr>";
+        $("#color-history-elements").append(content);
+    } else if (checkcolumnSize == 1) {
+        content = "<td color='" + color + "' style='background-color:" + color + "'></td>";
+        $($("#color-history-elements tbody")[0].lastElementChild).append(content);
+    }
+
+    //add click handler to display color palette on the added element to the color history table
+    $("#color-history-elements tr:last-child td:last-child").on("click", function (e) {
+        onColorClick(e.currentTarget.attributes.color.value);
+    });
+}
 
 /***/ })
 /******/ ]);

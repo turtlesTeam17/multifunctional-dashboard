@@ -23,17 +23,40 @@
                 <div class="shortUrlInfo"></div>
             </div>
             <div class="url-shortener__qrcode">
-
             </div>
         </div>
-
         <div class="url-shortener__history">
             <table id="urlHistory">
                
             </table>
         </div>
     </div>
-
+    <div class="color-picker-popup">
+        <div class="table">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <h2>Analyze page</h2>
+                        <p id="x">X: </p>
+                        <p id="y">Y: </p>
+                        <p id="hex">HEX: </p>
+                        <button id="checkPage">Check this page!</button>
+                        <!-- end for the color Picker -->
+                        <input style="position:absolute;top: 3%;left: 3%;" type="color" id="colorPicker">
+                    </div>
+                    <div id="historyTitle"> History </div>
+                    <div class="row">
+                        <div id="color-history">             
+                        </div>
+                    </div>
+                </div>
+                    <div class="col">
+                        <div id="palette">
+                        </div>
+                    </div>
+                    </div>
+            </div>
+    </div>
     <!-- build:js assets/scripts/App.js -->
     <script type="text/javascript" src="./temp/scripts/App.js"></script>
     <!-- endbuild -->
