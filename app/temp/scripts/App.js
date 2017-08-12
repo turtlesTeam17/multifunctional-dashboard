@@ -3020,17 +3020,26 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _templateObject = _taggedTemplateLiteral(["urlData"], ["urlData"]);
+var _templateObject = _taggedTemplateLiteral(['urlData'], ['urlData']);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 function urlHistory() {
-    var localCount = 0;
+    var localCount, storageCount, tabTitle, url, title;
     var objects = [];
     var storage = chrome.storage.sync;
-    var tabTitle, url, title;
+
+    var myPromise = new Promise(function (resolve, reject) {
+        storage.get(null, function (items) {
+            if (items) {
+                resolve(items);
+            } else {
+                reject('error happened');
+            }
+        });
+    });
 
     // get count of stored items
     function readDataCount(val) {
@@ -3067,7 +3076,6 @@ function urlHistory() {
                 // if its no longer than 50 chars then display it as it is
                 $('#urlHistory').append('<tr><td title="' + val1 + '">' + val1 + '</td><td><a href="' + val2 + '">' + val2 + '</a></td></tr>');
             }
-            console.log(val1, val2);
         }
     }
     // functions for looping through storage
@@ -3126,6 +3134,8 @@ function urlHistory() {
         storage.get(null, function (items) {
             var allKeys = Object.keys(items);
             console.log('Items in storage: ' + allKeys);
+            console.log('Two');
+            return allKeys;
         });
     }
 
@@ -3146,7 +3156,7 @@ function urlHistory() {
     // create array from data received from storage
     function createDataArray() {
         var appendKeyPrefix = 'urlData';
-        var appendKeyCount = localCount;
+        var appendKeyCount = storageCount;
         var keys = [];
         storage.get(function (e) {
             $.each(e, function (key) {
@@ -3159,8 +3169,8 @@ function urlHistory() {
                     objects.push(obj);
                 });
             }
-            console.log(objects);
         });
+        console.log(objects);
     }
 
     function checkForDuplicateKey(item) {
@@ -3174,16 +3184,30 @@ function urlHistory() {
         }
     }
 
+    function populateHistory(array) {
+        console.log(array.length + ' afsfasf');
+        for (var i = 0; i < array.length; i++) {
+            for (var x in array[i]) {
+                if (array[i][x].title) {
+                    console.log(array[i][x].title + '  ' + i);
+                } else {
+                    console.log('Array is empty');
+                }
+            }
+        }
+    }
+
     // -----------------------------------------------------------------
     document.body.onload = function () {
 
-        // clearStorage();
-
-        getDataCount(readDataCount);
-        createDataArray();
+        myPromise.then(function (val) {
+            storageCount = Object.keys(val).length - 1;
+            console.log(storageCount + ' CVADFA');
+        }).then(createDataArray()).then(console.log('array created')).then(getDataCount(readDataCount));
 
         // this will display all items in chrome storage // debugging
-        showAllData();
+        // showAllData();
+        // clearStorage();
     };
 
     // Listen for change in short-url-info div with custom jQuery event

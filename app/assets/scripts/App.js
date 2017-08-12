@@ -6,7 +6,6 @@ import shortenTabUrl from './modules/shortenTabUrl';
 import urlHistory from './modules/urlHistory';
 
 import { storeColorPickerData, printNewHistoryColor, printHistoryColor } from './modules/colorHistory';
-
 shortenTabUrl();
 urlHistory();
 
