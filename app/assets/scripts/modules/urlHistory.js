@@ -35,7 +35,7 @@ function urlHistory() {
             if (val1.length >= 50) {
                 // shorten it so it can fit into one row in table without slicing it in middle of an word(with regex)
                 // This expressions returns the first 46 (any) characters plus any subsequent non-space characters.
-                var shortenedTitle = val1.replace(/^(.{46}[^\s]*).*/, "$1") + "...";
+                var shortenedTitle = val1.replace(/^(.{40}[^\s]*).*/, "$1") + "...";
                 $('#urlHistory').append('<tr><td title="' + val1 + '">' + shortenedTitle + '</td><td><a href="' + val2 + '">' + val2 + '</a></td></tr>');
             } else {
                 // if its no longer than 50 chars then display it as it is
