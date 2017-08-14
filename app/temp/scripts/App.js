@@ -3259,10 +3259,11 @@ function urlHistory() {
     // get count of stored items // primary
     function getDataCount(y) {
         if (y) {
-            localCount = y;
-        }
-        if (y == 50) {
-            resetCount();
+            if (y > 50) {
+                resetCount();
+            } else {
+                localCount = y;
+            }
         }
     };
 
@@ -3297,7 +3298,6 @@ function urlHistory() {
             });
             for (var i = 0; i < keys.length; i++) {
                 storage.get(keys[i], function (obj) {
-                    // console.log(keys[i], obj);
                     objects.push(obj);
                 });
             }
@@ -3310,7 +3310,7 @@ function urlHistory() {
         for (var i = 0; i < objects.length; i++) {
             for (var x in objects[i]) {
                 if (objects[i][x].url == item) {
-                    console.log('Gotcha!');
+                    console.log('Already in storage!');
                     return true;
                 }
             }

@@ -20,11 +20,13 @@ function urlHistory() {
     // get count of stored items // primary
     function getDataCount(y) {
         if (y) {
-            localCount = y;
+            if (y > 50) {
+                resetCount();
+            } else {
+                localCount = y;
+            }
         }
-        if (y == 50) {
-            resetCount();
-        }
+
     };
 
     // read received data from chrome.storage.get and print it to history table
@@ -58,7 +60,6 @@ function urlHistory() {
             });
             for (var i = 0; i < keys.length; i++) {
                 storage.get(keys[i], function (obj) {
-                    // console.log(keys[i], obj);
                     objects.push(obj);
                 })
             }
@@ -71,7 +72,7 @@ function urlHistory() {
         for (var i = 0; i < objects.length; i++) {
             for (var x in objects[i]) {
                 if (objects[i][x].url == item) {
-                    console.log('Gotcha!');
+                    console.log('Already in storage!');
                     return true;
                 }
             }
@@ -97,9 +98,9 @@ function urlHistory() {
     function urlData(o) {
         Object.keys(o).map((e) => {
             if (`${o[e].url}` && `${o[e].title}`) {
-                    title = `${o[e].title}`;
-                    url = `${o[e].url}`;
-                    readData(title, url);
+                title = `${o[e].title}`;
+                url = `${o[e].url}`;
+                readData(title, url);
             }
             // console.log(`key=${e}  value1=${o[e].url}  value1=${o[e].title}`)
         });
@@ -119,7 +120,6 @@ function urlHistory() {
         });
         localCount = 0;
     }
-
 
     function showAllData() {
         storage.get(null, function (items) {
