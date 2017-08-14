@@ -7,11 +7,11 @@ import shortenTabUrl from './modules/shortenTabUrl';
 import urlHistory from './modules/urlHistory';
 
 import { storeColorPickerData, printNewHistoryColor, printHistoryColor } from './modules/colorHistory';
-shortenTabUrl();
-urlHistory();
 
 $(document).ready(function() {
     printHistoryColor(onColorClick);
+    shortenTabUrl();
+    urlHistory();
 });
 
 $("#colorPicker").on("change", function(e) {
