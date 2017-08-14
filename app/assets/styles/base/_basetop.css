@@ -1,26 +1,37 @@
 /*! HTML5 Boilerplate v5.3.0 | MIT License | https://html5boilerplate.com/ */
 
+
 /*
  * What follows is the result of much research on cross-browser styling.
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
  * Kroc Camen, and the H5BP dev community and team.
  */
 
+
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-
+body,
 html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
+    overflow: hidden;
+    background: #333538 url('http://res.cloudinary.com/puritanic/image/upload/a_90/v1501796811/drible_xrzwss.jpg');
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
+
 
 /*
  * Remove text-shadow in selection highlight:
@@ -40,6 +51,7 @@ html {
     text-shadow: none;
 }
 
+
 /*
  * A better looking default horizontal rule
  */
@@ -52,6 +64,7 @@ hr {
     margin: 1em 0;
     padding: 0;
 }
+
 
 /*
  * Remove the gap between audio, canvas, iframes,
@@ -68,6 +81,7 @@ video {
     vertical-align: middle;
 }
 
+
 /*
  * Remove default fieldset styles.
  */
@@ -78,6 +92,7 @@ fieldset {
     padding: 0;
 }
 
+
 /*
  * Allow only vertical resizing of textareas.
  */
@@ -85,6 +100,7 @@ fieldset {
 textarea {
     resize: vertical;
 }
+
 
 /* ==========================================================================
    Browser Upgrade Prompt
@@ -97,11 +113,40 @@ textarea {
     padding: 0.2em 0;
 }
 
+
 /* ==========================================================================
    Custom CSS
    ========================================================================== */
 
+.responsive {
+    font-size: responsive 16px 36px;
+}
 
-   .responsive {
-       font-size: responsive 16px 36px;
-   }
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #b46868;
+}
+
+
+/* the new scrollbar will have a flat appearance with the set background color */
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+
+/* this will style the thumb, ignoring the track */
+
+::-webkit-scrollbar-button {
+    background-color: #7c2929;
+}
+
+
+/* top and the bottom buttons (left and right for horizontal bars) */
+
+::-webkit-scrollbar-corner {
+    background-color: black;
+}

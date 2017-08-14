@@ -64,7 +64,6 @@
             outline: none;
 }
 .url-shortener__history {
-        border-radius: 0 0 .5rem .5rem;
         width: 100%;
         height: calc(99.9% * 5/8 - (10px - 10px * 5/8));
         margin-bottom: 10px;
@@ -613,16 +612,25 @@ body {
    Base styles: opinionated defaults
    ========================================================================== */
 
+body,
 html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
+    overflow: hidden;
+    background: #333538 url('http://res.cloudinary.com/puritanic/image/upload/a_90/v1501796811/drible_xrzwss.jpg');
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /*
@@ -705,8 +713,8 @@ textarea {
    ========================================================================== */
 
 .responsive {
-       font-size: calc(16px + 20 * ((100vw - 420px) / 860));
-   }
+    font-size: calc(16px + 20 * ((100vw - 420px) / 860));
+}
 
 @media screen and (min-width: 1280px) {
             .responsive {
@@ -718,6 +726,32 @@ textarea {
             .responsive {
                         font-size: 16px;
             }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #b46868;
+}
+
+/* the new scrollbar will have a flat appearance with the set background color */
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .2);
+}
+
+/* this will style the thumb, ignoring the track */
+
+::-webkit-scrollbar-button {
+    background-color: #7c2929;
+}
+
+/* top and the bottom buttons (left and right for horizontal bars) */
+
+::-webkit-scrollbar-corner {
+    background-color: black;
 }
 
 /*
@@ -1268,44 +1302,6 @@ we can specify global variable to use flexbox as default instead of floats
     top: 10px;
     font-size: 20px;
     font-weight: bold;
-}
-
-body,
-html {
-    overflow: hidden;
-    background: #333538 url('http://res.cloudinary.com/puritanic/image/upload/a_90/v1501796811/drible_xrzwss.jpg');
-    margin: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    position: relative;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
-}
-
-::-webkit-scrollbar {
-      width: 10px;
-}
-
-::-webkit-scrollbar-track {
-      background-color: #b46868;
-}
-
-/* the new scrollbar will have a flat appearance with the set background color */
-
-::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, .2); 
-}
-
-/* this will style the thumb, ignoring the track */
-
-::-webkit-scrollbar-button {
-      background-color: #7c2929;
-}
-
-/* top and the bottom buttons (left and right for horizontal bars) */
-
-::-webkit-scrollbar-corner {
-      background-color: black;
 }
 
 .url-shortener {

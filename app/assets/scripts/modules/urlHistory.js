@@ -38,10 +38,10 @@ function urlHistory() {
                 // shorten it so it can fit into one row in table without slicing it in middle of an word(with regex)
                 // This expressions returns the first 46 (any) characters plus any subsequent non-space characters.
                 var shortenedTitle = val1.replace(/^(.{40}[^\s]*).*/, "$1") + "...";
-                $('#urlHistory').append('<tr><td title="' + val1 + '">' + shortenedTitle + '</td><td><a href="' + val2 + '">' + val2 + '</a></td></tr>');
+                $('#urlHistory').append('<tr><td title="' + val1 + '">' + shortenedTitle + '</td><td><a target="_blank" href="' + val2 + '">' + val2 + '</a></td></tr>');
             } else {
                 // if its no longer than 50 chars then display it as it is
-                $('#urlHistory').append('<tr><td title="' + val1 + '">' + val1 + '</td><td><a href="' + val2 + '">' + val2 + '</a></td></tr>');
+                $('#urlHistory').append('<tr><td title="' + val1 + '">' + val1 + '</td><td><a target="_blank" href="' + val2 + '">' + val2 + '</a></td></tr>');
             }
         }
     }
@@ -91,6 +91,17 @@ function urlHistory() {
                 'globalCount': localCount
             }, function () {
                 console.log('Saved to storage: ', dataObj, localCount);
+            });
+            var notificationMsg = {
+                type: "basic",
+                title: "Url shortener",
+                message: "Url shortened and it's data sent to storage",
+                iconUrl: "icons/icon128.png"
+            }
+            chrome.notifications.create('success', notificationMsg, function () {
+                setTimeout(function () {
+                    chrome.notifications.clear('success', function () {});
+                }, 2000);
             });
         }
     }
