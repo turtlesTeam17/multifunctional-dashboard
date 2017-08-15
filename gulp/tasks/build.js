@@ -57,8 +57,7 @@ gulp.task('useminTrigger', ['deleteDist'], function(){
 gulp.task('usemin', ['styles', 'scripts'], function(){
 	return gulp.src('./app/index.html')
 		.pipe(usemin({
-			css: [ function(){return rev()}, function(){ return cssNano()}],
-			js: [ function(){return rev()}, function(){ return uglify()}]
+			css: [ function(){return rev()}, function(){ return cssNano()}]
 		}))
 		.pipe(gulp.dest('./docs'));
 });
