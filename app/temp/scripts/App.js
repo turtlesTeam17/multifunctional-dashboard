@@ -94,17 +94,16 @@ var _colorHistory = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _shortenTabUrl2.default)();
-(0, _urlHistory2.default)();
-
 (0, _jquery2.default)(document).ready(function () {
     (0, _colorHistory.printHistoryColor)(onColorClick);
+    (0, _shortenTabUrl2.default)();
+    (0, _urlHistory2.default)();
 });
 
 (0, _jquery2.default)("#colorPicker").on("change", function (e) {
     var selectedColor = e.currentTarget.value;
-    (0, _colorHistory.storeColorPickerData)(selectedColor);
-    (0, _colorHistory.printNewHistoryColor)(selectedColor, onColorClick);
+    (0, _colorHistory.storeColorPickerData)(selectedColor, onColorClick);
+    //  printNewHistoryColor(selectedColor, onColorClick);
     (0, _getPalette2.default)(selectedColor.substring(1));
 });
 
@@ -3423,17 +3422,26 @@ exports.printHistoryColor = printHistoryColor;
 exports.printNewHistoryColor = printNewHistoryColor;
 
 var NUM_COLUMNS = 2;
-function storeColorPickerData(color) {
+function storeColorPickerData(color, onColorClick) {
 
     chrome.storage.sync.get(null, function (result) {
         // the input argument is ALWAYS an object containing the queried keys
         // so we select the key we need
         var historyColors = result.historyColors || [];
-        historyColors.push(color);
-        // set the new array value to the same key
-        chrome.storage.sync.set({ historyColors: historyColors }, function () {
-            console.log("storedColor", historyColors);
-        });
+
+        //add check for duplicates    
+        var dublicate = historyColors.filter(function (hColor) {
+            return hColor == color;
+        }).length !== 0;
+
+        if (!dublicate) {
+            historyColors.push(color);
+            // set the new array value to the same key
+            chrome.storage.sync.set({ historyColors: historyColors }, function () {
+                console.log("storedColor", historyColors);
+            });
+            printNewHistoryColor(color, onColorClick);
+        }
     });
 }
 function printHistoryColor(onColorClick) {

@@ -1,16 +1,26 @@
 
 const NUM_COLUMNS = 2;
- export  function storeColorPickerData(color) {
-      
+ export  function storeColorPickerData(color,onColorClick) {
+        
         chrome.storage.sync.get(null, function (result) {
             // the input argument is ALWAYS an object containing the queried keys
             // so we select the key we need
             var historyColors = result.historyColors || [];
-            historyColors.push(color);
-            // set the new array value to the same key
-            chrome.storage.sync.set({historyColors: historyColors}, function () {
-                 console.log("storedColor",historyColors);
-            });
+            
+            //add check for duplicates    
+            var dublicate = historyColors.filter(function(hColor){
+                return hColor  == color;
+            }).length !==0;
+           
+            if(!dublicate){
+               historyColors.push(color);
+                // set the new array value to the same key
+                chrome.storage.sync.set({historyColors: historyColors}, function () {
+                     console.log("storedColor",historyColors);
+                });  
+                printNewHistoryColor(color,onColorClick);
+            }
+            
         });
     }
 export  function printHistoryColor(onColorClick){
