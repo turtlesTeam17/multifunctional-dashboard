@@ -1,3 +1,7 @@
+#palette{
+    font-size: 12px;
+    margin-left: 10px;
+}
 .color-picker-popup{
     position: absolute;
     height: 100%;
@@ -8,7 +12,7 @@
     padding-left: 2%;
     padding-top: 10%;
     padding-right: 10%;
-    visibility: hidden;
+    visibility: visible;
 }
 .color-picker-popup .table >.row:first-child{
     display:flex;
@@ -22,8 +26,8 @@
 }
 #color-history{
     overflow-y:auto;
-    height: 300px;
-    margin-top: 20%;
+    height: 260px;
+    margin-top: 15%;
 }
 #color-history-elements td{
     cursor: pointer;
