@@ -1,5 +1,5 @@
 
-const NUM_COLUMNS = 2;
+import {STORAGE_LIMIT, NUM_COLUMNS } from './constants';
  export  function storeColorPickerData(color,onColorClick) {
         
         chrome.storage.sync.get(null, function (result) {
@@ -8,17 +8,28 @@ const NUM_COLUMNS = 2;
             var historyColors = result.historyColors || [];
             
             //add check for duplicates    
-            var dublicate = historyColors.filter(function(hColor){
+            var dublicate = historyColors.length !==0 && historyColors.filter(function(hColor){
                 return hColor  == color;
             }).length !==0;
            
             if(!dublicate){
-               historyColors.push(color);
-                // set the new array value to the same key
-                chrome.storage.sync.set({historyColors: historyColors}, function () {
-                     console.log("storedColor",historyColors);
-                });  
-                printNewHistoryColor(color,onColorClick);
+                
+               if(historyColors.length >= STORAGE_LIMIT){
+                    historyColors.shift();
+                }
+                   historyColors.push(color);
+                 // set the new array value to the same key
+                 chrome.storage.sync.set({historyColors: historyColors}, function () {
+                    console.log("storedColor",historyColors);
+                 }); 
+              if(historyColors.length >= STORAGE_LIMIT){
+                    printHistoryColor(onColorClick);
+               }
+               else{
+
+                  printNewHistoryColor(color,onColorClick);
+               }
+                
             }
             
         });
@@ -42,6 +53,7 @@ export  function printHistoryColor(onColorClick){
                     
                 }
                 content +="</table>";
+                $("#color-history").empty();
                 $("#color-history").append(content);
                 //add click events for every color history td element added to the history table
                 $( "#color-history-elements td").on("click",function(e){

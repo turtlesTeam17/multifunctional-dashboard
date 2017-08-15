@@ -17,7 +17,6 @@ $(document).ready(function() {
 $("#colorPicker").on("change", function(e) {
     var selectedColor = e.currentTarget.value;
     storeColorPickerData(selectedColor,onColorClick);
-  //  printNewHistoryColor(selectedColor, onColorClick);
     printPalette(selectedColor.substring(1));
 });
 

@@ -103,7 +103,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (0, _jquery2.default)("#colorPicker").on("change", function (e) {
     var selectedColor = e.currentTarget.value;
     (0, _colorHistory.storeColorPickerData)(selectedColor, onColorClick);
-    //  printNewHistoryColor(selectedColor, onColorClick);
     (0, _getPalette2.default)(selectedColor.substring(1));
 });
 
@@ -3421,7 +3420,8 @@ exports.storeColorPickerData = storeColorPickerData;
 exports.printHistoryColor = printHistoryColor;
 exports.printNewHistoryColor = printNewHistoryColor;
 
-var NUM_COLUMNS = 2;
+var _constants = __webpack_require__(11);
+
 function storeColorPickerData(color, onColorClick) {
 
     chrome.storage.sync.get(null, function (result) {
@@ -3430,17 +3430,26 @@ function storeColorPickerData(color, onColorClick) {
         var historyColors = result.historyColors || [];
 
         //add check for duplicates    
-        var dublicate = historyColors.filter(function (hColor) {
+        var dublicate = historyColors.length !== 0 && historyColors.filter(function (hColor) {
             return hColor == color;
         }).length !== 0;
 
         if (!dublicate) {
+
+            if (historyColors.length >= _constants.STORAGE_LIMIT) {
+                historyColors.shift();
+            }
             historyColors.push(color);
             // set the new array value to the same key
             chrome.storage.sync.set({ historyColors: historyColors }, function () {
                 console.log("storedColor", historyColors);
             });
-            printNewHistoryColor(color, onColorClick);
+            if (historyColors.length >= _constants.STORAGE_LIMIT) {
+                printHistoryColor(onColorClick);
+            } else {
+
+                printNewHistoryColor(color, onColorClick);
+            }
         }
     });
 }
@@ -3449,19 +3458,20 @@ function printHistoryColor(onColorClick) {
     chrome.storage.sync.get('historyColors', function (result) {
         if (result.historyColors) {
             var content = "<table id='color-history-elements'";
-            var columns = NUM_COLUMNS;
+            var columns = _constants.NUM_COLUMNS;
             for (var i = 0; i < result.historyColors.length; i++) {
-                if (columns == NUM_COLUMNS) {
+                if (columns == _constants.NUM_COLUMNS) {
                     content += "<tr>";
                 }
                 content += "<td  color='" + result.historyColors[i] + "'style='background-color:" + result.historyColors[i] + "'></td>";
                 columns--;
                 if (columns == 0) {
                     content += "</tr>";
-                    columns = NUM_COLUMNS;
+                    columns = _constants.NUM_COLUMNS;
                 }
             }
             content += "</table>";
+            $("#color-history").empty();
             $("#color-history").append(content);
             //add click events for every color history td element added to the history table
             $("#color-history-elements td").on("click", function (e) {
@@ -3491,6 +3501,19 @@ function printNewHistoryColor(color, onColorClick) {
         onColorClick(e.currentTarget.attributes.color.value);
     });
 }
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var STORAGE_LIMIT = exports.STORAGE_LIMIT = 50;
+var NUM_COLUMNS = exports.NUM_COLUMNS = 2;
 
 /***/ })
 /******/ ]);
