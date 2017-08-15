@@ -3484,13 +3484,18 @@ function printHistoryColor(onColorClick) {
 }
 
 function printNewHistoryColor(color, onColorClick) {
-    var content = "";
+    var content = $("#color-history-elements").length == 0 ? "<table id='color-history-elements'>" : "";
     //check if there are two elements in the row, if yes add new row, otherwise add column to existing row
     var checkcolumnSize = $("#color-history-elements tbody")[0] ? $("#color-history-elements tbody")[0].lastElementChild.children.length : 0;
 
     if (checkcolumnSize == 2 || checkcolumnSize == 0) {
-        content = "<tr><td color='" + color + "'style='background-color:" + color + "'></td></tr>";
-        $("#color-history-elements").append(content);
+        content += "<tr><td color='" + color + "'style='background-color:" + color + "'></td></tr>";
+        if ($("#color-history-elements").length == 0) {
+            content += "</table>";
+            $("#color-history").append(content);
+        } else {
+            $("#color-history-elements").append(content);
+        }
     } else if (checkcolumnSize == 1) {
         content = "<td color='" + color + "' style='background-color:" + color + "'></td>";
         $($("#color-history-elements tbody")[0].lastElementChild).append(content);
