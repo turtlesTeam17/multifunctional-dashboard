@@ -6,12 +6,13 @@ import printPalette from './modules/getPalette';
 import shortenTabUrl from './modules/shortenTabUrl';
 import urlHistory from './modules/urlHistory';
 
+shortenTabUrl();
+urlHistory();
+
 import { storeColorPickerData, printNewHistoryColor, printHistoryColor } from './modules/colorHistory';
 
 $(document).ready(function() {
     printHistoryColor(onColorClick);
-    shortenTabUrl();
-    urlHistory();
 });
 
 $("#colorPicker").on("change", function(e) {

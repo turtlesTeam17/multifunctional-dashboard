@@ -94,10 +94,11 @@ var _colorHistory = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+(0, _shortenTabUrl2.default)();
+(0, _urlHistory2.default)();
+
 (0, _jquery2.default)(document).ready(function () {
     (0, _colorHistory.printHistoryColor)(onColorClick);
-    (0, _shortenTabUrl2.default)();
-    (0, _urlHistory2.default)();
 });
 
 (0, _jquery2.default)("#colorPicker").on("change", function (e) {

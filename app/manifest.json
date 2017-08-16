@@ -41,7 +41,8 @@
                             "notifications",
                             "contextMenus",
 		                        "clipboardWrite",
-                            "activeTab"
+                            "activeTab",
+                            "clipboardWrite"
     ],
 
     "content_scripts": 
