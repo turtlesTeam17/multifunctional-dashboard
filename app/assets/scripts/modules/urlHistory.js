@@ -17,7 +17,7 @@ function urlHistory() {
         }
     }
 
-    // get count of stored items // primary
+    // get count of stored items 
     function getDataCount(y) {
         if (y) {
             if (y > 50) {
