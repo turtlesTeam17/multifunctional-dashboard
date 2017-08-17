@@ -3,6 +3,7 @@ function urlHistory() {
     var storage = chrome.storage.sync;
     var objects = [];
     var localCount = 0;
+
     // https://stackoverflow.com/a/38641281 for sorting retrieved object before displaying it to history
     var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
 
@@ -66,8 +67,6 @@ function urlHistory() {
                     objects.push(obj);
                 })
             }
-            console.log(objects);
-            console.log(sortedKeys.length);
             resolve(objects);
         });
     }
@@ -99,7 +98,7 @@ function urlHistory() {
             var notificationMsg = {
                 type: "basic",
                 title: "Url shortener",
-                message: "Url shortened and it's data sent to storage",
+                message: "Shortened url copied to clipboard, and it's data sent to storage",
                 iconUrl: "icons/icon128.png"
             }
             chrome.notifications.create('success', notificationMsg, function () {
@@ -117,7 +116,7 @@ function urlHistory() {
                 url = `${o[e].url}`;
                 readData(title, url);
             }
-            console.log(`key=${e}  value1=${o[e].url}  value1=${o[e].title}`)
+            // console.log(`key=${e}  value1=${o[e].url}  value1=${o[e].title}`)
         });
     }
 

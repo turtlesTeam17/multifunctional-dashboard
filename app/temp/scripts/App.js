@@ -3161,6 +3161,19 @@ var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// http://stackoverflow.com/a/18455088/277133
+function copyToClipboard(url) {
+    var input = document.createElement("input");
+    input.style.position = "fixed";
+    input.style.opacity = 0;
+    input.value = url;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("Copy");
+    document.body.removeChild(input);
+} // Automagically gets current tab's urls and shorten it
+;
+
 function shortenTabUrl() {
 
     var tabUrl;
@@ -3187,12 +3200,14 @@ function shortenTabUrl() {
                     height: 120,
                     text: short_url
                 });
+                copyToClipboard(short_url);
             } else {
                 $('.shortUrlInfo').append('<p> Invalid value </p>');
             }
         });
     });
-} // Automagically gets current tab's urls and shorten it
+}
+
 exports.default = shortenTabUrl;
 
 /***/ }),
@@ -3241,6 +3256,7 @@ function urlHistory() {
     var storage = chrome.storage.sync;
     var objects = [];
     var localCount = 0;
+
     // https://stackoverflow.com/a/38641281 for sorting retrieved object before displaying it to history
     var collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
 
@@ -3303,8 +3319,6 @@ function urlHistory() {
                     objects.push(obj);
                 });
             }
-            console.log(objects);
-            console.log(sortedKeys.length);
             resolve(objects);
         });
     }
@@ -3335,7 +3349,7 @@ function urlHistory() {
             var notificationMsg = {
                 type: "basic",
                 title: "Url shortener",
-                message: "Url shortened and it's data sent to storage",
+                message: "Shortened url copied to clipboard, and it's data sent to storage",
                 iconUrl: "icons/icon128.png"
             };
             chrome.notifications.create('success', notificationMsg, function () {
@@ -3353,7 +3367,7 @@ function urlHistory() {
                 url = '' + o[e].url;
                 readData(title, url);
             }
-            console.log('key=' + e + '  value1=' + o[e].url + '  value1=' + o[e].title);
+            // console.log(`key=${e}  value1=${o[e].url}  value1=${o[e].title}`)
         });
     }
 
