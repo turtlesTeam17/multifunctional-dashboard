@@ -3161,6 +3161,19 @@ var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// http://stackoverflow.com/a/18455088/277133
+function copyToClipboard(url) {
+    var input = document.createElement("input");
+    input.style.position = "fixed";
+    input.style.opacity = 0;
+    input.value = url;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("Copy");
+    document.body.removeChild(input);
+} // Automagically gets current tab's urls and shorten it
+;
+
 function shortenTabUrl() {
 
     var tabUrl;
@@ -3187,12 +3200,14 @@ function shortenTabUrl() {
                     height: 120,
                     text: short_url
                 });
+                copyToClipboard(short_url);
             } else {
                 $('.shortUrlInfo').append('<p> Invalid value </p>');
             }
         });
     });
-} // Automagically gets current tab's urls and shorten it
+}
+
 exports.default = shortenTabUrl;
 
 /***/ }),
@@ -3242,6 +3257,9 @@ function urlHistory() {
     var objects = [];
     var localCount = 0;
 
+    // https://stackoverflow.com/a/38641281 for sorting retrieved object before displaying it to history
+    var collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+
     async function main() {
         try {
             var storedUrls = await storage.get(null, function (items) {});
@@ -3255,7 +3273,7 @@ function urlHistory() {
         }
     }
 
-    // get count of stored items // primary
+    // get count of stored items 
     function getDataCount(y) {
         if (y) {
             if (y > 50) {
@@ -3285,22 +3303,22 @@ function urlHistory() {
 
     // create array from data received from storage
     function createDataArray(e) {
-        var appendKeyPrefix = 'urlData';
+        var appendKeySuffix = 'urlData';
         var appendKeyCount = storageCount;
         var keys = [];
 
         return new Promise(function (resolve, reject) {
             $.each(e, function (key) {
-                if (key.startsWith(appendKeyPrefix)) {
+                if (key.endsWith(appendKeySuffix)) {
                     keys.push(key);
                 }
             });
-            for (var i = 0; i < keys.length; i++) {
-                storage.get(keys[i], function (obj) {
+            var sortedKeys = keys.sort(collator.compare);
+            for (var i = 0; i < sortedKeys.length; i++) {
+                storage.get(sortedKeys[i], function (obj) {
                     objects.push(obj);
                 });
             }
-            console.log(objects);
             resolve(objects);
         });
     }
@@ -3325,13 +3343,13 @@ function urlHistory() {
             var _storage$set;
 
             localCount++;
-            storage.set((_storage$set = {}, _defineProperty(_storage$set, 'urlData' + localCount, dataObj), _defineProperty(_storage$set, 'globalCount', localCount), _storage$set), function () {
+            storage.set((_storage$set = {}, _defineProperty(_storage$set, localCount + '_' + 'urlData', dataObj), _defineProperty(_storage$set, 'globalCount', localCount), _storage$set), function () {
                 console.log('Saved to storage: ', dataObj, localCount);
             });
             var notificationMsg = {
                 type: "basic",
                 title: "Url shortener",
-                message: "Url shortened and it's data sent to storage",
+                message: "Shortened url copied to clipboard, and it's data sent to storage",
                 iconUrl: "icons/icon128.png"
             };
             chrome.notifications.create('success', notificationMsg, function () {
@@ -3341,9 +3359,9 @@ function urlHistory() {
             });
         }
     }
-
+    // write shortened-urls data to history <table></table>
     function urlData(o) {
-        Object.keys(o).map(function (e) {
+        Object.keys(o).sort(collator.compare).map(function (e) {
             if ('' + o[e].url && '' + o[e].title) {
                 title = '' + o[e].title;
                 url = '' + o[e].url;
