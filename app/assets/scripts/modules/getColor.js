@@ -6,7 +6,7 @@
 var clickX, clickY, canvas, context, tabId;
 
 document.addEventListener("DOMContentLoaded", function() {
-    var checkButton = document.getElementById("checkPage");
+    //var checkButton = document.getElementById("checkPage");
     var xVal = document.getElementById("x");
     var yVal = document.getElementById("y");
     var hexVal = document.getElementById("hex");
@@ -20,12 +20,12 @@ document.addEventListener("DOMContentLoaded", function() {
             xVal.innerHTML = "X: " + clickX;
             yVal.innerHTML = "Y: " + clickY;
 
-            console.log(context);
+            //console.log(context);
 
             if (context != null) {
                 var hex = GetPixel(context, clickX, clickY);
                 hexVal.innerHTML = "HEX: " + hex;
-                sendResponse({"hex": hex});
+                //sendResponse({"hex": hex});
                 return true;
             }
 
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
-    checkButton.addEventListener('click', capture_canvas, false);
+    //checkButton.addEventListener('click', capture_canvas, false);
 
 
 
@@ -61,37 +61,81 @@ function rgbToHex(r, g, b) {
     return ((r << 16) | (g << 8) | b).toString(16);
 }
 
-function capture_canvas() {
+//chrome.runtime.sendMessage(msg, function(response) {
+//    if (response != null) {
+//        console.log(response);
+//        colorDiv.style.background = response.hex;
+//    }
+//
+//});
+
+function inject_script_current_tab(file) {
+
     chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
-        tabId = tabs[0].id;
-        console.log(tabs);
+        console.log("@func -> inject_script_current_tab -> tabs[0].id " + tabs[0].id);
+        console.log("@func -> inject_script_current_tab -> file " + file);
+        chrome.tabs.executeScript(tabs[0].id, {file: file});
+
+        chrome.tabs.captureVisibleTab(null, {}, function (img) {
+            var message;
+            //console.log("@func -> inject_script_current_tab -> img " + img);
+            message = {
+                "from": "color-picker",
+                "image": img
+            };
+            console.log("@func -> inject_script_current_tab -> message.from " + message.from);
+            //console.log("@func -> inject_script_current_tab -> message.img " + message.image);
+            chrome.tabs.sendMessage(tabs[0].id, {
+                "from": "color-picker",
+                "image": img
+            });
+        });
+
     });
-
-    chrome.tabs.executeScript(tabId, {file: "content_script.js"});
-    chrome.tabs.captureVisibleTab(tabId, {}, function (image) {
+}
 
 
-        if (canvas == null || canvas == undefined) {
-            var paragraph = document.createElement("p");
-            paragraph.innerHTML = "canvas \\/";
-            document.body.appendChild(paragraph);
+function set_tab_id() {
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+        console.log(tabs[0].id);
+        return tabs[0].id;
+    });
+}
 
-            canvas = document.createElement("canvas");
 
-            set_canvas_tab_width(canvas);
+function get_tab_id() {
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+        console.log(tabs[0].id);
+    });
+}
 
-            context = canvas.getContext("2d");
+/*
 
-            draw_image_on_canvas(image, canvas);
+    @func
+    -> captures the visible tab
+    -> forms a message with the identifier "color-pcker"
+    -> sends the message which will be consumed by the content script in "eventpage.js"
 
-            document.body.appendChild(canvas);
-        } else {
-            draw_image_on_canvas(image, canvas);
-        }
+ */
 
+
+function send_image() {
+
+    chrome.tabs.captureVisibleTab({}, function (img) {
+        var message;
+
+        message = {
+            "from": "color-picker",
+            "image": img
+        };
+
+        chrome.runtime.sendMessage(message, function(response) {
+
+        });
     });
 
 }
+
 
 function set_canvas_tab_width(canvas) {
     chrome.tabs.getSelected(null, function(tab) {
@@ -117,3 +161,12 @@ chrome.tabs.onActivated.addListener(function() {
 chrome.tabs.onCreated.addListener(function() {
     chrome.runtime.sendMessage({"from": "tab-created"});
 });
+
+function init() {
+
+    console.log(chrome.extension.getURL("color_picker.js"));
+    console.log(chrome.runtime.getURL("color_picker.js"));
+    inject_script_current_tab("color_picker.js");
+}
+
+export default init;

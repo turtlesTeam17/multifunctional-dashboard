@@ -90,21 +90,30 @@ var _urlHistory = __webpack_require__(9);
 
 var _urlHistory2 = _interopRequireDefault(_urlHistory);
 
-var _colorHistory = __webpack_require__(10);
+var _getColor = __webpack_require__(10);
+
+var _getColor2 = _interopRequireDefault(_getColor);
+
+var _colorHistory = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//import colorPickerContentScript from './modules/colorPickerContentScript';
 
 (0, _shortenTabUrl2.default)();
 (0, _urlHistory2.default)();
 
 (0, _jquery2.default)(document).ready(function () {
     (0, _colorHistory.printHistoryColor)(onColorClick);
+    (0, _jquery2.default)("#eyeDropper").on('click', function () {
+        console.log("pick color!");
+        (0, _getColor2.default)();
+    });
 });
 
 (0, _jquery2.default)("#colorPicker").on("change", function (e) {
     var selectedColor = e.currentTarget.value;
-    (0, _colorHistory.storeColorPickerData)(selectedColor);
-    (0, _colorHistory.printNewHistoryColor)(selectedColor, onColorClick);
+    (0, _colorHistory.storeColorPickerData)(selectedColor, onColorClick);
     (0, _getPalette2.default)(selectedColor.substring(1));
 });
 
@@ -3418,22 +3427,206 @@ exports.default = urlHistory;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+/**
+ * Created by Tudor on 8/9/2017.
+ * TODO
+ * -convert to es6 code
+ */
+var clickX, clickY, canvas, context, tabId;
+
+document.addEventListener("DOMContentLoaded", function () {
+    //var checkButton = document.getElementById("checkPage");
+    var xVal = document.getElementById("x");
+    var yVal = document.getElementById("y");
+    var hexVal = document.getElementById("hex");
+
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        if (message["from"] == "position" || message["from"] == "mousemove") {
+            console.log(message);
+            clickX = message.position.clientX;
+            clickY = message.position.clientY;
+
+            xVal.innerHTML = "X: " + clickX;
+            yVal.innerHTML = "Y: " + clickY;
+
+            //console.log(context);
+
+            if (context != null) {
+                var hex = GetPixel(context, clickX, clickY);
+                hexVal.innerHTML = "HEX: " + hex;
+                //sendResponse({"hex": hex});
+                return true;
+            }
+        }
+
+        if (message["from"] == "scroll") {
+            capture_canvas();
+        }
+    });
+
+    //checkButton.addEventListener('click', capture_canvas, false);
+
+}, false);
+
+//https://stackoverflow.com/questions/667045/getpixel-from-html-canvas
+function GetPixel(context, x, y) {
+    var p = context.getImageData(x, y, 1, 1).data;
+    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    return hex;
+}
+//https://stackoverflow.com/questions/667045/getpixel-from-html-canvas
+function rgbToHex(r, g, b) {
+    if (r > 255 || g > 255 || b > 255) throw "Invalid color component";
+    return (r << 16 | g << 8 | b).toString(16);
+}
+
+//chrome.runtime.sendMessage(msg, function(response) {
+//    if (response != null) {
+//        console.log(response);
+//        colorDiv.style.background = response.hex;
+//    }
+//
+//});
+
+function inject_script_current_tab(file) {
+
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        console.log("@func -> inject_script_current_tab -> tabs[0].id " + tabs[0].id);
+        console.log("@func -> inject_script_current_tab -> file " + file);
+        chrome.tabs.executeScript(tabs[0].id, { file: file });
+
+        chrome.tabs.captureVisibleTab(null, {}, function (img) {
+            var message;
+            //console.log("@func -> inject_script_current_tab -> img " + img);
+            message = {
+                "from": "color-picker",
+                "image": img
+            };
+            console.log("@func -> inject_script_current_tab -> message.from " + message.from);
+            //console.log("@func -> inject_script_current_tab -> message.img " + message.image);
+            chrome.tabs.sendMessage(tabs[0].id, {
+                "from": "color-picker",
+                "image": img
+            });
+        });
+    });
+}
+
+function set_tab_id() {
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        console.log(tabs[0].id);
+        return tabs[0].id;
+    });
+}
+
+function get_tab_id() {
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        console.log(tabs[0].id);
+    });
+}
+
+/*
+
+    @func
+    -> captures the visible tab
+    -> forms a message with the identifier "color-pcker"
+    -> sends the message which will be consumed by the content script in "eventpage.js"
+
+ */
+
+function send_image() {
+
+    chrome.tabs.captureVisibleTab({}, function (img) {
+        var message;
+
+        message = {
+            "from": "color-picker",
+            "image": img
+        };
+
+        chrome.runtime.sendMessage(message, function (response) {});
+    });
+}
+
+function set_canvas_tab_width(canvas) {
+    chrome.tabs.getSelected(null, function (tab) {
+        canvas.width = tab.width;
+        canvas.height = tab.height;
+    });
+}
+
+function draw_image_on_canvas(imageSrc, canvas) {
+    var im = new Image();
+
+    im.onload = function () {
+        context.drawImage(im, 0, 0, canvas.width, canvas.height);
+    };
+
+    im.src = imageSrc;
+}
+
+chrome.tabs.onActivated.addListener(function () {
+    chrome.runtime.sendMessage({ "from": "tab-changed" });
+});
+
+chrome.tabs.onCreated.addListener(function () {
+    chrome.runtime.sendMessage({ "from": "tab-created" });
+});
+
+function init() {
+
+    console.log(chrome.extension.getURL("color_picker.js"));
+    console.log(chrome.runtime.getURL("color_picker.js"));
+    inject_script_current_tab("color_picker.js");
+}
+
+exports.default = init;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 exports.storeColorPickerData = storeColorPickerData;
 exports.printHistoryColor = printHistoryColor;
 exports.printNewHistoryColor = printNewHistoryColor;
 
-var NUM_COLUMNS = 2;
-function storeColorPickerData(color) {
+var _constants = __webpack_require__(12);
+
+function storeColorPickerData(color, onColorClick) {
 
     chrome.storage.sync.get(null, function (result) {
         // the input argument is ALWAYS an object containing the queried keys
         // so we select the key we need
         var historyColors = result.historyColors || [];
-        historyColors.push(color);
-        // set the new array value to the same key
-        chrome.storage.sync.set({ historyColors: historyColors }, function () {
-            console.log("storedColor", historyColors);
-        });
+
+        //add check for duplicates    
+        var dublicate = historyColors.length !== 0 && historyColors.filter(function (hColor) {
+            return hColor == color;
+        }).length !== 0;
+
+        if (!dublicate) {
+
+            if (historyColors.length >= _constants.STORAGE_LIMIT) {
+                historyColors.shift();
+            }
+            historyColors.push(color);
+            // set the new array value to the same key
+            chrome.storage.sync.set({ historyColors: historyColors }, function () {
+                console.log("storedColor", historyColors);
+            });
+            if (historyColors.length >= _constants.STORAGE_LIMIT) {
+                printHistoryColor(onColorClick);
+            } else {
+
+                printNewHistoryColor(color, onColorClick);
+            }
+        }
     });
 }
 function printHistoryColor(onColorClick) {
@@ -3441,19 +3634,20 @@ function printHistoryColor(onColorClick) {
     chrome.storage.sync.get('historyColors', function (result) {
         if (result.historyColors) {
             var content = "<table id='color-history-elements'";
-            var columns = NUM_COLUMNS;
+            var columns = _constants.NUM_COLUMNS;
             for (var i = 0; i < result.historyColors.length; i++) {
-                if (columns == NUM_COLUMNS) {
+                if (columns == _constants.NUM_COLUMNS) {
                     content += "<tr>";
                 }
                 content += "<td  color='" + result.historyColors[i] + "'style='background-color:" + result.historyColors[i] + "'></td>";
                 columns--;
                 if (columns == 0) {
                     content += "</tr>";
-                    columns = NUM_COLUMNS;
+                    columns = _constants.NUM_COLUMNS;
                 }
             }
             content += "</table>";
+            $("#color-history").empty();
             $("#color-history").append(content);
             //add click events for every color history td element added to the history table
             $("#color-history-elements td").on("click", function (e) {
@@ -3466,13 +3660,18 @@ function printHistoryColor(onColorClick) {
 }
 
 function printNewHistoryColor(color, onColorClick) {
-    var content = "";
+    var content = $("#color-history-elements").length == 0 ? "<table id='color-history-elements'>" : "";
     //check if there are two elements in the row, if yes add new row, otherwise add column to existing row
     var checkcolumnSize = $("#color-history-elements tbody")[0] ? $("#color-history-elements tbody")[0].lastElementChild.children.length : 0;
 
     if (checkcolumnSize == 2 || checkcolumnSize == 0) {
-        content = "<tr><td color='" + color + "'style='background-color:" + color + "'></td></tr>";
-        $("#color-history-elements").append(content);
+        content += "<tr><td color='" + color + "'style='background-color:" + color + "'></td></tr>";
+        if ($("#color-history-elements").length == 0) {
+            content += "</table>";
+            $("#color-history").append(content);
+        } else {
+            $("#color-history-elements").append(content);
+        }
     } else if (checkcolumnSize == 1) {
         content = "<td color='" + color + "' style='background-color:" + color + "'></td>";
         $($("#color-history-elements tbody")[0].lastElementChild).append(content);
@@ -3483,6 +3682,19 @@ function printNewHistoryColor(color, onColorClick) {
         onColorClick(e.currentTarget.attributes.color.value);
     });
 }
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var STORAGE_LIMIT = exports.STORAGE_LIMIT = 50;
+var NUM_COLUMNS = exports.NUM_COLUMNS = 2;
 
 /***/ })
 /******/ ]);

@@ -1,14 +1,7 @@
-/**
- * Created by Tudor on 8/9/2017.
- * TODO
- * -convert to es6 code
- *
- */
 
-
-(function colorPickerContentScript() {
-    var div, img, colorDiv;
-    console.log("aasde");
+(function () {
+    var div, img, colorDiv, canvas, image;
+    console.log("aasderrr");
     document.addEventListener("click", function(e) {
 
         var position = {clientX: e.clientX, clientY: e.clientY, width: window.innerWidth, height: window.innerHeight};
@@ -59,7 +52,7 @@
 
         if (img == null) {
             //document.body.style.cursor = "url(" + chrome.extension.getURL("cursor.png") + ")";
-            document.body.style.cursor = "none";
+            //document.body.style.cursor = "none";
             img = document.createElement("img");
             img.src = chrome.extension.getURL("eyedropper.png");
             img.style.width = "20px";
@@ -81,13 +74,7 @@
 
         var msg = {"position": position, "from": "mousemove"};
 
-        chrome.runtime.sendMessage(msg, function(response) {
-            if (response != null) {
-                console.log(response);
-                colorDiv.style.background = response.hex;
-            }
-
-        });
+        chrome.runtime.sendMessage(msg);
 
         console.log(img.src);
 
@@ -108,6 +95,48 @@
             }
         }
 
+        if(message["from"] == "color-picker") {
+
+            image = document.createElement("img");
+            image.style.width =  window.innerWidth + "px";
+            image.style.height = window.innerHeight + "px";
+            image.src = message["image"];
+
+
+
+            document.body.appendChild(image);
+
+            console.log(message["image"]);
+            canvas = document.createElement("canvas");
+            canvas.width = window.innerWidth + "px";
+            console.log(window.innerWidth);
+            canvas.height = window.innerHeight + "px";
+            //console.log(window.innerHeight);
+
+            canvas = document.createElement('canvas');
+            //canvas.width = image.width;
+            //canvas.height = image.height;
+            canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
+
+            document.body.appendChild(canvas);
+
+            draw_image_on_canvas(message["image"], canvas);
+        }
+
     });
 })();
 
+
+function set_canvas_tab_width(canvas) {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+function draw_image_on_canvas(imageSrc, canvas) {
+    var im = new Image();
+    var context = canvas.getContext("2d");
+    im.onload = function() {
+        context.drawImage(im, 0, 0, canvas.width, canvas.height);
+    };
+    im.src = imageSrc;
+}
