@@ -1,5 +1,6 @@
 
 import {STORAGE_LIMIT, NUM_COLUMNS } from './constants';
+import {hexToRgb} from './getPalette';
  export  function storeColorPickerData(color,onColorClick) {
         
         chrome.storage.sync.get(null, function (result) {
@@ -44,7 +45,7 @@ export  function printHistoryColor(onColorClick){
                     if(columns == NUM_COLUMNS){
                         content+="<tr>"
                     }
-                    content +="<td  color='"+result.historyColors[i]+"'style='background-color:"+result.historyColors[i]+"'></td>";
+                    content +="<td  color='"+result.historyColors[i]+"' style='border: 2px solid white; background-color:"+result.historyColors[i]+"'></td>";
                     columns--;
                     if(columns == 0){
                         content+="</tr>";
@@ -72,7 +73,7 @@ export function printNewHistoryColor(color,onColorClick){
   
    if(checkcolumnSize == 2 || checkcolumnSize ==0)
         {
-            content +="<tr><td color='"+color+"'style='background-color:"+color+"'></td></tr>";
+            content +="<tr><td color='"+color+"'style='border: 2px solid white; background-color:"+color+"'></td></tr>";
             if($("#color-history-elements").length ==0){
               content+="</table>";
                $("#color-history").append(content);   
@@ -82,7 +83,7 @@ export function printNewHistoryColor(color,onColorClick){
                    
         }
         else if(checkcolumnSize == 1){
-            content = "<td color='"+color+"' style='background-color:"+color+"'></td>";
+            content = "<td color='"+color+"' style=' border: 2px solid white; background-color:"+color+"'></td>";
             $($("#color-history-elements tbody")[0].lastElementChild).append(content);
 
         }
@@ -92,3 +93,9 @@ export function printNewHistoryColor(color,onColorClick){
                 onColorClick(e.currentTarget.attributes.color.value);
         });
    }     
+export function printSelectedColor(color){
+      $('#selectedColor').css('background-color',"#"+color);
+      $('#scHex').text("#"+color);
+      var rgbValues = hexToRgb("#"+color);
+      $('#scRGB').text("rgb("+parseInt(rgbValues[1],16)+","+parseInt(rgbValues[2],16)+","+parseInt(rgbValues[3],16)+")");
+}
