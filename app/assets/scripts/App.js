@@ -9,7 +9,7 @@ import urlHistory from './modules/urlHistory';
 shortenTabUrl();
 urlHistory();
 
-import { storeColorPickerData, printNewHistoryColor, printHistoryColor } from './modules/colorHistory';
+import { storeColorPickerData, printNewHistoryColor, printHistoryColor, printSelectedColor } from './modules/colorHistory';
 
 $(document).ready(function() {
     printHistoryColor(onColorClick);
@@ -19,8 +19,10 @@ $("#colorPicker").on("change", function(e) {
     var selectedColor = e.currentTarget.value;
     storeColorPickerData(selectedColor,onColorClick);
     printPalette(selectedColor.substring(1));
+    printSelectedColor(selectedColor.substring(1));
 });
 
 function onColorClick(selectedColor) {
     printPalette(selectedColor.substring(1));
+    printSelectedColor(selectedColor.substring(1));
 }

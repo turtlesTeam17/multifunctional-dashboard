@@ -144,7 +144,7 @@ function hexToComplimentary(hex,shiftWheel){
     rgb = b | (g << 8) | (r << 16); 
     return "#" + (0x1000000 | rgb).toString(16).substring(1);
 }  
-function hexToRgb(hex) {
+export function hexToRgb(hex) {
     // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
     var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, function(m, r, g, b) {
@@ -152,20 +152,19 @@ function hexToRgb(hex) {
     });
 
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? 
-        "rgb("+parseInt(result[1], 16)+","+parseInt(result[2], 16)+","+parseInt(result[3], 16)+")"
- 		 : null;
+    return result ? result : null;
 }
 function printPalette(color){
 	var palette = getPallete(color);
      $("#palette").empty();
-	var content = "<table style='background-color:white;'>";
+	var content = "<table style ='background-color:white;'>";
 	var columns = NUM_COLUMNS;
 	for(var i=0;i < palette.length;i++){
 		if(columns == NUM_COLUMNS){
 			content+="<tr>"
 		}
-		content +="<td><div style='width:50px; height:20px; margin:10px;background-color:"+palette[i]+"'></div><div style='padding-left: 10px;'>"+palette[i] +",<br>"+hexToRgb(palette[i])+"</div></td>";
+        var rgbValues = hexToRgb(palette[i]);
+		content +="<td><div style='width:50px; height:20px; margin:10px;background-color:"+palette[i]+"'></div><div style='padding-left: 10px; padding-bottom: 10px;'>"+palette[i] +"<br>"+"r:"+parseInt(rgbValues[1], 16)+"<br> g:"+parseInt(rgbValues[2], 16)+"<br> b:"+parseInt(rgbValues[3], 16)+"</div></td>";
 		columns--;
 		if(columns == 0){
 			content+="</tr>";
@@ -176,5 +175,6 @@ function printPalette(color){
 	content+="</table>";
 	$("#palette").append(content);
 }
+
 
 export default printPalette;
