@@ -6,7 +6,7 @@ $(document).ready(function () {
         var tab_id = $(this).attr('data-tab'); // grab the data-tab attribute and assign the same to tab_id variable
         $('ul.tabs li').removeClass('active'); // remove the current class from all list elements and our DIV.tab-content elements  
         $('.tab-content').removeClass('active');
-        $(this).addClass('active'); // add the “current” class to the clicked list element and DIV tab with the grabbed data-tab ID
+        $(this).addClass('active'); // add the “active” class to the clicked list element and DIV tab with the grabbed data-tab ID
         $("#" + tab_id).addClass('active');
     })
 });
