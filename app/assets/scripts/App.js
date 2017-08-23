@@ -5,6 +5,7 @@ import './vendor/chrome-extension-async';
 import printPalette from './modules/getPalette';
 import shortenTabUrl from './modules/shortenTabUrl';
 import urlHistory from './modules/urlHistory';
+import './modules/tabs';
 
 shortenTabUrl();
 urlHistory();

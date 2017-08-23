@@ -1,4 +1,9 @@
+.tab-content{
+	display: none;
+}
+
 .options{
+    cursor: pointer;
     position: absolute;
     z-index: 99;
     top: 0;
@@ -11,10 +16,10 @@
         padding: 0;
         margin: 0;
     }
-    & li {
+    & .tab{
         list-style: none;
         float: left;
-        width: 33%;
+        width: 25%;
         text-align: center;
         line-height: 2.5;
         height: 40px;
@@ -24,3 +29,13 @@
         background: color(white alpha(25%));
     }
 }
+
+.tabs.active{
+    background: #ededed;
+	color: #222;
+}
+
+.active {
+    display: inherit; /* This will hide all DIV elements and show the tab with current class only.*/
+}
+
