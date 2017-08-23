@@ -1,7 +1,7 @@
 
 (function () {
     var div, img, colorDiv, canvas, image;
-    console.log("aasderrr");
+    console.log("aas");
     document.addEventListener("click", function(e) {
 
         var position = {clientX: e.clientX, clientY: e.clientY, width: window.innerWidth, height: window.innerHeight};
@@ -12,8 +12,17 @@
 
     });
 
+    window.onscroll = function() {
+        console.log("scorll");
+        document.body.removeChild(div);
+        chrome.runtime.sendMessage({
+            "from": "scroll"
+        });
+    };
 
-    document.addEventListener('scroll', function() {
+    document.addEventListener('onscroll', function() {
+        console.log("scorll");
+        document.body.removeChild(div);
         chrome.runtime.sendMessage({
             "from": "scroll"
         });
@@ -97,6 +106,13 @@
 
         if(message["from"] == "color-picker") {
 
+            if (canvas != null || canvas != undefined) {
+                document.body.removeChild(canvas);
+                canvas = null;
+            }
+
+
+
             image = document.createElement("img");
             image.style.width =  window.innerWidth + "px";
             image.style.height = window.innerHeight + "px";
@@ -104,21 +120,29 @@
 
 
 
-            document.body.appendChild(image);
+            //document.body.appendChild(image);
 
-            console.log(message["image"]);
+            //console.log(message["image"]);
             canvas = document.createElement("canvas");
-            canvas.width = window.innerWidth + "px";
-            console.log(window.innerWidth);
-            canvas.height = window.innerHeight + "px";
-            //console.log(window.innerHeight);
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.style.width  = window.innerWidth + "px !important";
+            canvas.style.height = window.innerHeight + "px !important";
+            canvas.style.margin = "0px !important";
+            canvas.style.padding = "0px !important";
+            canvas.style.position = "absolute";
+            canvas.style.top = Math.round(window.pageYOffset) + "px";
+            canvas.style.left = "0px";
+            canvas.style.zIndex = "9999";
 
-            canvas = document.createElement('canvas');
-            //canvas.width = image.width;
-            //canvas.height = image.height;
-            canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
+            var context = canvas.getContext("2d");
+            context.mozImageSmoothingEnabled = true;
+            context.mzImageSmoothingEnabled = true;
+            context.imageSmoothingEnabled = true;
 
             document.body.appendChild(canvas);
+
+            //context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
             draw_image_on_canvas(message["image"], canvas);
         }
@@ -139,4 +163,16 @@ function draw_image_on_canvas(imageSrc, canvas) {
         context.drawImage(im, 0, 0, canvas.width, canvas.height);
     };
     im.src = imageSrc;
+}
+
+//https://stackoverflow.com/questions/667045/getpixel-from-html-canvas
+function getPixel(context, x, y) {
+    var p = context.getImageData(x, y, 1, 1).data;
+    return "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+}
+//https://stackoverflow.com/questions/667045/getpixel-from-html-canvas
+function rgbToHex(r, g, b) {
+    if (r > 255 || g > 255 || b > 255)
+        throw "Invalid color component";
+    return ((r << 16) | (g << 8) | b).toString(16);
 }

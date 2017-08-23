@@ -6,7 +6,7 @@ import printPalette from './modules/getPalette';
 import shortenTabUrl from './modules/shortenTabUrl';
 import urlHistory from './modules/urlHistory';
 
-import init from './modules/getColor';
+import colorPickerInit from './modules/colorPicker';
 //import colorPickerContentScript from './modules/colorPickerContentScript';
 
 shortenTabUrl();
@@ -18,7 +18,7 @@ $(document).ready(function() {
     printHistoryColor(onColorClick);
     $("#eyeDropper").on('click', function() {
         console.log("pick color!");
-        init();
+        colorPickerInit();
     });
 });
 

@@ -1,10 +1,8 @@
-
-(function () {
-    var div, img, colorDiv, canvas, image;
-    console.log("aasderrr");
+    var div, img, colorDiv, canvasWrapper, canvas, image, debugText;
+    console.log("aas");
     document.addEventListener("click", function(e) {
 
-        var position = {clientX: e.clientX, clientY: e.clientY, width: window.innerWidth, height: window.innerHeight};
+        var position = {clientX: e.clientX, clientY: e.clientY};
 
         var msg = {"position": position, "from": "position"};
 
@@ -12,12 +10,19 @@
 
     });
 
-
-    document.addEventListener('scroll', function() {
+    window.onscroll = function() {
+        console.log("scorll");
+        if (canvasWrapper != null || canvasWrapper != undefined) {
+            canvasWrapper.style.visibility = "hidden";
+        }
         chrome.runtime.sendMessage({
             "from": "scroll"
+        }, function(response) {
+            drawScreenShot(response["image"]);
+            return true;
         });
-    });
+    };
+
 
     document.onkeydown = function(evt) {
         evt = evt || window.event;
@@ -27,6 +32,7 @@
     };
 
     document.addEventListener("mousemove", function(e) {
+        /*
         if (div == null) {
             div = document.createElement("div");
             div.style.width = "110px";
@@ -49,6 +55,8 @@
 
 
         }
+
+
 
         if (img == null) {
             //document.body.style.cursor = "url(" + chrome.extension.getURL("cursor.png") + ")";
@@ -76,8 +84,21 @@
 
         chrome.runtime.sendMessage(msg);
 
-        console.log(img.src);
+        */
 
+        console.log(debugText);
+        if (debugText == null) {
+            debugText = document.createElement("span");
+            debugText.style.position = "absolute";
+            debugText.style.top = "20px";
+            debugText.style.left = "20px";
+            debugText.style.zIndex = "9999";
+            document.body.appendChild(debugText);
+
+        }
+
+
+        debugText.innerHTML = getPixel(canvas.getContext("2d"), e.clientX, e.clientY);
     });
 
     chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
@@ -97,34 +118,14 @@
 
         if(message["from"] == "color-picker") {
 
-            image = document.createElement("img");
-            image.style.width =  window.innerWidth + "px";
-            image.style.height = window.innerHeight + "px";
-            image.src = message["image"];
+            console.log("a");
+            drawScreenShot(message["image"]);
+            return true;
 
-
-
-            document.body.appendChild(image);
-
-            console.log(message["image"]);
-            canvas = document.createElement("canvas");
-            canvas.width = window.innerWidth + "px";
-            console.log(window.innerWidth);
-            canvas.height = window.innerHeight + "px";
-            //console.log(window.innerHeight);
-
-            canvas = document.createElement('canvas');
-            //canvas.width = image.width;
-            //canvas.height = image.height;
-            canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
-
-            document.body.appendChild(canvas);
-
-            draw_image_on_canvas(message["image"], canvas);
         }
 
     });
-})();
+
 
 
 function set_canvas_tab_width(canvas) {
@@ -134,9 +135,83 @@ function set_canvas_tab_width(canvas) {
 
 function draw_image_on_canvas(imageSrc, canvas) {
     var im = new Image();
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     var context = canvas.getContext("2d");
+    context.mozImageSmoothingEnabled = true;
+    context.mzImageSmoothingEnabled = true;
+    context.imageSmoothingEnabled = true;
+    im.src = imageSrc;
     im.onload = function() {
         context.drawImage(im, 0, 0, canvas.width, canvas.height);
     };
-    im.src = imageSrc;
+
+}
+
+//https://stackoverflow.com/questions/667045/getpixel-from-html-canvas
+function getPixel(context, x, y) {
+    var p = context.getImageData(x, y, 1, 1).data;
+    return "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+}
+//https://stackoverflow.com/questions/667045/getpixel-from-html-canvas
+function rgbToHex(r, g, b) {
+    if (r > 255 || g > 255 || b > 255)
+        throw "Invalid color component";
+    return ((r << 16) | (g << 8) | b).toString(16);
+}
+
+function drawScreenShot(image) {
+    if (canvasWrapper != null || canvasWrapper != undefined) {
+        //document.body.removeChild(canvas);
+    }
+
+
+
+    if (canvasWrapper == null || canvasWrapper == undefined) {
+        //document.body.removeChild(canvasWrapper);
+        canvasWrapper = document.createElement("div");
+    }
+
+
+
+    canvasWrapper.style.visibility = "visible";
+    canvasWrapper.style.width  = window.innerWidth + "px !important";
+    canvasWrapper.style.height = window.innerHeight + "px !important";
+    canvasWrapper.style.margin = "0px !important";
+    canvasWrapper.style.padding = "0px !important";
+    canvasWrapper.style.position = "absolute";
+    canvasWrapper.style.top = Math.round(window.pageYOffset) + "px";
+    canvasWrapper.style.left = "0px";
+    canvasWrapper.style.zIndex = "9998";
+    document.body.appendChild(canvasWrapper);
+
+    canvasWrapper.innerHTML = "<canvas id='canvas' width='"+ window.innerWidth +"' height='"+  window.innerHeight +"'></canvas>";
+
+    canvas = document.getElementById("canvas");
+
+
+
+
+    //console.log(message["image"]);
+    //canvas = document.createElement("canvas");
+    //canvas.width = window.innerWidth;
+    //canvas.height = window.innerHeight;
+    //canvas.style.width  = window.innerWidth + "px !important";
+    //canvas.style.height = window.innerHeight + "px !important";
+    //canvas.style.margin = "0px !important";
+    //canvas.style.padding = "0px !important";
+    //canvas.style.position = "absolute";
+    //canvas.style.top = Math.round(window.pageYOffset) + "px";
+    //canvas.style.left = "0px";
+    //canvas.style.zIndex = "9999";
+
+    //var context = canvas.getContext("2d");
+    //context.mozImageSmoothingEnabled = true;
+    //context.mzImageSmoothingEnabled = true;
+    //context.imageSmoothingEnabled = true;
+    //document.body.appendChild(canvas);
+
+    //context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    draw_image_on_canvas(image, canvas);
 }
