@@ -7,7 +7,7 @@ $(document).ready(function () {
         console.log(tab_id + ' from tabs');
         $('ul.tabs li').removeClass('active'); // remove the current class from all list elements and our DIV.tab-content elements  
         $('.tab-content').removeClass('active');
-        $(this).addClass('active'); // add the “current” class to the clicked list element and DIV tab with the grabbed data-tab ID
+        $(this).addClass('active'); // add the “active” class to the clicked list element and DIV tab with the grabbed data-tab ID
         $("#" + tab_id).addClass('active');
     })
 });
