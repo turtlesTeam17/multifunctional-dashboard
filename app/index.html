@@ -19,13 +19,13 @@
 <body>
     <div class="options">
         <ul class="tabs">
-            <li class="tab" data-tab="colorPickerDiv">Color Picker</li>
-            <li class="tab active" data-tab="urlShortenerDiv">Url Shortener</li>
+            <li class="tab active" data-tab="colorPickerDiv">Color Picker</li>
+            <li class="tab" data-tab="urlShortenerDiv">Url Shortener</li>
             <li class="tab" data-tab="">Quote Grabber</li>
-            <li class="tab" data-tab="">Dashboard Options</li>
+            <li class="tab" data-tab="settings">Dashboard Options</li>
         </ul>
     </div>
-    <div id="urlShortenerDiv" class="url-shortener tab-content active">
+    <div id="urlShortenerDiv" class="url-shortener tab-content">
         <div class="url-shortener__input">
             <!-- <input id="longUrl_input" type="text" name="longUrl_input"> -->
             <!-- <input id="shortenButton" type="submit" name="shortenButton" value="Shorten"> -->
@@ -41,7 +41,7 @@
             </table>
         </div>
     </div>
-    <div id="colorPickerDiv" class="color-picker-popup tab-content">
+    <div id="colorPickerDiv" class="color-picker-popup tab-content active">
         <div class="table">
             <div class="row">
                 <div class="col">
@@ -65,6 +65,12 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="quoteGrabber">
+
+    </div>
+    <div id="settings">
+
     </div>
     <!-- build:js assets/scripts/App.js -->
     <script type="text/javascript" src="./temp/scripts/App.js"></script>
