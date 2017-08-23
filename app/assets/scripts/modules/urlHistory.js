@@ -174,6 +174,15 @@ function urlHistory() {
         });
     });
 
+    $('#clear-history').on('click', function () { 
+        if (confirm('Are you sure you want to delete data from database?')) {
+            clearStorage();
+            console.log('Storage cleared');
+        } else {
+            // Do nothing!
+        }
+     });
+
 }
 
 export default urlHistory;

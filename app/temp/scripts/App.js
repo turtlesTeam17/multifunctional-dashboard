@@ -3429,6 +3429,15 @@ function urlHistory() {
             console.log(localCount);
         });
     });
+
+    $('#clear-history').on('click', function () {
+        if (confirm('Are you sure you want to delete data from database?')) {
+            clearStorage();
+            console.log('Storage cleared');
+        } else {
+            // Do nothing!
+        }
+    });
 }
 
 exports.default = urlHistory;
@@ -3450,7 +3459,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (0, _jquery2.default)(document).ready(function () {
     (0, _jquery2.default)('ul.tabs li').click(function () {
         var tab_id = (0, _jquery2.default)(this).attr('data-tab'); // grab the data-tab attribute and assign the same to tab_id variable
-        console.log(tab_id + ' from tabs');
         (0, _jquery2.default)('ul.tabs li').removeClass('active'); // remove the current class from all list elements and our DIV.tab-content elements  
         (0, _jquery2.default)('.tab-content').removeClass('active');
         (0, _jquery2.default)(this).addClass('active'); // add the “current” class to the clicked list element and DIV tab with the grabbed data-tab ID

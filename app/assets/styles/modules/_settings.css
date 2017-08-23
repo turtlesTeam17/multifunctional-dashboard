@@ -9,4 +9,26 @@
     background-attachment: fixed;
     background-position: center;
     position: relative;
+    color: aliceblue;
+    padding: 10%;
+
+    & .urlS-settings {
+        border: 1px solid white;
+        border-radius: 15px;
+        padding: 20px;
+
+        & h3 {
+            margin: 0;
+            padding: 0;
+            margin-bottom: 15px;
+        }
+    }
+
+    & input[type="submit"]{
+        // color: black;
+        background: crimson;
+        margin-left: 15px;
+        border: none;
+        outline: none;
+    }
 }

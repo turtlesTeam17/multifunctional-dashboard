@@ -4,7 +4,6 @@ import $ from '../vendor/jquery-3.2.1.min';
 $(document).ready(function () {
     $('ul.tabs li').click(function () {
         var tab_id = $(this).attr('data-tab'); // grab the data-tab attribute and assign the same to tab_id variable
-        console.log(tab_id + ' from tabs');
         $('ul.tabs li').removeClass('active'); // remove the current class from all list elements and our DIV.tab-content elements  
         $('.tab-content').removeClass('active');
         $(this).addClass('active'); // add the “current” class to the clicked list element and DIV tab with the grabbed data-tab ID

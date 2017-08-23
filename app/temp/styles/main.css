@@ -14,6 +14,13 @@
             border-collapse: collapse;
             width: 100%;
 }
+#settings input[type="submit"] {
+        // color: black;
+        background: crimson;
+        margin-left: 15px;
+        border: none;
+        outline: none;
+}
 .options .url-shortener-tab {
         background: rgba(255, 255, 255, 0.25);
 }
@@ -1355,8 +1362,6 @@ we can specify global variable to use flexbox as default instead of floats
     min-width: 600px;
     max-height: 600px;
     max-width: 600px;
-    width: 100%;
-    height: 90vh;
 
     position: relative;
     height: 100%;
@@ -1459,6 +1464,20 @@ we can specify global variable to use flexbox as default instead of floats
     background-attachment: fixed;
     background-position: center;
     position: relative;
+    color: aliceblue;
+    padding: 10%
+}
+
+#settings .urlS-settings {
+        border: 1px solid white;
+        border-radius: 15px;
+        padding: 20px;
+}
+
+#settings .urlS-settings h3 {
+            margin: 0;
+            padding: 0;
+            margin-bottom: 15px;
 }
 
 /* ==========================================================================
