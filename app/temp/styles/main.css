@@ -14,6 +14,18 @@
             border-collapse: collapse;
             width: 100%;
 }
+.options .url-shortener-tab {
+        background: rgba(255, 255, 255, 0.25);
+}
+.options li {
+        list-style: none;
+        float: left;
+        width: 33%;
+        text-align: center;
+        line-height: 2.5;
+        height: 40px;
+        border-right: 1px solid black;
+}
 .url-shortener__input .url-shortener__qrcode {
             display: -webkit-box;
             display: -ms-flexbox;
@@ -1398,6 +1410,98 @@ we can specify global variable to use flexbox as default instead of floats
             width: 75%;
             height: 30px;
             padding-left: 5px;
+}
+
+#palette{
+    font-size: 12px;
+    margin-left: 30px;
+    margin-top: 25%;
+    color:black;
+}
+
+#selectedColor{
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    border: 3px solid white;
+}
+
+.color-picker-popup{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgb(48, 80, 105);
+    padding-left: 2%;
+    padding-top: 10%;
+    padding-right: 7%;
+    visibility: hidden;
+    color:white;
+}
+
+.cTitle{
+     position: relative;
+     left: 150px;
+     color:white;
+     font-weight: bold;
+}
+
+.color-picker-popup .table{
+    margin-top: -20px;
+    padding: 16px;
+    margin-left: 30px;
+    background-color: rgba(0, 0, 0, .63);
+}
+
+.color-picker-popup .table >.row:first-child{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+}
+
+.color-picker-popup .table .col:nth-child(2){
+      width: 60%;
+}
+
+#color-history-elements {
+    border-spacing: 10px;
+    border-collapse: separate !important;
+}
+
+#color-history{
+    overflow-y:auto;
+    height: 260px;
+    margin-top: 15%;
+}
+
+#color-history-elements td{
+    cursor: pointer;
+    width:50px; 
+    height:50px;
+}
+
+#historyTitle{
+    position: relative;
+    top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.options{
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    width: 100%;
+    min-height: 40px;
+    max-height: 40px
+}
+
+.options ul {
+        background: rgb(124, 127, 130);
+        height: 40px;
+        padding: 0;
+        margin: 0;
 }
 
 /* ==========================================================================

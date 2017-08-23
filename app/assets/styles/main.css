@@ -4,7 +4,9 @@
 @import "base/basetop";
 @import "base/grids";
 
-@import "modules/dashboard";
+@import "modules/url-shortener";
+@import "modules/pallete";
+@import "modules/options";
 
 
 @import "base/basebottom";
