@@ -31,6 +31,12 @@ function urlHistory() {
         }
 
     };
+    // function for shortening title 
+    String.prototype.trimToLength = function(m) {
+        return (this.length > m) 
+          ? jQuery.trim(this).substring(0, m).split(" ").slice(0, -1).join(" ") + "..."
+          : this;
+      };
 
     // read received data from chrome.storage.get and print it to history table
     function readData(val1, val2) {
@@ -38,9 +44,7 @@ function urlHistory() {
         if ((val1 && val2) && (val1 != 'undefined' && val2 != 'undefined')) {
             // and if longer than 50 characters
             if (val1.length >= 50) {
-                // shorten it so it can fit into one row in table without slicing it in middle of an word(with regex)
-                // This expressions returns the first 46 (any) characters plus any subsequent non-space characters.
-                var shortenedTitle = val1.replace(/^(.{40}[^\s]*).*/, "$1") + "...";
+                var shortenedTitle = val1.trimToLength(47);         
                 $('#urlHistory').append('<tr><td title="' + val1 + '">' + shortenedTitle + '</td><td><a target="_blank" href="' + val2 + '">' + val2 + '</a></td></tr>');
             } else {
                 // if its no longer than 50 chars then display it as it is
@@ -169,6 +173,15 @@ function urlHistory() {
             console.log(localCount);
         });
     });
+
+    $('#clear-history').on('click', function () { 
+        if (confirm('Are you sure you want to delete data from database?')) {
+            clearStorage();
+            console.log('Storage cleared');
+        } else {
+            // Do nothing!
+        }
+     });
 
 }
 

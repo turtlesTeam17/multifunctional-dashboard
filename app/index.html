@@ -17,7 +17,15 @@
 </head>
 
 <body>
-    <div class="url-shortener">
+    <div class="options">
+        <ul class="tabs">
+            <li class="tab active" data-tab="colorPickerDiv">Color Picker</li>
+            <li class="tab" data-tab="urlShortenerDiv">Url Shortener</li>
+            <li class="tab" data-tab="">Quote Grabber</li>
+            <li class="tab" data-tab="settings">Dashboard Options</li>
+        </ul>
+    </div>
+    <div id="urlShortenerDiv" class="url-shortener tab-content">
         <div class="url-shortener__input">
             <!-- <input id="longUrl_input" type="text" name="longUrl_input"> -->
             <!-- <input id="shortenButton" type="submit" name="shortenButton" value="Shorten"> -->
@@ -29,34 +37,47 @@
         </div>
         <div class="url-shortener__history">
             <table id="urlHistory">
-               
+
             </table>
         </div>
     </div>
-    <div class="color-picker-popup">
+    <div id="colorPickerDiv" class="color-picker-popup tab-content active">
         <div class="table">
             <div class="row">
                 <div class="col">
                     <div class="row">
                         <h2 class="cTitle">Color palettes</h2>
                         <p id="selectedColor"></p>
-                         <div>Selected Color</div>
-                          <div id="scHex">#FFFFFF</div>
-                          <div id="scRGB">rgb(255,255,255)</div>
+                        <div>Selected Color</div>
+                        <div id="scHex">#FFFFFF</div>
+                        <div id="scRGB">rgb(255,255,255)</div>
                         <input style="position:absolute;top: 3%;left: 3%;" type="color" id="colorPicker">
                     </div>
                     <div id="historyTitle"> History </div>
                     <div class="row">
-                        <div id="color-history">             
+                        <div id="color-history">
                         </div>
                     </div>
                 </div>
-                    <div class="col">
-                        <div id="palette">
-                        </div>
+                <div class="col">
+                    <div id="palette">
                     </div>
-                    </div>
+                </div>
             </div>
+        </div>
+    </div>
+    <div id="quoteGrabber">
+
+    </div>
+    <div id="settings">
+        <div class="urlS-settings">
+            <h3>Url Shortener Settings</h3>
+            <form>
+                <label for="clear-history">Clear url storage: </label>
+                <input id="clear-history" type="submit" name="clear-history" value="Clear">
+            </form>
+        </div>
+
     </div>
     <!-- build:js assets/scripts/App.js -->
     <script type="text/javascript" src="./temp/scripts/App.js"></script>
