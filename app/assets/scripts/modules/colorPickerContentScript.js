@@ -39,7 +39,7 @@
             div.style.width = "110px";
             div.style.height = "43px";
             div.style.position = "absolute";
-            //div.style.background = "#232323";
+            //div.style.background = "#232323"; 
             div.style.backgroundImage = chrome.extension.getURL("eyedropper.png");
             document.body.appendChild(div);
 
