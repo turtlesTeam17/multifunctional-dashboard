@@ -733,20 +733,22 @@ textarea {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #b46868;
+    background-color: #d2cccc;
 }
 
 /* the new scrollbar will have a flat appearance with the set background color */
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgb(128, 126, 126);
 }
 
 /* this will style the thumb, ignoring the track */
 
+/*
 ::-webkit-scrollbar-button {
-    background-color: #7c2929;
+    background-color: #d2cccc;
 }
+*/
 
 /* top and the bottom buttons (left and right for horizontal bars) */
 
@@ -1265,7 +1267,16 @@ we can specify global variable to use flexbox as default instead of floats
 
 #palette{
     font-size: 12px;
-    margin-left: 10px;
+    margin-left: 30px;
+    margin-top: 25%;
+    color:black;
+}
+
+#selectedColor{
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    border: 3px solid white;
 }
 
 .color-picker-popup{
@@ -1274,11 +1285,26 @@ we can specify global variable to use flexbox as default instead of floats
     width: 100%;
     top: 0;
     left: 0;
-    background-color: white;
+    background-color: rgb(48, 80, 105);
     padding-left: 2%;
     padding-top: 10%;
-    padding-right: 10%;
-    visibility: hidden;
+    padding-right: 7%;
+    visibility: visible;
+    color:white;
+}
+
+.cTitle{
+     position: relative;
+     left: 150px;
+     color:white;
+     font-weight: bold;
+}
+
+.color-picker-popup .table{
+    margin-top: -20px;
+    padding: 16px;
+    margin-left: 30px;
+    background-color: rgba(0, 0, 0, .63);
 }
 
 .color-picker-popup .table >.row:first-child{

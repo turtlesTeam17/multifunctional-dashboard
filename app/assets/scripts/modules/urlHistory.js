@@ -4,6 +4,9 @@ function urlHistory() {
     var objects = [];
     var localCount = 0;
 
+    // https://stackoverflow.com/a/38641281 for sorting retrieved object before displaying it to history
+    var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+
     async function main() {
         try {
             var storedUrls = await storage.get(null, function (items) {});
@@ -17,7 +20,7 @@ function urlHistory() {
         }
     }
 
-    // get count of stored items // primary
+    // get count of stored items 
     function getDataCount(y) {
         if (y) {
             if (y > 50) {
@@ -48,22 +51,22 @@ function urlHistory() {
 
     // create array from data received from storage
     function createDataArray(e) {
-        var appendKeyPrefix = 'urlData';
+        var appendKeySuffix = 'urlData';
         var appendKeyCount = storageCount;
         var keys = [];
-
+        
         return new Promise((resolve, reject) => {
             $.each(e, function (key) {
-                if (key.startsWith(appendKeyPrefix)) {
+                if (key.endsWith(appendKeySuffix)) {
                     keys.push(key);
                 }
             });
-            for (var i = 0; i < keys.length; i++) {
-                storage.get(keys[i], function (obj) {
+            var sortedKeys = keys.sort(collator.compare);
+            for (var i = 0; i < sortedKeys.length; i++) {
+                storage.get(sortedKeys[i], function (obj) {
                     objects.push(obj);
                 })
             }
-            console.log(objects);
             resolve(objects);
         });
     }
@@ -87,7 +90,7 @@ function urlHistory() {
         if (!(checkForDuplicateKey(dataObj.url))) {
             localCount++;
             storage.set({
-                ['urlData' + localCount]: dataObj,
+                [localCount + '_' + 'urlData']: dataObj,
                 'globalCount': localCount
             }, function () {
                 console.log('Saved to storage: ', dataObj, localCount);
@@ -95,7 +98,7 @@ function urlHistory() {
             var notificationMsg = {
                 type: "basic",
                 title: "Url shortener",
-                message: "Url shortened and it's data sent to storage",
+                message: "Shortened url copied to clipboard, and it's data sent to storage",
                 iconUrl: "icons/icon128.png"
             }
             chrome.notifications.create('success', notificationMsg, function () {
@@ -105,9 +108,9 @@ function urlHistory() {
             });
         }
     }
-
+    // write shortened-urls data to history <table></table>
     function urlData(o) {
-        Object.keys(o).map((e) => {
+        Object.keys(o).sort(collator.compare).map((e) => {
             if (`${o[e].url}` && `${o[e].title}`) {
                 title = `${o[e].title}`;
                 url = `${o[e].url}`;
