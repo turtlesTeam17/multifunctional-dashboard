@@ -21,6 +21,9 @@ $(document).ready(function() {
         console.log("pick color!");
         colorPickerInit();
     });
+    $('#shrinkMe').click(function(){ // or any other event
+        $(this).toggleClass('shrink');
+    });
 });
 
 $("#colorPicker").on("change", function(e) {

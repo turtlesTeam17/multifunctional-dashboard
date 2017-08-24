@@ -1364,14 +1364,13 @@ we can specify global variable to use flexbox as default instead of floats
     max-width: 600px;
 
     position: relative;
+    overflow: hidden;
     height: 100%;
     width: 100%;
     top: 0;
     left: 0;
-    background-color: rgb(48, 80, 105);
-    padding-left: 2%;
+    background-color: #333538;
     padding-top: 10%;
-    padding-right: 7%;
     color:white;
 }
 
@@ -1384,9 +1383,8 @@ we can specify global variable to use flexbox as default instead of floats
 
 .color-picker-popup .table{
     margin-top: -20px;
-    padding: 16px;
     margin-left: 30px;
-    background-color: rgba(0, 0, 0, .63);
+    background-color: #333538;
 }
 
 .color-picker-popup .table >.row:first-child{
@@ -1406,7 +1404,7 @@ we can specify global variable to use flexbox as default instead of floats
 
 #color-history{
     overflow-y:auto;
-    height: 260px;
+    height: 350px;
     margin-top: 15%;
 }
 
@@ -1421,6 +1419,23 @@ we can specify global variable to use flexbox as default instead of floats
     top: 10px;
     font-size: 20px;
     font-weight: bold;
+}
+
+.collapse{
+  cursor: pointer;
+  display: block;
+}
+
+.collapse + input{
+  display: none; /* hide the checkboxes */
+}
+
+.collapse + input + div{
+  display:none;
+}
+
+.collapse + input:checked + div{
+  display:block;
 }
 
 .tab-content{

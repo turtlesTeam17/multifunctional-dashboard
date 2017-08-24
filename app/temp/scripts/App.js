@@ -2624,6 +2624,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         console.log("pick color!");
         (0, _colorPicker2.default)();
     });
+    (0, _jquery2.default)('#shrinkMe').click(function () {
+        // or any other event
+        (0, _jquery2.default)(this).toggleClass('shrink');
+    });
 });
 
 (0, _jquery2.default)("#colorPicker").on("change", function (e) {
