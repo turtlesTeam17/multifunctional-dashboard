@@ -3,7 +3,7 @@
             text-indent: 5px;
 }
 .url-shortener__history tr:nth-child(even) {
-            background-color: rgb(124, 127, 130); 
+            background-color: rgb(117, 133, 141); 
             color: #dddddd;
 }
 .url-shortener__history td {
@@ -58,8 +58,8 @@
                 -ms-flex-flow: column wrap;
                     flex-flow: column wrap;
             text-align: center;
-            font-size: 15.2px;
-            font-size: .95rem;
+            font-size: 20px;
+            font-size: 1.25rem;
             margin-right: 16px;
             margin-right: 1rem;
             -webkit-box-align: center;
@@ -71,7 +71,7 @@
 }
 .url-shortener__input .url-shortener__info a {
                 text-decoration: none;
-                color: #022933;
+                color: #FCFFF5;
 }
 .url-shortener__input input[type="submit"] {
             height: 30px;
@@ -86,8 +86,7 @@
         width: 100%;
         height: calc(99.9% * 5/8 - (10px - 10px * 5/8));
         margin-bottom: 10px;
-        border: 1px solid black;
-        background: rgba(255, 255, 255, 0.75);
+        background: rgba(69, 90, 100, 0.75);
         font-size: 16px;
         font-size: 1rem;
         overflow-y: auto;
@@ -633,12 +632,13 @@ body {
 
 body,
 html {
-    color: #222;
+    color: #FCFFF5;
     font-size: 1em;
     line-height: 1.4;
     overflow: hidden;
-    background: #333538 url('http://res.cloudinary.com/puritanic/image/upload/a_90/v1501796811/drible_xrzwss.jpg');
+    background: #3E606F;
     margin: 0;
+    padding: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
@@ -714,17 +714,6 @@ fieldset {
 
 textarea {
     resize: vertical;
-}
-
-/* ==========================================================================
-   Browser Upgrade Prompt
-   ========================================================================== */
-
-.browserupgrade {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
 }
 
 /* ==========================================================================
@@ -1279,7 +1268,7 @@ we can specify global variable to use flexbox as default instead of floats
     </div>*/
 
 .url-shortener {
-    margin: 0;
+
     min-height: 600px;
     min-width: 600px;
     max-height: 600px;
@@ -1313,7 +1302,6 @@ we can specify global variable to use flexbox as default instead of floats
         height: calc(99.9% * 3/8 - (10px - 10px * 3/8));
         margin-bottom: 10px;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        border: 1px solid black;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -1329,7 +1317,7 @@ we can specify global variable to use flexbox as default instead of floats
         -webkit-box-pack: center;
             -ms-flex-pack: center;
                 justify-content: center;
-        background: rgba(255, 255, 255, 0.55);
+        background: #3E606F;
 }
 
 .url-shortener__input:last-child {
@@ -1337,7 +1325,7 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .url-shortener__input input[type="text"] {
-            background: rgba(69, 90, 100, 0.45);
+            background: rgba(69, 90, 100, 0.25);
             border: none;
             width: 75%;
             height: 30px;
@@ -1354,8 +1342,8 @@ we can specify global variable to use flexbox as default instead of floats
 #selectedColor{
     width: 70px;
     height: 70px;
-    background-color: white;
-    border: 3px solid white;
+    background-color: #FCFFF5;
+    border: 3px solid #FCFFF5;
 }
 
 .color-picker-popup{
@@ -1370,22 +1358,22 @@ we can specify global variable to use flexbox as default instead of floats
     width: 100%;
     top: 0;
     left: 0;
-    background-color: #1A1A1A;
+    background-color: #3E606F;
     padding-top: 10%;
-    color:white;
+    color:#FCFFF5;
 }
 
 .cTitle{
      position: relative;
      left: 150px;
-     color:white;
+     color:#FCFFF5;
      font-weight: bold;
 }
 
 .color-picker-popup .table{
     margin-top: -20px;
     margin-left: 30px;
-    background-color: #1A1A1A;
+    background-color: #3E606F;
 }
 
 .color-picker-popup .table >.row:first-child{
@@ -1450,25 +1438,25 @@ we can specify global variable to use flexbox as default instead of floats
     top: 0;
     width: 100%;
     min-height: 40px;
-    max-height: 40px
+    max-height: 40px;
+    color: #D1DBBD
 }
 
 .options ul {
-        background: rgb(124, 127, 130);
+        background: #193441;
         height: 40px;
         padding: 0;
         margin: 0;
 }
 
 .tab.active{
-    background: #1A1A1A;
-	color: aliceblue;
+    background: #3E606F;
+	color: #91AA9D;
     transition: background .2s ease-in-out; 
 }
 
 .active {
     display: inherit; /* This will hide all DIV elements and show the tab with current class only.*/
-    margin: 0;
 }
 
 #settings {
@@ -1476,7 +1464,7 @@ we can specify global variable to use flexbox as default instead of floats
     max-height: 600px;
     min-width: 600px;
     min-height: 600px;
-    background: #1A1A1A url('http://res.cloudinary.com/puritanic/image/upload/a_90/v1503500142/settings_xsad1t.png');
+    background: #3E606F;
     margin: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;

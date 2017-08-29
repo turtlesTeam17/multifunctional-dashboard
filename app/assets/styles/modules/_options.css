@@ -10,8 +10,9 @@
     width: 100%;
     min-height: 40px;
     max-height: 40px;
+    color: #D1DBBD;
     & ul {
-        background: rgb(124, 127, 130);
+        background: #193441;
         height: 40px;
         padding: 0;
         margin: 0;
@@ -31,13 +32,12 @@
 }
 
 .tab.active{
-    background: #1A1A1A;
-	color: aliceblue;
+    background: #3E606F;
+	color: #91AA9D;
     transition: background .2s ease-in-out; 
 }
 
 .active {
     display: inherit; /* This will hide all DIV elements and show the tab with current class only.*/
-    margin: 0;
 }
 

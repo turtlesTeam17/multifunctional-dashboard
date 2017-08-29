@@ -1,5 +1,5 @@
 .url-shortener {
-    margin: 0;
+
     min-height: 600px;
     min-width: 600px;
     max-height: 600px;
@@ -14,15 +14,14 @@
         border-radius: .5rem .5rem 0 0;
         lost-row: 3/8 10px;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        border: 1px solid black;
         display: flex;
         flex-flow: column wrap;
         padding-top: 1rem;
         align-items: top;
         justify-content: center;
-        background: color(white alpha(55%));
+        background: #3E606F;
         & input[type="text"] {
-            background: color(#455A64 alpha(45%));
+            background: color(#455A64 alpha(25%));
             border: none;
             width: 75%;
             height: 30px;
@@ -41,14 +40,14 @@
             display: flex;
             flex-flow: column wrap;
             text-align: center;
-            font-size: .95rem;
+            font-size: 1.25rem;
             margin-right: 1rem;
             align-items: center;
             justify-content: center;
 
             & a {
                 text-decoration: none;
-                color: var(--darkblue);
+                color: #FCFFF5;
             }
         }
 
@@ -62,8 +61,7 @@
     }
     &__history {
         lost-row: 5/8 10px;
-        border: 1px solid black;
-        background: color(white alpha(75%));
+        background: color(#455A64 alpha(75%));
         font-size: 1rem;
         overflow-y: auto;
         overflow-x: hidden;
@@ -88,7 +86,7 @@
             padding: 3px;
         }
         & tr:nth-child(even) {
-            background-color: color(#24292E tint(40%)); 
+            background-color: color(#193441 tint(40%)); 
             color: #dddddd;
         }
         & td:first-of-type {
