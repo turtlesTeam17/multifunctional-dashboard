@@ -8,11 +8,6 @@ import urlHistory from './modules/urlHistory';
 import './modules/tabs';
 
 import colorPickerInit from './modules/colorPicker';
-//import colorPickerContentScript from './modules/colorPickerContentScript';
-
-shortenTabUrl();
-urlHistory();
-
 import { storeColorPickerData, printNewHistoryColor, printHistoryColor, printSelectedColor } from './modules/colorHistory';
 
 $(document).ready(function() {
@@ -33,9 +28,12 @@ $("#colorPicker").on("change", function(e) {
     printSelectedColor(selectedColor.substring(1));
 });
 
-
-
 function onColorClick(selectedColor) {
     printPalette(selectedColor.substring(1));
     printSelectedColor(selectedColor.substring(1));
 }
+
+$(document).one('urlShortenerTriggered', function () { 
+    shortenTabUrl();
+    urlHistory();
+ })

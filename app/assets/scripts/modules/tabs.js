@@ -8,5 +8,9 @@ $(document).ready(function () {
         $('.tab-content').removeClass('active');
         $(this).addClass('active'); // add the “active” class to the clicked list element and DIV tab with the grabbed data-tab ID
         $("#" + tab_id).addClass('active');
+        
+        if($(this).attr('data-tab') == 'urlShortenerDiv'){
+            $(document).trigger('urlShortenerTriggered');
+        };
     })
 });

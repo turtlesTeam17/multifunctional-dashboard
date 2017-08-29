@@ -2613,11 +2613,6 @@ var _colorHistory = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//import colorPickerContentScript from './modules/colorPickerContentScript';
-
-(0, _shortenTabUrl2.default)();
-(0, _urlHistory2.default)();
-
 (0, _jquery2.default)(document).ready(function () {
     (0, _colorHistory.printHistoryColor)(onColorClick);
     (0, _jquery2.default)("#eyeDropper").on('click', function () {
@@ -2641,6 +2636,11 @@ function onColorClick(selectedColor) {
     (0, _getPalette2.default)(selectedColor.substring(1));
     (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
 }
+
+(0, _jquery2.default)(document).one('urlShortenerTriggered', function () {
+    (0, _shortenTabUrl2.default)();
+    (0, _urlHistory2.default)();
+});
 
 /***/ }),
 /* 4 */
@@ -3430,21 +3430,20 @@ function urlHistory() {
     }
 
     // -----------------------------------------------------------------
-    document.body.onload = function () {
-        // clearStorage();
-        showAllData();
-        main().then(function (x) {
-            console.log(x[0]); // stored Urls Object
-            console.log(x[1] + ' globalCount');
-            console.log(x[2] + ' storedUrlsCount');
-            urlData(x[0]);
-            getDataCount(x[1]);
-            storageCount = x[2];
-            createDataArray(x[0]);
-        }).catch(function (err) {
-            return console.error(err);
-        });
-    };
+
+    // clearStorage();
+    showAllData();
+    main().then(function (x) {
+        console.log(x[0]); // stored Urls Object
+        console.log(x[1] + ' globalCount');
+        console.log(x[2] + ' storedUrlsCount');
+        urlData(x[0]);
+        getDataCount(x[1]);
+        storageCount = x[2];
+        createDataArray(x[0]);
+    }).catch(function (err) {
+        return console.error(err);
+    });
 
     // Listen for change in short-url-info div with custom jQuery event
     $('.shortUrlInfo').on('contentChanged', function () {
@@ -3491,6 +3490,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         (0, _jquery2.default)('.tab-content').removeClass('active');
         (0, _jquery2.default)(this).addClass('active'); // add the “active” class to the clicked list element and DIV tab with the grabbed data-tab ID
         (0, _jquery2.default)("#" + tab_id).addClass('active');
+
+        if ((0, _jquery2.default)(this).attr('data-tab') == 'urlShortenerDiv') {
+            (0, _jquery2.default)(document).trigger('urlShortenerTriggered');
+        };
     });
 });
 

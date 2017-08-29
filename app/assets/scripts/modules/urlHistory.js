@@ -147,7 +147,7 @@ function urlHistory() {
     }
 
     // -----------------------------------------------------------------
-    document.body.onload = function () {
+ 
         // clearStorage();
         showAllData();
         main().then(function (x) {
@@ -160,7 +160,7 @@ function urlHistory() {
                 createDataArray(x[0]);
             })
             .catch(err => console.error(err));
-    }
+    
 
     // Listen for change in short-url-info div with custom jQuery event
     $('.shortUrlInfo').on('contentChanged', function () {
