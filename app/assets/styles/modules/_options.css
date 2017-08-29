@@ -30,12 +30,14 @@
     }
 }
 
-.tabs.active{
-    background: #ededed;
-	color: #222;
+.tab.active{
+    background: #1A1A1A;
+	color: aliceblue;
+    transition: background .2s ease-in-out; 
 }
 
 .active {
     display: inherit; /* This will hide all DIV elements and show the tab with current class only.*/
+    margin: 0;
 }
 

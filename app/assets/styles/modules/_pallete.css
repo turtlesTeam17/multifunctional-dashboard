@@ -22,7 +22,7 @@
     width: 100%;
     top: 0;
     left: 0;
-    background-color: #333538;
+    background-color: #1A1A1A;
     padding-top: 10%;
     color:white;
 }
@@ -35,7 +35,7 @@
 .color-picker-popup .table{
     margin-top: -20px;
     margin-left: 30px;
-    background-color: #333538;
+    background-color: #1A1A1A;
 }
 .color-picker-popup .table >.row:first-child{
     display:flex;
