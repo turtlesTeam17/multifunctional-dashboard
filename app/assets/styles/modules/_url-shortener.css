@@ -68,7 +68,7 @@
 
         & a {
             text-decoration: none;
-            color: #333538;
+            color: #c6f31a;
             font-size: 1.1rem;
         }
         & table {
@@ -86,7 +86,7 @@
             padding: 3px;
         }
         & tr:nth-child(even) {
-            background-color: color(#193441 tint(40%)); 
+            background-color: rgba(3, 37, 53, 0.59); 
             color: #dddddd;
         }
         & td:first-of-type {

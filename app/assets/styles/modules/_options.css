@@ -33,7 +33,7 @@
 
 .tab.active{
     background: #3E606F;
-	color: #91AA9D;
+	color: #dbe0de;
     transition: background .2s ease-in-out; 
 }
 
