@@ -1,0 +1,43 @@
+.tab-content{
+	display: none;
+}
+
+.options{
+    cursor: pointer;
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    width: 100%;
+    min-height: 40px;
+    max-height: 40px;
+    color: #D1DBBD;
+    & ul {
+        background: #193441;
+        height: 40px;
+        padding: 0;
+        margin: 0;
+    }
+    & .tab{
+        list-style: none;
+        float: left;
+        width: 25%;
+        text-align: center;
+        line-height: 2.5;
+        height: 40px;
+        border-right: 1px solid black;
+    }
+    & .url-shortener-tab {
+        background: color(white alpha(25%));
+    }
+}
+
+.tab.active{
+    background: #3E606F;
+	color: #dbe0de;
+    transition: background .2s ease-in-out; 
+}
+
+.active {
+    display: inherit; /* This will hide all DIV elements and show the tab with current class only.*/
+}
+

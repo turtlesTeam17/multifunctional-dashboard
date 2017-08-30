@@ -13,17 +13,18 @@
    ========================================================================== */
 body,
 html {
-    color: #222;
+    color: #FCFFF5;
     font-size: 1em;
     line-height: 1.4;
     overflow: hidden;
-    background: #333538 url('http://res.cloudinary.com/puritanic/image/upload/a_90/v1501796811/drible_xrzwss.jpg');
+    background: #3E606F;
     margin: 0;
+    padding: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
     position: relative;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 *,
@@ -100,19 +101,6 @@ fieldset {
 textarea {
     resize: vertical;
 }
-
-
-/* ==========================================================================
-   Browser Upgrade Prompt
-   ========================================================================== */
-
-.browserupgrade {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
-}
-
 
 /* ==========================================================================
    Custom CSS

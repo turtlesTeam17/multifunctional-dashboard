@@ -3,7 +3,7 @@
             text-indent: 5px;
 }
 .url-shortener__history tr:nth-child(even) {
-            background-color: rgb(124, 127, 130); 
+            background-color: rgba(3, 37, 53, .59); 
             color: #dddddd;
 }
 .url-shortener__history td {
@@ -13,6 +13,25 @@
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 100%;
+}
+#settings input[type="submit"] {
+        // color: black;
+        background: crimson;
+        margin-left: 15px;
+        border: none;
+        outline: none;
+}
+.options .url-shortener-tab {
+        background: rgba(255, 255, 255, 0.25);
+}
+.options .tab {
+        list-style: none;
+        float: left;
+        width: 25%;
+        text-align: center;
+        line-height: 2.5;
+        height: 40px;
+        border-right: 1px solid black;
 }
 .url-shortener__input .url-shortener__qrcode {
             display: -webkit-box;
@@ -39,8 +58,8 @@
                 -ms-flex-flow: column wrap;
                     flex-flow: column wrap;
             text-align: center;
-            font-size: 15.2px;
-            font-size: .95rem;
+            font-size: 20px;
+            font-size: 1.25rem;
             margin-right: 16px;
             margin-right: 1rem;
             -webkit-box-align: center;
@@ -52,7 +71,7 @@
 }
 .url-shortener__input .url-shortener__info a {
                 text-decoration: none;
-                color: #022933;
+                color: #FCFFF5;
 }
 .url-shortener__input input[type="submit"] {
             height: 30px;
@@ -67,11 +86,10 @@
         width: 100%;
         height: calc(99.9% * 5/8 - (10px - 10px * 5/8));
         margin-bottom: 10px;
-        border: 1px solid black;
-        background: rgba(255, 255, 255, 0.75);
+        background: rgba(69, 90, 100, 0.75);
         font-size: 16px;
         font-size: 1rem;
-        overflow: scroll;
+        overflow-y: auto;
         overflow-x: hidden;
         & td,
         th {
@@ -88,7 +106,7 @@
 }
 .url-shortener__history a {
             text-decoration: none;
-            color: #333538;
+            color: #c6f31a;
             font-size: 17.6px;
             font-size: 1.1rem;
 }
@@ -614,17 +632,18 @@ body {
 
 body,
 html {
-    color: #222;
+    color: #FCFFF5;
     font-size: 1em;
     line-height: 1.4;
     overflow: hidden;
-    background: #333538 url('http://res.cloudinary.com/puritanic/image/upload/a_90/v1501796811/drible_xrzwss.jpg');
+    background: #3E606F;
     margin: 0;
+    padding: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
     position: relative;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 *,
@@ -695,17 +714,6 @@ fieldset {
 
 textarea {
     resize: vertical;
-}
-
-/* ==========================================================================
-   Browser Upgrade Prompt
-   ========================================================================== */
-
-.browserupgrade {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
 }
 
 /* ==========================================================================
@@ -1265,83 +1273,8 @@ we can specify global variable to use flexbox as default instead of floats
     </section>
     </div>*/
 
-#palette{
-    font-size: 12px;
-    margin-left: 30px;
-    margin-top: 25%;
-    color:black;
-}
-
-#selectedColor{
-    width: 70px;
-    height: 70px;
-    background-color: white;
-    border: 3px solid white;
-}
-
-.color-picker-popup{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    background-color: rgb(48, 80, 105);
-    padding-left: 2%;
-    padding-top: 10%;
-    padding-right: 7%;
-    visibility: visible;
-    color:white;
-}
-
-.cTitle{
-     position: relative;
-     left: 150px;
-     color:white;
-     font-weight: bold;
-}
-
-.color-picker-popup .table{
-    margin-top: -20px;
-    padding: 16px;
-    margin-left: 30px;
-    background-color: rgba(0, 0, 0, .63);
-}
-
-.color-picker-popup .table >.row:first-child{
-    display:-webkit-box;
-    display:-ms-flexbox;
-    display:flex;
-}
-
-.color-picker-popup .table .col:nth-child(2){
-      width: 60%;
-}
-
-#color-history-elements {
-    border-spacing: 10px;
-    border-collapse: separate !important;
-}
-
-#color-history{
-    overflow-y:auto;
-    height: 260px;
-    margin-top: 15%;
-}
-
-#color-history-elements td{
-    cursor: pointer;
-    width:50px; 
-    height:50px;
-}
-
-#historyTitle{
-    position: relative;
-    top: 10px;
-    font-size: 20px;
-    font-weight: bold;
-}
-
 .url-shortener {
+
     min-height: 600px;
     min-width: 600px;
     max-height: 600px;
@@ -1375,7 +1308,6 @@ we can specify global variable to use flexbox as default instead of floats
         height: calc(99.9% * 3/8 - (10px - 10px * 3/8));
         margin-bottom: 10px;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        border: 1px solid black;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -1391,7 +1323,7 @@ we can specify global variable to use flexbox as default instead of floats
         -webkit-box-pack: center;
             -ms-flex-pack: center;
                 justify-content: center;
-        background: rgba(255, 255, 255, 0.55);
+        background: #3E606F;
 }
 
 .url-shortener__input:last-child {
@@ -1399,11 +1331,165 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .url-shortener__input input[type="text"] {
-            background: rgba(69, 90, 100, 0.45);
+            background: rgba(69, 90, 100, 0.25);
             border: none;
             width: 75%;
             height: 30px;
             padding-left: 5px;
+}
+
+#palette{
+    font-size: 12px;
+    margin-left: 30px;
+    margin-top: 25%;
+    color:black;
+}
+
+#selectedColor{
+    width: 70px;
+    height: 70px;
+    background-color: #FCFFF5;
+    border: 3px solid #FCFFF5;
+}
+
+.color-picker-popup{
+    min-height: 600px;
+    min-width: 600px;
+    max-height: 600px;
+    max-width: 600px;
+
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: #3E606F;
+    padding-top: 10%;
+    color:#FCFFF5;
+}
+
+.cTitle{
+     position: relative;
+     left: 150px;
+     color:#FCFFF5;
+     font-weight: bold;
+}
+
+.color-picker-popup .table{
+    margin-top: -20px;
+    margin-left: 30px;
+    background-color: #3E606F;
+}
+
+.color-picker-popup .table >.row:first-child{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+}
+
+.color-picker-popup .table .col:nth-child(2){
+      width: 60%;
+}
+
+#color-history-elements {
+    border-spacing: 10px;
+    border-collapse: separate !important;
+}
+
+#color-history{
+    overflow-y:auto;
+    height: 350px;
+    margin-top: 15%;
+}
+
+#color-history-elements td{
+    cursor: pointer;
+    width:50px; 
+    height:50px;
+}
+
+#historyTitle{
+    position: relative;
+    top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.collapse{
+  cursor: pointer;
+  display: block;
+}
+
+.collapse + input{
+  display: none; /* hide the checkboxes */
+}
+
+.collapse + input + div{
+  display:none;
+}
+
+.collapse + input:checked + div{
+  display:block;
+}
+
+.tab-content{
+	display: none;
+}
+
+.options{
+    cursor: pointer;
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    width: 100%;
+    min-height: 40px;
+    max-height: 40px;
+    color: #D1DBBD
+}
+
+.options ul {
+        background: #193441;
+        height: 40px;
+        padding: 0;
+        margin: 0;
+}
+
+.tab.active{
+    background: #3E606F;
+	color: #dbe0de;
+    transition: background .2s ease-in-out; 
+}
+
+.active {
+    display: inherit; /* This will hide all DIV elements and show the tab with current class only.*/
+}
+
+#settings {
+    max-width: 600px;
+    max-height: 600px;
+    min-width: 600px;
+    min-height: 600px;
+    background: #3E606F;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+    color: aliceblue;
+    padding: 10%
+}
+
+#settings .urlS-settings {
+        border: 1px solid white;
+        border-radius: 15px;
+        padding: 20px;
+}
+
+#settings .urlS-settings h3 {
+            margin: 0;
+            padding: 0;
+            margin-bottom: 15px;
 }
 
 /* ==========================================================================
