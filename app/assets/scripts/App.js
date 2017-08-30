@@ -28,6 +28,11 @@ $("#colorPicker").on("change", function(e) {
     printSelectedColor(selectedColor.substring(1));
 });
 
+export function showSelectedColor(selectedColor){
+    printSelectedColor(selectedColor.substring(1));
+    printPalette(selectedColor.substring(1));
+}
+
 function onColorClick(selectedColor) {
     printPalette(selectedColor.substring(1));
     printSelectedColor(selectedColor.substring(1));
@@ -37,3 +42,4 @@ $(document).one('urlShortenerTriggered', function () {
     shortenTabUrl();
     urlHistory();
  })
+

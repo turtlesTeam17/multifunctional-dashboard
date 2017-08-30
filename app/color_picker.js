@@ -1,13 +1,40 @@
+   function storeColorPickerData(color) {
+        
+        chrome.storage.sync.get(null, function (result) {
+            // the input argument is ALWAYS an object containing the queried keys
+            // so we select the key we need
+            var historyColors = result.historyColors || [];
+            
+            //add check for duplicates    
+            var duplicate = historyColors.length !==0 && historyColors.filter(function(hColor){
+                return hColor  == color;
+            }).length !==0;
+           
+            if(!duplicate){
+                
+               if(historyColors.length >= 50){
+                    historyColors.shift();
+                }
+                   historyColors.push(color);
+                 // set the new array value to the same key
+                 chrome.storage.sync.set({historyColors: historyColors}, function () {
+                    console.log("stored color");
+                    //TODO copy to clipboard and set notification
+                 });     
+            }
+            
+        });
+    }
+
     var div, img, colorDiv, canvasWrapper, canvas, image, debugText;
     console.log("aas");
     document.addEventListener("click", function(e) {
 
-        var position = {clientX: e.clientX, clientY: e.clientY};
-
-        var msg = {"position": position, "from": "position"};
-
-        chrome.runtime.sendMessage(msg);
-
+        var pixelValue = getPixel(canvas.getContext("2d"), e.clientX, e.clientY);       
+        
+        storeColorPickerData(pixelValue);
+        document.body.removeChild(canvasWrapper);
+        document.body.removeChild(debugText);
     });
 
     window.onscroll = function() {
@@ -85,8 +112,10 @@
         chrome.runtime.sendMessage(msg);
 
         */
-
-        console.log(debugText);
+        var pixelValue = getPixel(canvas.getContext("2d"), e.clientX, e.clientY);
+        //console.log(debugText);
+         var msg = {"value": pixelValue, "from": "mousemove"};
+        chrome.runtime.sendMessage(msg);
         if (debugText == null) {
             debugText = document.createElement("span");
             debugText.style.position = "absolute";

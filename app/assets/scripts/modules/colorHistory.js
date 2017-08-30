@@ -9,11 +9,11 @@ import {hexToRgb} from './getPalette';
             var historyColors = result.historyColors || [];
             
             //add check for duplicates    
-            var dublicate = historyColors.length !==0 && historyColors.filter(function(hColor){
+            var duplicate = historyColors.length !==0 && historyColors.filter(function(hColor){
                 return hColor  == color;
             }).length !==0;
            
-            if(!dublicate){
+            if(!duplicate){
                 
                if(historyColors.length >= STORAGE_LIMIT){
                     historyColors.shift();

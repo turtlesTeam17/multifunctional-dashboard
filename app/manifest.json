@@ -42,18 +42,5 @@
                             "contextMenus",
                             "clipboardWrite",
                             "activeTab"
-    ],
-
-  "web_accessible_resources": [
-                            "color_picker.js"
-  ],
-
-    "content_scripts": 
-	[
-		{
-			"matches": 			      ["http://*/*", "https://*/*"],
-			"js": 				        ["content_script.js"],
-			"all_frames": 		    true
-		}
-  ]
+    ]
 }

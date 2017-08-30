@@ -1338,6 +1338,11 @@ we can specify global variable to use flexbox as default instead of floats
             padding-left: 5px;
 }
 
+#eyeDropper{
+    background-color: green;
+    border-radius: 11%;
+}
+
 #palette{
     font-size: 12px;
     margin-left: 30px;
@@ -1399,8 +1404,8 @@ we can specify global variable to use flexbox as default instead of floats
 
 #color-history{
     overflow-y:auto;
-    height: 350px;
-    margin-top: 15%;
+    height: 247px;
+    margin-top: 8%;
 }
 
 #color-history-elements td{

@@ -4,7 +4,7 @@
  */
 
 import {COLOR_PICKER_CONTENT_SCRIPT} from './constants.js';
-
+import {showSelectedColor} from '../App.js';
 /*
 
 @prop   - insures that the content scrip is ran only once
@@ -23,6 +23,8 @@ let contentScriptExecuted = false;
 function add_message_listeners() {
     chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         if (message["from"] == "position" || message["from"] == "mousemove") {
+          var selectedColor = message["value"];
+          showSelectedColor(selectedColor);
         }
         if (message["from"] == "scroll") {
             console.log("scroll in tab");

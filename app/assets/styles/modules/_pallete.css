@@ -1,3 +1,7 @@
+#eyeDropper{
+    background-color: green;
+    border-radius: 11%;
+}
 #palette{
     font-size: 12px;
     margin-left: 30px;
@@ -49,8 +53,8 @@
 }
 #color-history{
     overflow-y:auto;
-    height: 350px;
-    margin-top: 15%;
+    height: 247px;
+    margin-top: 8%;
 }
 #color-history-elements td{
     cursor: pointer;
