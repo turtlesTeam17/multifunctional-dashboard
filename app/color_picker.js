@@ -1,4 +1,15 @@
    function storeColorPickerData(color) {
+
+    function copyToClipboard(item) {
+        const input = document.createElement("input");
+        input.style.position = "fixed";
+        input.style.opacity = 0;
+        input.value = item;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand("Copy");
+        document.body.removeChild(input);
+    };
         
         chrome.storage.sync.get(null, function (result) {
             // the input argument is ALWAYS an object containing the queried keys
@@ -18,11 +29,15 @@
                    historyColors.push(color);
                  // set the new array value to the same key
                  chrome.storage.sync.set({historyColors: historyColors}, function () {
-                    console.log("stored color");
+                    console.log(color);
+                    // copy selected color to clipboard
+                    copyToClipboard(color);
                     //TODO copy to clipboard and set notification
+                    chrome.runtime.sendMessage({"from": "colorPicked"}, function(response) {
+                        return true;
+                      });
                  });     
             }
-            
         });
     }
 
@@ -142,6 +157,7 @@
         if (message["from"] == "tab-created") {
             if (div != undefined || div != null) {
                 div.parentNode.removeChild(div);
+                return true;
             }
         }
 
