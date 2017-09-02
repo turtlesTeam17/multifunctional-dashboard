@@ -1,6 +1,8 @@
 #eyeDropper{
     background-color: green;
     border-radius: 11%;
+    outline: none;
+    border: none;
 }
 #palette{
     font-size: 12px;

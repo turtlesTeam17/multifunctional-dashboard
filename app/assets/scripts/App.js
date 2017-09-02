@@ -1,3 +1,5 @@
+'use strict';
+
 import $ from './vendor/jquery-3.2.1.min';
 import './vendor/jquery.qrcode.min';
 import './vendor/chrome-extension-async';

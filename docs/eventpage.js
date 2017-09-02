@@ -4,10 +4,9 @@ chrome.browserAction.onClicked.addListener(function (tab) {
         'selected': true
     });
 });
-    // Open browser popup with key combination Ctrl + Shift + K for Linux
-   chrome.commands.onCommand.addListener(function(command) {
-        console.log('Command:', command);
-      });
 
-
+// Open browser popup with key combination Ctrl + Shift + K for Linux
+chrome.commands.onCommand.addListener(function(command) {
+    console.log('Command:', command);
+});
 
