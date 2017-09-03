@@ -3569,6 +3569,7 @@ function add_message_listeners() {
                 }, 2000);
             });
         }
+        return true;
     });
 }
 

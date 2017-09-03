@@ -32,7 +32,7 @@
                     console.log(color);
                     // copy selected color to clipboard
                     copyToClipboard(color);
-                    //TODO copy to clipboard and set notification
+                    // send message to eventpage
                     chrome.runtime.sendMessage({"from": "colorPicked"}, function(response) {
                         return true;
                       });
@@ -42,18 +42,18 @@
     }
 
     var div, img, colorDiv, canvasWrapper, canvas, image, debugText;
-    console.log("aas");
     document.addEventListener("click", function(e) {
-
-        var pixelValue = getPixel(canvas.getContext("2d"), e.clientX, e.clientY);       
-        
-        storeColorPickerData(pixelValue);
-        document.body.removeChild(canvasWrapper);
-        document.body.removeChild(debugText);
+        // check if element exists before trying to remove it
+        if(document.body.contains(canvasWrapper)){
+            var pixelValue = getPixel(canvas.getContext("2d"), e.clientX, e.clientY);       
+            
+            storeColorPickerData(pixelValue);
+            document.body.removeChild(canvasWrapper);
+            document.body.removeChild(debugText);
+        } 
     });
 
     window.onscroll = function() {
-        console.log("scorll");
         if (canvasWrapper != null || canvasWrapper != undefined) {
             canvasWrapper.style.visibility = "hidden";
         }
