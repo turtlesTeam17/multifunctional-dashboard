@@ -24,7 +24,6 @@
         "scripts":          ["eventpage.js"],
         "persistent":       false
     },
-    "web_accessible_resources":["icons/icon48.png"],
 
   "commands": {
     "_execute_browser_action": {

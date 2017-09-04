@@ -32,7 +32,7 @@
                     console.log(color);
                     // copy selected color to clipboard
                     copyToClipboard(color);
-                    //TODO copy to clipboard and set notification
+                    // send message to eventpage
                     chrome.runtime.sendMessage({"from": "colorPicked"}, function(response) {
                         return true;
                       });
@@ -42,39 +42,8 @@
     }
 
     var div, img, colorDiv, canvasWrapper, canvas, image, debugText;
-    console.log("aas");
-    document.addEventListener("click", function(e) {
-
-        var pixelValue = getPixel(canvas.getContext("2d"), e.clientX, e.clientY);       
-        
-        storeColorPickerData(pixelValue);
-        document.body.removeChild(canvasWrapper);
-        document.body.removeChild(debugText);
-    });
-
-    window.onscroll = function() {
-        console.log("scorll");
-        if (canvasWrapper != null || canvasWrapper != undefined) {
-            canvasWrapper.style.visibility = "hidden";
-        }
-        chrome.runtime.sendMessage({
-            "from": "scroll"
-        }, function(response) {
-            drawScreenShot(response["image"]);
-            return true;
-        });
-    };
-
-
-    document.onkeydown = function(evt) {
-        evt = evt || window.event;
-        if (evt.keyCode == 27) {
-            div.parentNode.removeChild(div);
-        }
-    };
-
-    document.addEventListener("mousemove", function(e) {
-        /*
+     function mouseMoveListener(e){
+         /*
         if (div == null) {
             div = document.createElement("div");
             div.style.width = "110px";
@@ -134,16 +103,56 @@
         if (debugText == null) {
             debugText = document.createElement("span");
             debugText.style.position = "absolute";
-            debugText.style.top = "20px";
-            debugText.style.left = "20px";
             debugText.style.zIndex = "9999";
+            debugText.style.width = "100px";
+            debugText.style.height = "30px";
+            debugText.style.padding ="5px";
+            debugText.style.border = "1px solid black";
             document.body.appendChild(debugText);
 
         }
 
+        debugText.style.top = e.pageY - 20 +"px";
+        debugText.style.left = e.pageX + 20 + "px";
+        debugText.style.backgroundColor = pixelValue;
+        debugText.innerHTML = pixelValue;
+    }
+    function clickListener(e){
+        if(document.body.contains(canvasWrapper)){
+            var pixelValue = getPixel(canvas.getContext("2d"), e.clientX, e.clientY);       
+            storeColorPickerData(pixelValue);
+            document.body.removeChild(canvasWrapper);
+            document.body.removeChild(debugText);
+            debugText = null;
+            canvasWrapper = null;
+            document.removeEventListener("mousemove", mouseMoveListener);
+            document.removeEventListener("click", clickListener);
+        }
+    }
 
-        debugText.innerHTML = getPixel(canvas.getContext("2d"), e.clientX, e.clientY);
-    });
+    document.addEventListener("click", clickListener);
+
+    window.onscroll = function() {
+        if (canvasWrapper != null || canvasWrapper != undefined) {
+            canvasWrapper.style.visibility = "hidden";
+        }
+        chrome.runtime.sendMessage({
+            "from": "scroll"
+        }, function(response) {
+            drawScreenShot(response["image"]);
+            return true;
+        });
+    };
+
+
+    document.onkeydown = function(evt) {
+        evt = evt || window.event;
+        if (evt.keyCode == 27) {
+            div.parentNode.removeChild(div);
+        }
+    };
+   
+    document.addEventListener("mousemove", mouseMoveListener);
 
     chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 

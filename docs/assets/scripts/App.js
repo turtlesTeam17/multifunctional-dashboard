@@ -3559,17 +3559,17 @@ function add_message_listeners() {
         if (message["from"] == "colorPicked") {
             var notificationMsgg = {
                 type: "basic",
-                title: "Color Picker",
+                title: "Color",
                 message: "Hex color code copied to clipboard, and it's data sent to color history",
-                iconUrl: "../../icons/icon48.png"
+                iconUrl: "icons/icon128.png"
             };
             chrome.notifications.create('done', notificationMsgg, function () {
-                console.log("Last error:", chrome.runtime.lastError);
                 setTimeout(function () {
                     chrome.notifications.clear('done', function () {});
                 }, 2000);
             });
         }
+        return true;
     });
 }
 
