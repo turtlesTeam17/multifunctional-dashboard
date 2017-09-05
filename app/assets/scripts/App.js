@@ -40,6 +40,11 @@ function onColorClick(selectedColor) {
     printSelectedColor(selectedColor.substring(1));
 }
 
+$("#toggle-wrapper").on('click', function () {
+    $("#contentWrapper").toggle();
+    $(".options").toggle();
+});
+
 $(document).one('urlShortenerTriggered', function () { 
     shortenTabUrl();
     urlHistory();

@@ -134,6 +134,11 @@ function onColorClick(selectedColor) {
     (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
 }
 
+(0, _jquery2.default)("#toggle-wrapper").on('click', function () {
+    (0, _jquery2.default)("#contentWrapper").toggle();
+    (0, _jquery2.default)(".options").toggle();
+});
+
 (0, _jquery2.default)(document).one('urlShortenerTriggered', function () {
     (0, _shortenTabUrl2.default)();
     (0, _urlHistory2.default)();

@@ -1362,11 +1362,11 @@ we can specify global variable to use flexbox as default instead of floats
 .color-picker-popup{
     min-height: 600px;
     min-width: 600px;
-    max-height: 600px;
-    max-width: 600px;
+    max-height: 640px;
+    max-width: 640px;
 
     position: relative;
-    overflow: hidden;
+    overflow: scroll;
     height: 100%;
     width: 100%;
     top: 0;
@@ -1470,6 +1470,17 @@ we can specify global variable to use flexbox as default instead of floats
 
 .active {
     display: inherit; /* This will hide all DIV elements and show the tab with current class only.*/
+}
+
+#toggle-wrapper {
+    //position: absolute;
+    //top: 40px;
+    background-color: #00ccff;
+    //left: 40px;
+    //z-index: 100;
+    margin-top: 40px;
+    margin-left: 40px;
+    margin-right: 40px;
 }
 
 #settings {
