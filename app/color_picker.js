@@ -91,7 +91,6 @@
 
          */
         var pixelValue = getPixel(canvas.getContext("2d"), e.clientX, e.clientY);
-        //console.log(debugText);
         var msg = {
             "value": pixelValue,
             "from": "mousemove"
@@ -107,6 +106,7 @@
             debugText.style.border = "1px solid black";
             document.body.appendChild(debugText);
         }
+        debugText.style.visibility = "visible";
         debugText.style.top = e.pageY - 20 + "px";
         debugText.style.left = e.pageX + 20 + "px";
         debugText.style.backgroundColor = pixelValue;
@@ -159,11 +159,13 @@
     window.onscroll = function () {
         if (canvasWrapper != null || canvasWrapper != undefined) {
             canvasWrapper.style.visibility = "hidden";
+            debugText.style.visibility = "hidden";
         }
         chrome.runtime.sendMessage({
             "from": "scroll"
         }, function (response) {
             drawScreenShot(response["image"]);
+            canvasWrapper.style.visibility = "visible";
             return true;
         });
     };
