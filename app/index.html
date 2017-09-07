@@ -25,8 +25,12 @@
             <li class="tab" data-tab="settings">Settings</li>
         </ul>
     </div>
-    <button id="toggle-wrapper">Toggle</button>
-    <div id="contentWrapper">
+        <div class="colorInfo invisible">
+            <p class="selectedColor"></p>
+            <div class="scHex">#FFFFFF</div>
+            <div class="scRGB">rgb(255,255,255)</div>
+        </div>
+
         <div id="urlShortenerDiv" class="url-shortener tab-content">
             <div class="url-shortener__input">
                 <!-- <input id="longUrl_input" type="text" name="longUrl_input"> -->
@@ -52,10 +56,10 @@
                             <div>
                                 <button id="eyeDropper">Pick Color </button>
 
-                                <p id="selectedColor"></p>
+                                <p class="selectedColor"></p>
                                 <div>Selected Color</div>
-                                <div id="scHex">#FFFFFF</div>
-                                <div id="scRGB">rgb(255,255,255)</div>
+                                <div class="scHex">#FFFFFF</div>
+                                <div class="scRGB">rgb(255,255,255)</div>
                             </div>
                         </div>
 
@@ -74,9 +78,7 @@
                 </div>
             </div>
         </div>
-        <!-- <div id="quoteGrabber">
-
-        </div> -->
+        <!-- <div id="quoteGrabber"></div> -->
         <div id="settings">
             <div class="urlS-settings">
                 <h3>Url Shortener Settings</h3>
@@ -87,7 +89,7 @@
             </div>
 
         </div>
-    </div>
+
 
 
     <!-- build:js assets/scripts/App.js -->

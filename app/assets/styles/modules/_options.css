@@ -40,15 +40,3 @@
 .active {
     display: inherit; /* This will hide all DIV elements and show the tab with current class only.*/
 }
-
-#toggle-wrapper {
-    //position: absolute;
-    //top: 40px;
-    background-color: #00ccff;
-    //left: 40px;
-    //z-index: 100;
-    margin-top: 40px;
-    margin-left: 40px;
-    margin-right: 40px;
-}
-

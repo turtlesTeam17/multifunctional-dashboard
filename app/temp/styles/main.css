@@ -1346,7 +1346,7 @@ we can specify global variable to use flexbox as default instead of floats
     color:black;
 }
 
-#selectedColor{
+.selectedColor{
     width: 70px;
     height: 70px;
     background-color: #FCFFF5;
@@ -1360,7 +1360,7 @@ we can specify global variable to use flexbox as default instead of floats
     max-width: 640px;
 
     position: relative;
-    overflow: scroll;
+    overflow: auto;
     height: 100%;
     width: 100%;
     top: 0;
@@ -1434,6 +1434,25 @@ we can specify global variable to use flexbox as default instead of floats
   display:block;
 }
 
+.invisible {
+    display: none;
+}
+
+.minimized {
+    font-size: 15px;
+    display: block;
+    width: 130px;
+    height: 120px
+}
+
+.minimized .selectedColor {
+        margin: 5px auto;
+}
+
+.colorInfo {
+    text-align: center;
+}
+
 .tab-content{
 	display: none;
 }
@@ -1464,17 +1483,6 @@ we can specify global variable to use flexbox as default instead of floats
 
 .active {
     display: inherit; /* This will hide all DIV elements and show the tab with current class only.*/
-}
-
-#toggle-wrapper {
-    //position: absolute;
-    //top: 40px;
-    background-color: #00ccff;
-    //left: 40px;
-    //z-index: 100;
-    margin-top: 40px;
-    margin-left: 40px;
-    margin-right: 40px;
 }
 
 #settings {
@@ -1511,10 +1519,6 @@ we can specify global variable to use flexbox as default instead of floats
 /*
  * Hide visually and from screen readers
  */
-
-/*.hidden {
-    display: none !important;
-}*/
 
 /*
  * Hide only visually, but have it available for screen readers:
