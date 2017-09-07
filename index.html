@@ -32,7 +32,7 @@
     .container {
         display: flex;
         align-items: center;
-        flex:1;
+        flex: 1 0 auto;
     }
 
     .header {
@@ -47,7 +47,7 @@
         margin-left: 40%;
     }
 
-    @media (max-width:680px) {
+    @media (max-width:600px) {
         .container {
             flex-direction: column;
         }
@@ -63,17 +63,16 @@
 
 <body>
     <div class="mainContainer">
-        <div class="header">
-        	
+        <header class="header">
             <div>
 	            <h1>Privacy Policy - Multifunctional Dashboard <img src="./app/icons/icon48.png"></h1>
 	            <p>Developed by <a href="https://github.com/turtlesTeam17"> Chingu Turtles-Team-17</a></p>
 	         </div>
-        </div>
+        </header>
         <div class="container">
-            <div class="policy">
+            <section class="policy">
                 This privacy policy has been compiled to better serve those who are concerned with how their 'Personally identifiable information' (PII) is being used online. PII, as used in US privacy law and information security, is information that can be used on its own or with other information to identify, contact, or locate a single person, or to identify an individual in context. Please read our privacy policy carefully to get a clear understanding of how we collect, use, protect or otherwise handle your Personally Identifiable Information in accordance with our website.
-            </div>
+            </section>
             <ol class="content">
                 <li>
                     <b>Collection of Information </b>
@@ -85,9 +84,9 @@
                 </li>
             </ol>
         </div>
-        <div class="footer">
+        <footer class="footer">
             Found a bug ? Open an issue <a href="https://github.com/turtlesTeam17/multifunctional-dashboard/issues"> here </a>
-        </div>
+        </footer>
     </div>
 </body>
 
