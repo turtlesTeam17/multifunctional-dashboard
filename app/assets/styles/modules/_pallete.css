@@ -1,8 +1,13 @@
 #eyeDropper{
-    background-color: green;
-    border-radius: 11%;
+    background-color: #193441;
+    // border-radius: 11%;
     outline: none;
     border: none;
+    margin: 0 auto;
+}
+
+#eyeDropper:hover {
+    background-color: #565556;
 }
 #palette{
     font-size: 12px;
@@ -11,6 +16,7 @@
     color:black;
 }
 .selectedColor{
+    margin: 15px auto;
     width: 70px;
     height: 70px;
     background-color: #FCFFF5;
@@ -18,10 +24,10 @@
 }
 .color-picker-popup{
     min-height: 600px;
-    min-width: 600px;
+    min-width: 500px;
     max-height: 640px;
-    max-width: 640px;
-
+    max-width: 500px;
+    text-align: center;
     position: relative;
     overflow: auto;
     height: 100%;
@@ -34,9 +40,15 @@
 }
 .cTitle{
      position: relative;
-     left: 150px;
+     left: 200px;
      color:#FCFFF5;
      font-weight: bold;
+}
+
+.selectedTitle {
+    color: #193441;
+    font-size: 1.1rem;
+    border-bottom: .5px solid #193441;
 }
 .color-picker-popup .table{
     margin-top: -20px;
@@ -73,6 +85,12 @@
 .collapse{
   cursor: pointer;
   display: block;
+  font-size: 1.3rem;
+  border: 1px solid #727072;
+  height: 1.6rem;
+  background: #193441;
+  line-height: 100%;
+  padding-top: 3.5px;
 }
 .collapse + input{
   display: none; /* hide the checkboxes */
@@ -98,4 +116,27 @@
 }
 .colorInfo {
     text-align: center;
+}
+
+.Chevron{
+    position:relative;
+    display:block;
+    height:30px;/*height should be double border*/
+}
+.Chevron:before,
+.Chevron:after{
+    position:absolute;
+    left: 8px;
+    display:block;
+    content:"";
+    border:15px solid transparent;/*adjust size*/
+}
+/* Replace all text `top` below with left/right/bottom to rotate the chevron */
+.Chevron:before{
+    top:7px;
+    border-top-color:#b00;/*Chevron Color*/
+}
+.Chevron:after{
+    top:2px;/*adjust thickness*/
+    border-top-color:#193441;/*Match background colour*/
 }
