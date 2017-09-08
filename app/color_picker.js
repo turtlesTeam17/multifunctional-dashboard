@@ -106,11 +106,36 @@
             debugText.style.border = "1px solid black";
             document.body.appendChild(debugText);
         }
+
+        console.log(img);
+        if (img == null || img == "undefined") {
+            //document.body.style.cursor = "url(" + chrome.extension.getURL("cursor.png") + ")";
+            //document.body.style.cursor = "none";
+            img = document.createElement("img");
+            img.src = chrome.extension.getURL("assets/images/color-picker.png");
+            img.style.width = "25px";
+            img.style.height = "25px";
+            img.style.maxHeight = "100%";
+            img.style.maxWidth = "100%";
+            img.style.position = "absolute";
+            img.style.zIndex = "9999";
+            document.body.appendChild(img);
+        }
+
+        img.style.top = e.pageY - 25 +"px";
+        img.style.left = e.pageX + "px";
+
         debugText.style.visibility = "visible";
-        debugText.style.top = e.pageY - 20 + "px";
-        debugText.style.left = e.pageX + 20 + "px";
+        debugText.style.top = e.pageY - 55 + "px";
+        debugText.style.left = e.pageX +25 + "px";
         debugText.style.backgroundColor = pixelValue;
         debugText.innerHTML = pixelValue;
+
+
+        if(document.body.style.cursor != "none") {
+            document.body.style.cursor = "none";
+        }
+
         // dynamic change of text color based on background color
         getRGB(debugText.style.backgroundColor);
         var currentColor = Math.round(((parseInt(rgbVal.red) * 299) + (parseInt(rgbVal.green) * 587) + (parseInt(rgbVal.blue) * 114)) / 1000);
@@ -138,9 +163,15 @@
             document.body.removeChild(debugText);
             debugText = null;
             canvasWrapper = null;
-            document.removeEventListener("mousemove", mouseMoveListener);
-            document.removeEventListener("click", clickListener);
+            document.body.style.cursor = "auto";
         }
+
+        if (document.body.contains(img)) {
+            document.body.removeChild(img);
+            img = null;
+        }
+        document.removeEventListener("mousemove", mouseMoveListener, true);
+        document.removeEventListener("click", clickListener, true);
     }
 
     function copyToClipboard(item) {
@@ -154,7 +185,7 @@
         document.body.removeChild(input);
     };
 
-    document.addEventListener("click", clickListener);
+    document.addEventListener("click", clickListener, true);
 
     window.onscroll = function () {
         if (canvasWrapper != null || canvasWrapper != undefined) {
@@ -178,7 +209,7 @@
         }
     };
 
-    document.addEventListener("mousemove", mouseMoveListener);
+    document.addEventListener("mousemove", mouseMoveListener, true);
 
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 

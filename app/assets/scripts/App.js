@@ -8,6 +8,7 @@ import printPalette from './modules/getPalette';
 import shortenTabUrl from './modules/shortenTabUrl';
 import urlHistory from './modules/urlHistory';
 import './modules/tabs';
+import colorInfo from './modules/colorInfoBlock';
 
 import colorPickerInit from './modules/colorPicker';
 import { storeColorPickerData, printNewHistoryColor, printHistoryColor, printSelectedColor } from './modules/colorHistory';
@@ -17,6 +18,10 @@ $(document).ready(function() {
     $("#eyeDropper").on('click', function() {
         console.log("pick color!");
         colorPickerInit();
+        $('.options').addClass('invisible');
+        $('#colorPickerDiv').addClass('invisible');
+        $('.colorInfo').removeClass('invisible');
+        colorInfo();
     });
     $('#shrinkMe').click(function(){ // or any other event
         $(this).toggleClass('shrink');
@@ -40,10 +45,10 @@ function onColorClick(selectedColor) {
     printSelectedColor(selectedColor.substring(1));
 }
 
-$("#toggle-wrapper").on('click', function () {
-    $("#contentWrapper").toggle();
-    $(".options").toggle();
-});
+// $("#toggle-wrapper").on('click', function () {
+//     $("#contentWrapper").toggle();
+//     $(".options").toggle();
+// });
 
 $(document).one('urlShortenerTriggered', function () { 
     shortenTabUrl();
