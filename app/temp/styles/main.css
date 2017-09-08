@@ -1398,7 +1398,7 @@ we can specify global variable to use flexbox as default instead of floats
 
 .color-picker-popup .table{
     margin-top: -20px;
-    margin-left: 30px;
+    margin-left: 15px;
     background-color: #3E606F;
 }
 
@@ -1426,7 +1426,11 @@ we can specify global variable to use flexbox as default instead of floats
 #color-history-elements td{
     cursor: pointer;
     width:50px; 
-    height:50px;
+    height:50px
+}
+
+#color-history-elements td:hover {
+      box-shadow: inset 0 0 10px black;
 }
 
 #historyTitle{

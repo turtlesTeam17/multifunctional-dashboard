@@ -111,6 +111,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 (0, _jquery2.default)(document).ready(function () {
     (0, _colorHistory.printHistoryColor)(onColorClick);
+    var selectedColor = getLastColor();
+    (0, _getPalette2.default)(selectedColor.substring(1));
+    (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
     (0, _jquery2.default)("#eyeDropper").on('click', function () {
         console.log("pick color!");
         (0, _colorPicker2.default)();
@@ -151,6 +154,11 @@ function onColorClick(selectedColor) {
     (0, _shortenTabUrl2.default)();
     (0, _urlHistory2.default)();
 });
+
+async function getLastColor() {
+    var historyColors = await chrome.storage.sync.get('historyColors');
+    return historyColors[historyColors.length - 1];
+}
 
 /***/ }),
 /* 1 */
@@ -3573,18 +3581,23 @@ var contentScriptExecuted = false;
 
 function add_message_listeners() {
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-        if (message["from"] == "position" || message["from"] == "mousemove") {
-            var selectedColor = message["value"];
-            (0, _App.showSelectedColor)(selectedColor);
+        try {
+            if (message["from"] == "position" || message["from"] == "mousemove") {
+                var selectedColor = message["value"];
+                (0, _App.showSelectedColor)(selectedColor);
+            }
+            if (message["from"] == "scroll") {
+                console.log("scroll in tab");
+                //capture_screen();
+                chrome.tabs.captureVisibleTab(null, { "format": "png" }, function (img) {
+                    sendResponse({ "image": img });
+                });
+                return true;
+            }
+        } catch (e) {
+            console.log("errOR: " + e.message);
         }
-        if (message["from"] == "scroll") {
-            console.log("scroll in tab");
-            //capture_screen();
-            chrome.tabs.captureVisibleTab(null, { "format": "png" }, function (img) {
-                sendResponse({ "image": img });
-            });
-            return true;
-        }
+
         // notification for colorpicker
         if (message["from"] == "colorPicked") {
             var notificationMsgg = {

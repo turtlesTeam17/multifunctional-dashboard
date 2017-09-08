@@ -14,7 +14,12 @@ import colorPickerInit from './modules/colorPicker';
 import { storeColorPickerData, printNewHistoryColor, printHistoryColor, printSelectedColor } from './modules/colorHistory';
 
 $(document).ready(function() {
-    printHistoryColor(onColorClick);
+     printHistoryColor(onColorClick);
+     getLastColor().then((selectedColor) => { 
+        printPalette(selectedColor.substring(1));
+        printSelectedColor(selectedColor.substring(1));
+    });
+    
     $("#eyeDropper").on('click', function() {
         console.log("pick color!");
         colorPickerInit();
@@ -28,13 +33,6 @@ $(document).ready(function() {
     });
 });
 
-$("#colorPicker").on("change", function(e) {
-    var selectedColor = e.currentTarget.value;
-    storeColorPickerData(selectedColor,onColorClick);
-    printPalette(selectedColor.substring(1));
-    printSelectedColor(selectedColor.substring(1));
-});
-
 export function showSelectedColor(selectedColor){
     printSelectedColor(selectedColor.substring(1));
     printPalette(selectedColor.substring(1));
@@ -45,13 +43,12 @@ function onColorClick(selectedColor) {
     printSelectedColor(selectedColor.substring(1));
 }
 
-// $("#toggle-wrapper").on('click', function () {
-//     $("#contentWrapper").toggle();
-//     $(".options").toggle();
-// });
-
 $(document).one('urlShortenerTriggered', function () { 
     shortenTabUrl();
     urlHistory();
  })
 
+async function getLastColor(){
+    var history = await chrome.storage.sync.get('historyColors');
+    return history.historyColors[history.historyColors.length-1];
+}
