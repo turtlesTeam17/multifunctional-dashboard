@@ -6,7 +6,7 @@
     <title>Multidash</title>
     <meta name="description" content="">
     <script src="assets/scripts/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="assets/styles/main-8566aa4e98.css"/>
+    <link rel="stylesheet" href="assets/styles/main-27e882f787.css"/>
     <script src="assets/scripts/Vendor.js"></script>
 </head>
 
@@ -15,12 +15,16 @@
         <ul class="tabs">
             <li class="tab active" data-tab="colorPickerDiv">Color Picker</li>
             <li class="tab" data-tab="urlShortenerDiv">Url Shortener</li>
-            <li class="tab" data-tab="quoteGrabber">Quote Grabber</li>
+            <!-- <li class="tab" data-tab="quoteGrabber">Quote Grabber</li> -->
             <li class="tab" data-tab="settings">Settings</li>
         </ul>
     </div>
-    <button id="toggle-wrapper">Toggle</button>
-    <div id="contentWrapper">
+        <div class="colorInfo invisible">
+            <p class="selectedColor"></p>
+            <div class="scHex">#FFFFFF</div>
+            <div class="scRGB">rgb(255,255,255)</div>
+        </div>
+
         <div id="urlShortenerDiv" class="url-shortener tab-content">
             <div class="url-shortener__input">
                 <!-- <input id="longUrl_input" type="text" name="longUrl_input"> -->
@@ -46,14 +50,14 @@
                             <div>
                                 <button id="eyeDropper">Pick Color </button>
 
-                                <p id="selectedColor"></p>
-                                <div>Selected Color</div>
-                                <div id="scHex">#FFFFFF</div>
-                                <div id="scRGB">rgb(255,255,255)</div>
+                                <p class="selectedColor"></p>
+                                <div><span class="selectedTitle">Selected Color</span></div>
+                                <div class="scHex">#FFFFFF</div>
+                                <div class="scRGB">rgb(255,255,255)</div>
                             </div>
                         </div>
 
-                        <label class="collapse" for="_2">History</label>
+                        <label class="collapse Chevron" for="_2">History</label>
                         <input id="_2" type="checkbox" checked>
                         <div>
                             <div class="row">
@@ -68,9 +72,7 @@
                 </div>
             </div>
         </div>
-        <div id="quoteGrabber">
-
-        </div>
+        <!-- <div id="quoteGrabber"></div> -->
         <div id="settings">
             <div class="urlS-settings">
                 <h3>Url Shortener Settings</h3>
@@ -81,7 +83,7 @@
             </div>
 
         </div>
-    </div>
+
 
 
     <script src="assets/scripts/App.js"></script>

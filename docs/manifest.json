@@ -36,6 +36,10 @@
     }
   },
 
+  "web_accessible_resources": [
+    "assets/images/color-picker.png"
+  ],
+
     "permissions": [
                             "storage",
                             "notifications",

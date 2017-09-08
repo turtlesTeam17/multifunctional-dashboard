@@ -3573,18 +3573,23 @@ var contentScriptExecuted = false;
 
 function add_message_listeners() {
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-        if (message["from"] == "position" || message["from"] == "mousemove") {
-            var selectedColor = message["value"];
-            (0, _App.showSelectedColor)(selectedColor);
+        try {
+            if (message["from"] == "position" || message["from"] == "mousemove") {
+                var selectedColor = message["value"];
+                (0, _App.showSelectedColor)(selectedColor);
+            }
+            if (message["from"] == "scroll") {
+                console.log("scroll in tab");
+                //capture_screen();
+                chrome.tabs.captureVisibleTab(null, { "format": "png" }, function (img) {
+                    sendResponse({ "image": img });
+                });
+                return true;
+            }
+        } catch (e) {
+            console.log("errOR: " + e.message);
         }
-        if (message["from"] == "scroll") {
-            console.log("scroll in tab");
-            //capture_screen();
-            chrome.tabs.captureVisibleTab(null, { "format": "png" }, function (img) {
-                sendResponse({ "image": img });
-            });
-            return true;
-        }
+
         // notification for colorpicker
         if (message["from"] == "colorPicked") {
             var notificationMsgg = {

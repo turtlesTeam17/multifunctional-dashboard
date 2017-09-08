@@ -106,11 +106,36 @@
             debugText.style.border = "1px solid black";
             document.body.appendChild(debugText);
         }
+
+
+        if (img == null) {
+            //document.body.style.cursor = "url(" + chrome.extension.getURL("cursor.png") + ")";
+            //document.body.style.cursor = "none";
+            img = document.createElement("img");
+            img.src = chrome.extension.getURL("assets/images/color-picker.png");
+            img.style.width = "25px";
+            img.style.height = "25px";
+            img.style.maxHeight = "100%";
+            img.style.maxWidth = "100%";
+            img.style.position = "absolute";
+            img.style.zIndex = "9999";
+            document.body.appendChild(img);
+        }
+
+        img.style.top = e.pageY - 25 +"px";
+        img.style.left = e.pageX + "px";
+
         debugText.style.visibility = "visible";
-        debugText.style.top = e.pageY - 20 + "px";
-        debugText.style.left = e.pageX + 20 + "px";
+        debugText.style.top = e.pageY - 55 + "px";
+        debugText.style.left = e.pageX +25 + "px";
         debugText.style.backgroundColor = pixelValue;
         debugText.innerHTML = pixelValue;
+
+
+        if(document.body.style.cursor != "none") {
+            document.body.style.cursor = "none";
+        }
+
         // dynamic change of text color based on background color
         getRGB(debugText.style.backgroundColor);
         var currentColor = Math.round(((parseInt(rgbVal.red) * 299) + (parseInt(rgbVal.green) * 587) + (parseInt(rgbVal.blue) * 114)) / 1000);
@@ -136,10 +161,12 @@
             storeColorPickerData(pixelValue);
             document.body.removeChild(canvasWrapper);
             document.body.removeChild(debugText);
+            document.body.removeChild(img);
             debugText = null;
             canvasWrapper = null;
             document.removeEventListener("mousemove", mouseMoveListener);
             document.removeEventListener("click", clickListener);
+            document.body.style.cursor = "auto";
         }
     }
 
