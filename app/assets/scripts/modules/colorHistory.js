@@ -9,11 +9,11 @@ import {hexToRgb} from './getPalette';
             var historyColors = result.historyColors || [];
             
             //add check for duplicates    
-            var dublicate = historyColors.length !==0 && historyColors.filter(function(hColor){
+            var duplicate = historyColors.length !==0 && historyColors.filter(function(hColor){
                 return hColor  == color;
             }).length !==0;
            
-            if(!dublicate){
+            if(!duplicate){
                 
                if(historyColors.length >= STORAGE_LIMIT){
                     historyColors.shift();
@@ -94,8 +94,8 @@ export function printNewHistoryColor(color,onColorClick){
         });
    }     
 export function printSelectedColor(color){
-      $('#selectedColor').css('background-color',"#"+color);
-      $('#scHex').text("#"+color);
+      $('.selectedColor').css('background-color',"#"+color);
+      $('.scHex').text("#"+color);
       var rgbValues = hexToRgb("#"+color);
-      $('#scRGB').text("rgb("+parseInt(rgbValues[1],16)+","+parseInt(rgbValues[2],16)+","+parseInt(rgbValues[3],16)+")");
+      $('.scRGB').text("rgb("+parseInt(rgbValues[1],16)+","+parseInt(rgbValues[2],16)+","+parseInt(rgbValues[3],16)+")");
 }

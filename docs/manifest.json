@@ -3,12 +3,12 @@
 
     "name":                 "Multidash",
     "description":          "A chrome extension with multiple features",
-    "version":              "0.1",
+    "version":              "0.9",
 
     "browser_action": {
         "default_icon":     "icons/icon48.png",
-        "default_title":    "Bit.ly url shortener",
-        "default_popup":    "colors.html"
+        "default_title":    "A chrome extension with multiple features",
+        "default_popup":    "index.html"
     },
 
     "icons": 
@@ -36,29 +36,15 @@
     }
   },
 
+  "web_accessible_resources": [
+    "assets/images/color-picker.png"
+  ],
+
     "permissions": [
                             "storage",
                             "notifications",
                             "contextMenus",
                             "clipboardWrite",
-                            "activeTab",
-                            "tabs",
-                            "clipboardWrite",
-                            "http://*/*",
-                            "https://*/*"
-    ],
-
-  "web_accessible_resources": [
-    "color_picker.js"
-  ]
-  ,
-
-    "content_scripts": 
-	[
-		{
-			"matches": 			      ["http://*/*", "https://*/*"],
-			"js": 				        ["content_script.js"],
-			"all_frames": 		    true
-		}
-  ]
+                            "activeTab"
+    ]
 }

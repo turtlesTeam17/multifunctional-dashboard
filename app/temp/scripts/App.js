@@ -60,11 +60,98 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.showSelectedColor = showSelectedColor;
+
+var _jquery = __webpack_require__(1);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+__webpack_require__(6);
+
+__webpack_require__(7);
+
+var _getPalette = __webpack_require__(2);
+
+var _getPalette2 = _interopRequireDefault(_getPalette);
+
+var _shortenTabUrl = __webpack_require__(8);
+
+var _shortenTabUrl2 = _interopRequireDefault(_shortenTabUrl);
+
+var _urlHistory = __webpack_require__(10);
+
+var _urlHistory2 = _interopRequireDefault(_urlHistory);
+
+__webpack_require__(11);
+
+var _colorInfoBlock = __webpack_require__(12);
+
+var _colorInfoBlock2 = _interopRequireDefault(_colorInfoBlock);
+
+var _colorPicker = __webpack_require__(13);
+
+var _colorPicker2 = _interopRequireDefault(_colorPicker);
+
+var _colorHistory = __webpack_require__(14);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _jquery2.default)(document).ready(function () {
+    (0, _colorHistory.printHistoryColor)(onColorClick);
+    getLastColor().then(function (selectedColor) {
+        (0, _getPalette2.default)(selectedColor.substring(1));
+        (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
+    });
+
+    (0, _jquery2.default)("#eyeDropper").on('click', function () {
+        console.log("pick color!");
+        (0, _colorPicker2.default)();
+        (0, _jquery2.default)('.options').addClass('invisible');
+        (0, _jquery2.default)('#colorPickerDiv').addClass('invisible');
+        (0, _jquery2.default)('.colorInfo').removeClass('invisible');
+        (0, _colorInfoBlock2.default)();
+    });
+    (0, _jquery2.default)('#shrinkMe').click(function () {
+        // or any other event
+        (0, _jquery2.default)(this).toggleClass('shrink');
+    });
+});
+
+function showSelectedColor(selectedColor) {
+    (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
+    (0, _getPalette2.default)(selectedColor.substring(1));
+}
+
+function onColorClick(selectedColor) {
+    (0, _getPalette2.default)(selectedColor.substring(1));
+    (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
+}
+
+(0, _jquery2.default)(document).one('urlShortenerTriggered', function () {
+    (0, _shortenTabUrl2.default)();
+    (0, _urlHistory2.default)();
+});
+
+async function getLastColor() {
+    var history = await chrome.storage.sync.get('historyColors');
+    return history.historyColors[history.historyColors.length - 1];
+}
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2354,7 +2441,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2563,7 +2650,7 @@ function printPalette(color) {
 exports.default = printPalette;
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2575,72 +2662,6 @@ Object.defineProperty(exports, "__esModule", {
 var STORAGE_LIMIT = exports.STORAGE_LIMIT = 50;
 var NUM_COLUMNS = exports.NUM_COLUMNS = 2;
 var COLOR_PICKER_CONTENT_SCRIPT = exports.COLOR_PICKER_CONTENT_SCRIPT = "color_picker.js";
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-__webpack_require__(6);
-
-__webpack_require__(7);
-
-var _getPalette = __webpack_require__(1);
-
-var _getPalette2 = _interopRequireDefault(_getPalette);
-
-var _shortenTabUrl = __webpack_require__(8);
-
-var _shortenTabUrl2 = _interopRequireDefault(_shortenTabUrl);
-
-var _urlHistory = __webpack_require__(10);
-
-var _urlHistory2 = _interopRequireDefault(_urlHistory);
-
-__webpack_require__(11);
-
-var _colorPicker = __webpack_require__(12);
-
-var _colorPicker2 = _interopRequireDefault(_colorPicker);
-
-var _colorHistory = __webpack_require__(13);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-(0, _jquery2.default)(document).ready(function () {
-    (0, _colorHistory.printHistoryColor)(onColorClick);
-    (0, _jquery2.default)("#eyeDropper").on('click', function () {
-        console.log("pick color!");
-        (0, _colorPicker2.default)();
-    });
-    (0, _jquery2.default)('#shrinkMe').click(function () {
-        // or any other event
-        (0, _jquery2.default)(this).toggleClass('shrink');
-    });
-});
-
-(0, _jquery2.default)("#colorPicker").on("change", function (e) {
-    var selectedColor = e.currentTarget.value;
-    (0, _colorHistory.storeColorPickerData)(selectedColor, onColorClick);
-    (0, _getPalette2.default)(selectedColor.substring(1));
-    (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
-});
-
-function onColorClick(selectedColor) {
-    (0, _getPalette2.default)(selectedColor.substring(1));
-    (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
-}
-
-(0, _jquery2.default)(document).one('urlShortenerTriggered', function () {
-    (0, _shortenTabUrl2.default)();
-    (0, _urlHistory2.default)();
-});
 
 /***/ }),
 /* 4 */
@@ -3476,7 +3497,7 @@ exports.default = urlHistory;
 "use strict";
 
 
-var _jquery = __webpack_require__(0);
+var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -3508,12 +3529,36 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _constants = __webpack_require__(2);
+function colorInfo() {
+    document.body.className = "minimized";
+}
+
+exports.default = colorInfo;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _constants = __webpack_require__(3);
+
+var _App = __webpack_require__(0);
 
 /*
 
 @prop   - insures that the content scrip is ran only once
         -> used in @func inject_script_current_tab
+ */
+
+/**
+ * Created by Tudor on 8/9/2017.
+
  */
 
 var contentScriptExecuted = false;
@@ -3524,22 +3569,40 @@ var contentScriptExecuted = false;
  => the messages is consumed by the content script
  */
 
-/**
- * Created by Tudor on 8/9/2017.
-
- */
-
 function add_message_listeners() {
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-        if (message["from"] == "position" || message["from"] == "mousemove") {}
-        if (message["from"] == "scroll") {
-            console.log("scroll in tab");
-            //capture_screen();
-            chrome.tabs.captureVisibleTab(null, { "format": "png" }, function (img) {
-                sendResponse({ "image": img });
-            });
-            return true;
+        try {
+            if (message["from"] == "position" || message["from"] == "mousemove") {
+                var selectedColor = message["value"];
+                (0, _App.showSelectedColor)(selectedColor);
+            }
+            if (message["from"] == "scroll") {
+                console.log("scroll in tab");
+                //capture_screen();
+                chrome.tabs.captureVisibleTab(null, { "format": "png" }, function (img) {
+                    sendResponse({ "image": img });
+                });
+                return true;
+            }
+        } catch (e) {
+            console.log("errOR: " + e.message);
         }
+
+        // notification for colorpicker
+        if (message["from"] == "colorPicked") {
+            var notificationMsgg = {
+                type: "basic",
+                title: "Color",
+                message: "Hex color code copied to clipboard, and it's data sent to color history",
+                iconUrl: "icons/icon128.png"
+            };
+            chrome.notifications.create('done', notificationMsgg, function () {
+                setTimeout(function () {
+                    chrome.notifications.clear('done', function () {});
+                }, 2000);
+            });
+        }
+        return true;
     });
 }
 
@@ -3615,7 +3678,7 @@ function colorPickerInit() {
 exports.default = colorPickerInit;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3629,9 +3692,9 @@ exports.printHistoryColor = printHistoryColor;
 exports.printNewHistoryColor = printNewHistoryColor;
 exports.printSelectedColor = printSelectedColor;
 
-var _constants = __webpack_require__(2);
+var _constants = __webpack_require__(3);
 
-var _getPalette = __webpack_require__(1);
+var _getPalette = __webpack_require__(2);
 
 function storeColorPickerData(color, onColorClick) {
 
@@ -3641,11 +3704,11 @@ function storeColorPickerData(color, onColorClick) {
         var historyColors = result.historyColors || [];
 
         //add check for duplicates    
-        var dublicate = historyColors.length !== 0 && historyColors.filter(function (hColor) {
+        var duplicate = historyColors.length !== 0 && historyColors.filter(function (hColor) {
             return hColor == color;
         }).length !== 0;
 
-        if (!dublicate) {
+        if (!duplicate) {
 
             if (historyColors.length >= _constants.STORAGE_LIMIT) {
                 historyColors.shift();
@@ -3718,10 +3781,10 @@ function printNewHistoryColor(color, onColorClick) {
     });
 }
 function printSelectedColor(color) {
-    $('#selectedColor').css('background-color', "#" + color);
-    $('#scHex').text("#" + color);
+    $('.selectedColor').css('background-color', "#" + color);
+    $('.scHex').text("#" + color);
     var rgbValues = (0, _getPalette.hexToRgb)("#" + color);
-    $('#scRGB').text("rgb(" + parseInt(rgbValues[1], 16) + "," + parseInt(rgbValues[2], 16) + "," + parseInt(rgbValues[3], 16) + ")");
+    $('.scRGB').text("rgb(" + parseInt(rgbValues[1], 16) + "," + parseInt(rgbValues[2], 16) + "," + parseInt(rgbValues[3], 16) + ")");
 }
 
 /***/ })

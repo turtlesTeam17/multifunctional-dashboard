@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,28 +71,19 @@
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-var STORAGE_LIMIT = exports.STORAGE_LIMIT = 50;
-var NUM_COLUMNS = exports.NUM_COLUMNS = 2;
-var COLOR_PICKER_CONTENT_SCRIPT = exports.COLOR_PICKER_CONTENT_SCRIPT = "color_picker.js";
+exports.showSelectedColor = showSelectedColor;
 
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _jquery = __webpack_require__(2);
+var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-__webpack_require__(5);
-
 __webpack_require__(6);
 
-var _getPalette = __webpack_require__(7);
+__webpack_require__(7);
+
+var _getPalette = __webpack_require__(2);
 
 var _getPalette2 = _interopRequireDefault(_getPalette);
 
@@ -104,25 +95,36 @@ var _urlHistory = __webpack_require__(10);
 
 var _urlHistory2 = _interopRequireDefault(_urlHistory);
 
-var _colorPicker = __webpack_require__(11);
+__webpack_require__(11);
+
+var _colorInfoBlock = __webpack_require__(12);
+
+var _colorInfoBlock2 = _interopRequireDefault(_colorInfoBlock);
+
+var _colorPicker = __webpack_require__(13);
 
 var _colorPicker2 = _interopRequireDefault(_colorPicker);
 
-var _colorHistory = __webpack_require__(12);
+var _colorHistory = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//import colorPickerContentScript from './modules/colorPickerContentScript';
-
-(0, _shortenTabUrl2.default)();
-(0, _urlHistory2.default)();
-
 (0, _jquery2.default)(document).ready(function () {
     (0, _colorHistory.printHistoryColor)(onColorClick);
+    var selectedColor = getLastColor();
+    (0, _getPalette2.default)(selectedColor.substring(1));
+    (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
     (0, _jquery2.default)("#eyeDropper").on('click', function () {
         console.log("pick color!");
-        console.log(_colorPicker2.default);
-        _colorPicker2.default.init();
+        (0, _colorPicker2.default)();
+        (0, _jquery2.default)('.options').addClass('invisible');
+        (0, _jquery2.default)('#colorPickerDiv').addClass('invisible');
+        (0, _jquery2.default)('.colorInfo').removeClass('invisible');
+        (0, _colorInfoBlock2.default)();
+    });
+    (0, _jquery2.default)('#shrinkMe').click(function () {
+        // or any other event
+        (0, _jquery2.default)(this).toggleClass('shrink');
     });
 });
 
@@ -130,14 +132,36 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     var selectedColor = e.currentTarget.value;
     (0, _colorHistory.storeColorPickerData)(selectedColor, onColorClick);
     (0, _getPalette2.default)(selectedColor.substring(1));
+    (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
 });
 
-function onColorClick(selectedColor) {
+function showSelectedColor(selectedColor) {
+    (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
     (0, _getPalette2.default)(selectedColor.substring(1));
 }
 
+function onColorClick(selectedColor) {
+    (0, _getPalette2.default)(selectedColor.substring(1));
+    (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
+}
+
+// $("#toggle-wrapper").on('click', function () {
+//     $("#contentWrapper").toggle();
+//     $(".options").toggle();
+// });
+
+(0, _jquery2.default)(document).one('urlShortenerTriggered', function () {
+    (0, _shortenTabUrl2.default)();
+    (0, _urlHistory2.default)();
+});
+
+async function getLastColor() {
+    var historyColors = await chrome.storage.sync.get('historyColors');
+    return historyColors[historyColors.length - 1];
+}
+
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2416,7 +2440,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return 1 === arguments.length ? this.off(a, "**") : this.off(b, a || "**", c);
     } }), r.holdReady = function (a) {
     a ? r.readyWait++ : r.ready(!0);
-  }, r.isArray = Array.isArray, r.parseJSON = JSON.parse, r.nodeName = B, "function" == "function" && __webpack_require__(4) && !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+  }, r.isArray = Array.isArray, r.parseJSON = JSON.parse, r.nodeName = B, "function" == "function" && __webpack_require__(5) && !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
     return r;
   }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));var Vb = a.jQuery,
@@ -2424,10 +2448,233 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return a.$ === r && (a.$ = Wb), b && a.jQuery === r && (a.jQuery = Vb), r;
   }, b || (a.jQuery = a.$ = r), r;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.hexToRgb = hexToRgb;
+var NUM_COLUMNS = 4;
+var GRAY = "666666";
+
+function getPallete(color) {
+    var palette = [];
+    //add shades
+    palette.push(ColorLuminance(color, 0.2)); // 20% lighter
+    palette.push(ColorLuminance(color, 0.4)); // 40% lighter
+    palette.push(ColorLuminance(color, -0.2)); // 20% darker
+    palette.push(ColorLuminance(color, -0.4)); // 40% darker 
+    //add tones 
+    palette.push(mix(color, GRAY, 90)); // 60% tone
+    palette.push(mix(color, GRAY, 60)); // 90% tone
+    palette.push(mix(color, GRAY, 40)); // 40% tone
+    palette.push(mix(color, GRAY, 30)); // 50% tone
+    //complementary color scheme
+    var complement = hexToComplimentary(color, 180);
+    palette.push("#" + color);
+    palette.push(complement); // 50% tone
+    palette.push(ColorLuminance(color, -0.1)); // 60% tone
+    palette.push(ColorLuminance(complement, -0.1)); // 90% tone
+    //analogous color scheme 
+    var analogue1 = hexToComplimentary(color, -40);
+    var analogue2 = hexToComplimentary(color, 40);
+    palette.push(analogue1); // 50% tone
+    palette.push("#" + color);
+    palette.push(analogue2); // 50% tone
+    palette.push(ColorLuminance(analogue2, 0.1));
+    return palette;
+}
+//to create shades
+function ColorLuminance(hex, lum) {
+
+    // validate hex string
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+    lum = lum || 0;
+
+    // convert to decimal and change luminosity
+    var rgb = "#",
+        c,
+        i;
+    for (i = 0; i < 3; i++) {
+        c = parseInt(hex.substr(i * 2, 2), 16);
+        c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
+        rgb += ("00" + c).substr(c.length);
+    }
+
+    return rgb;
+}
+function mix(color_1, color_2, weight) {
+    function d2h(d) {
+        return d.toString(16);
+    } // convert a decimal value to hex
+    function h2d(h) {
+        return parseInt(h, 16);
+    } // convert a hex value to decimal 
+
+    weight = typeof weight !== 'undefined' ? weight : 50; // set the weight to 50%, if that argument is omitted
+
+    var color = "#";
+
+    for (var i = 0; i <= 5; i += 2) {
+        // loop through each of the 3 hex pairs—red, green, and blue
+        var v1 = h2d(color_1.substr(i, 2)),
+            // extract the current pairs
+        v2 = h2d(color_2.substr(i, 2)),
+
+
+        // combine the current pairs from each source color, according to the specified weight
+        val = d2h(Math.floor(v2 + (v1 - v2) * (weight / 100.0)));
+
+        while (val.length < 2) {
+            val = '0' + val;
+        } // prepend a '0' if val results in a single digit
+
+        color += val; // concatenate val to our new color string
+    }
+
+    return color; // PROFIT!
+}
+function hexToComplimentary(hex, shiftWheel) {
+
+    // Convert hex to rgb
+    // Credit to Denis http://stackoverflow.com/a/36253499/4939630
+    var rgb = 'rgb(' + (hex = hex.replace('#', '')).match(new RegExp('(.{' + hex.length / 3 + '})', 'g')).map(function (l) {
+        return parseInt(hex.length % 2 ? l + l : l, 16);
+    }).join(',') + ')';
+
+    // Get array of RGB values
+    rgb = rgb.replace(/[^\d,]/g, '').split(',');
+
+    var r = rgb[0],
+        g = rgb[1],
+        b = rgb[2];
+
+    // Convert RGB to HSL
+    // Adapted from answer by 0x000f http://stackoverflow.com/a/34946092/4939630
+    r /= 255.0;
+    g /= 255.0;
+    b /= 255.0;
+    var max = Math.max(r, g, b);
+    var min = Math.min(r, g, b);
+    var h,
+        s,
+        l = (max + min) / 2.0;
+
+    if (max == min) {
+        h = s = 0; //achromatic
+    } else {
+        var d = max - min;
+        s = l > 0.5 ? d / (2.0 - max - min) : d / (max + min);
+
+        if (max == r && g >= b) {
+            h = 1.0472 * (g - b) / d;
+        } else if (max == r && g < b) {
+            h = 1.0472 * (g - b) / d + 6.2832;
+        } else if (max == g) {
+            h = 1.0472 * (b - r) / d + 2.0944;
+        } else if (max == b) {
+            h = 1.0472 * (r - g) / d + 4.1888;
+        }
+    }
+
+    h = h / 6.2832 * 360.0 + 0;
+
+    // Shift hue to opposite side of wheel and convert to [0-1] value
+    h += shiftWheel;
+    if (h > 360) {
+        h -= 360;
+    }
+    h /= 360;
+
+    // Convert h s and l values into r g and b values
+    // Adapted from answer by Mohsen http://stackoverflow.com/a/9493060/4939630
+    if (s === 0) {
+        r = g = b = l; // achromatic
+    } else {
+        var hue2rgb = function hue2rgb(p, q, t) {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+        };
+
+        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        var p = 2 * l - q;
+
+        r = hue2rgb(p, q, h + 1 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1 / 3);
+    }
+
+    r = Math.round(r * 255);
+    g = Math.round(g * 255);
+    b = Math.round(b * 255);
+
+    // Convert r b and g values to hex
+    rgb = b | g << 8 | r << 16;
+    return "#" + (0x1000000 | rgb).toString(16).substring(1);
+}
+function hexToRgb(hex) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? result : null;
+}
+function printPalette(color) {
+    var palette = getPallete(color);
+    $("#palette").empty();
+    var content = "<table style ='background-color:white;'>";
+    var columns = NUM_COLUMNS;
+    for (var i = 0; i < palette.length; i++) {
+        if (columns == NUM_COLUMNS) {
+            content += "<tr>";
+        }
+        var rgbValues = hexToRgb(palette[i]);
+        content += "<td><div style='width:50px; height:20px; margin:10px;background-color:" + palette[i] + "'></div><div style='padding-left: 10px; padding-bottom: 10px;'>" + palette[i] + "<br>" + "r:" + parseInt(rgbValues[1], 16) + "<br> g:" + parseInt(rgbValues[2], 16) + "<br> b:" + parseInt(rgbValues[3], 16) + "</div></td>";
+        columns--;
+        if (columns == 0) {
+            content += "</tr>";
+            columns = NUM_COLUMNS;
+        }
+    }
+    content += "</table>";
+    $("#palette").append(content);
+}
+
+exports.default = printPalette;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var STORAGE_LIMIT = exports.STORAGE_LIMIT = 50;
+var NUM_COLUMNS = exports.NUM_COLUMNS = 2;
+var COLOR_PICKER_CONTENT_SCRIPT = exports.COLOR_PICKER_CONTENT_SCRIPT = "color_picker.js";
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -2455,7 +2702,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -2464,7 +2711,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2750,7 +2997,7 @@ module.exports = __webpack_amd_options__;
 })(jQuery);
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2963,213 +3210,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 })();
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var NUM_COLUMNS = 4;
-var GRAY = "666666";
-
-function getPallete(color) {
-    var palette = [];
-    //add shades
-    palette.push(ColorLuminance(color, 0.2)); // 20% lighter
-    palette.push(ColorLuminance(color, 0.4)); // 40% lighter
-    palette.push(ColorLuminance(color, -0.2)); // 20% darker
-    palette.push(ColorLuminance(color, -0.4)); // 40% darker 
-    //add tones 
-    palette.push(mix(color, GRAY, 90)); // 60% tone
-    palette.push(mix(color, GRAY, 60)); // 90% tone
-    palette.push(mix(color, GRAY, 40)); // 40% tone
-    palette.push(mix(color, GRAY, 30)); // 50% tone
-    //complementary color scheme
-    var complement = hexToComplimentary(color, 180);
-    palette.push("#" + color);
-    palette.push(complement); // 50% tone
-    palette.push(ColorLuminance(color, -0.1)); // 60% tone
-    palette.push(ColorLuminance(complement, -0.1)); // 90% tone
-    //analogous color scheme 
-    var analogue1 = hexToComplimentary(color, -40);
-    var analogue2 = hexToComplimentary(color, 40);
-    palette.push(analogue1); // 50% tone
-    palette.push("#" + color);
-    palette.push(analogue2); // 50% tone
-    palette.push(ColorLuminance(analogue2, 0.1));
-    return palette;
-}
-//to create shades
-function ColorLuminance(hex, lum) {
-
-    // validate hex string
-    hex = String(hex).replace(/[^0-9a-f]/gi, '');
-    if (hex.length < 6) {
-        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-    }
-    lum = lum || 0;
-
-    // convert to decimal and change luminosity
-    var rgb = "#",
-        c,
-        i;
-    for (i = 0; i < 3; i++) {
-        c = parseInt(hex.substr(i * 2, 2), 16);
-        c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
-        rgb += ("00" + c).substr(c.length);
-    }
-
-    return rgb;
-}
-function mix(color_1, color_2, weight) {
-    function d2h(d) {
-        return d.toString(16);
-    } // convert a decimal value to hex
-    function h2d(h) {
-        return parseInt(h, 16);
-    } // convert a hex value to decimal 
-
-    weight = typeof weight !== 'undefined' ? weight : 50; // set the weight to 50%, if that argument is omitted
-
-    var color = "#";
-
-    for (var i = 0; i <= 5; i += 2) {
-        // loop through each of the 3 hex pairs—red, green, and blue
-        var v1 = h2d(color_1.substr(i, 2)),
-            // extract the current pairs
-        v2 = h2d(color_2.substr(i, 2)),
-
-
-        // combine the current pairs from each source color, according to the specified weight
-        val = d2h(Math.floor(v2 + (v1 - v2) * (weight / 100.0)));
-
-        while (val.length < 2) {
-            val = '0' + val;
-        } // prepend a '0' if val results in a single digit
-
-        color += val; // concatenate val to our new color string
-    }
-
-    return color; // PROFIT!
-}
-function hexToComplimentary(hex, shiftWheel) {
-
-    // Convert hex to rgb
-    // Credit to Denis http://stackoverflow.com/a/36253499/4939630
-    var rgb = 'rgb(' + (hex = hex.replace('#', '')).match(new RegExp('(.{' + hex.length / 3 + '})', 'g')).map(function (l) {
-        return parseInt(hex.length % 2 ? l + l : l, 16);
-    }).join(',') + ')';
-
-    // Get array of RGB values
-    rgb = rgb.replace(/[^\d,]/g, '').split(',');
-
-    var r = rgb[0],
-        g = rgb[1],
-        b = rgb[2];
-
-    // Convert RGB to HSL
-    // Adapted from answer by 0x000f http://stackoverflow.com/a/34946092/4939630
-    r /= 255.0;
-    g /= 255.0;
-    b /= 255.0;
-    var max = Math.max(r, g, b);
-    var min = Math.min(r, g, b);
-    var h,
-        s,
-        l = (max + min) / 2.0;
-
-    if (max == min) {
-        h = s = 0; //achromatic
-    } else {
-        var d = max - min;
-        s = l > 0.5 ? d / (2.0 - max - min) : d / (max + min);
-
-        if (max == r && g >= b) {
-            h = 1.0472 * (g - b) / d;
-        } else if (max == r && g < b) {
-            h = 1.0472 * (g - b) / d + 6.2832;
-        } else if (max == g) {
-            h = 1.0472 * (b - r) / d + 2.0944;
-        } else if (max == b) {
-            h = 1.0472 * (r - g) / d + 4.1888;
-        }
-    }
-
-    h = h / 6.2832 * 360.0 + 0;
-
-    // Shift hue to opposite side of wheel and convert to [0-1] value
-    h += shiftWheel;
-    if (h > 360) {
-        h -= 360;
-    }
-    h /= 360;
-
-    // Convert h s and l values into r g and b values
-    // Adapted from answer by Mohsen http://stackoverflow.com/a/9493060/4939630
-    if (s === 0) {
-        r = g = b = l; // achromatic
-    } else {
-        var hue2rgb = function hue2rgb(p, q, t) {
-            if (t < 0) t += 1;
-            if (t > 1) t -= 1;
-            if (t < 1 / 6) return p + (q - p) * 6 * t;
-            if (t < 1 / 2) return q;
-            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-            return p;
-        };
-
-        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-        var p = 2 * l - q;
-
-        r = hue2rgb(p, q, h + 1 / 3);
-        g = hue2rgb(p, q, h);
-        b = hue2rgb(p, q, h - 1 / 3);
-    }
-
-    r = Math.round(r * 255);
-    g = Math.round(g * 255);
-    b = Math.round(b * 255);
-
-    // Convert r b and g values to hex
-    rgb = b | g << 8 | r << 16;
-    return "#" + (0x1000000 | rgb).toString(16).substring(1);
-}
-function hexToRgb(hex) {
-    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-        return r + r + g + g + b + b;
-    });
-
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? "rgb(" + parseInt(result[1], 16) + "," + parseInt(result[2], 16) + "," + parseInt(result[3], 16) + ")" : null;
-}
-function printPalette(color) {
-    var palette = getPallete(color);
-    $("#palette").empty();
-    var content = "<table style='background-color:white;'>";
-    var columns = NUM_COLUMNS;
-    for (var i = 0; i < palette.length; i++) {
-        if (columns == NUM_COLUMNS) {
-            content += "<tr>";
-        }
-        content += "<td><div style='width:50px; height:20px; margin:10px;background-color:" + palette[i] + "'></div><div style='padding-left: 10px;'>" + palette[i] + ",<br>" + hexToRgb(palette[i]) + "</div></td>";
-        columns--;
-        if (columns == 0) {
-            content += "</tr>";
-            columns = NUM_COLUMNS;
-        }
-    }
-    content += "</table>";
-    $("#palette").append(content);
-}
-
-exports.default = printPalette;
-
-/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3185,6 +3225,19 @@ var _bitlyAPIcall = __webpack_require__(9);
 var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// http://stackoverflow.com/a/18455088/277133
+function copyToClipboard(url) {
+    var input = document.createElement("input");
+    input.style.position = "fixed";
+    input.style.opacity = 0;
+    input.value = url;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("Copy");
+    document.body.removeChild(input);
+} // Automagically gets current tab's urls and shorten it
+;
 
 function shortenTabUrl() {
 
@@ -3212,12 +3265,14 @@ function shortenTabUrl() {
                     height: 120,
                     text: short_url
                 });
+                copyToClipboard(short_url);
             } else {
                 $('.shortUrlInfo').append('<p> Invalid value </p>');
             }
         });
     });
-} // Automagically gets current tab's urls and shorten it
+}
+
 exports.default = shortenTabUrl;
 
 /***/ }),
@@ -3267,6 +3322,9 @@ function urlHistory() {
     var objects = [];
     var localCount = 0;
 
+    // https://stackoverflow.com/a/38641281 for sorting retrieved object before displaying it to history
+    var collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+
     async function main() {
         try {
             var storedUrls = await storage.get(null, function (items) {});
@@ -3280,7 +3338,7 @@ function urlHistory() {
         }
     }
 
-    // get count of stored items // primary
+    // get count of stored items 
     function getDataCount(y) {
         if (y) {
             if (y > 50) {
@@ -3290,6 +3348,10 @@ function urlHistory() {
             }
         }
     };
+    // function for shortening title 
+    String.prototype.trimToLength = function (m) {
+        return this.length > m ? jQuery.trim(this).substring(0, m).split(" ").slice(0, -1).join(" ") + "..." : this;
+    };
 
     // read received data from chrome.storage.get and print it to history table
     function readData(val1, val2) {
@@ -3297,9 +3359,7 @@ function urlHistory() {
         if (val1 && val2 && val1 != 'undefined' && val2 != 'undefined') {
             // and if longer than 50 characters
             if (val1.length >= 50) {
-                // shorten it so it can fit into one row in table without slicing it in middle of an word(with regex)
-                // This expressions returns the first 46 (any) characters plus any subsequent non-space characters.
-                var shortenedTitle = val1.replace(/^(.{40}[^\s]*).*/, "$1") + "...";
+                var shortenedTitle = val1.trimToLength(47);
                 $('#urlHistory').append('<tr><td title="' + val1 + '">' + shortenedTitle + '</td><td><a target="_blank" href="' + val2 + '">' + val2 + '</a></td></tr>');
             } else {
                 // if its no longer than 50 chars then display it as it is
@@ -3310,22 +3370,22 @@ function urlHistory() {
 
     // create array from data received from storage
     function createDataArray(e) {
-        var appendKeyPrefix = 'urlData';
+        var appendKeySuffix = 'urlData';
         var appendKeyCount = storageCount;
         var keys = [];
 
         return new Promise(function (resolve, reject) {
             $.each(e, function (key) {
-                if (key.startsWith(appendKeyPrefix)) {
+                if (key.endsWith(appendKeySuffix)) {
                     keys.push(key);
                 }
             });
-            for (var i = 0; i < keys.length; i++) {
-                storage.get(keys[i], function (obj) {
+            var sortedKeys = keys.sort(collator.compare);
+            for (var i = 0; i < sortedKeys.length; i++) {
+                storage.get(sortedKeys[i], function (obj) {
                     objects.push(obj);
                 });
             }
-            console.log(objects);
             resolve(objects);
         });
     }
@@ -3350,13 +3410,13 @@ function urlHistory() {
             var _storage$set;
 
             localCount++;
-            storage.set((_storage$set = {}, _defineProperty(_storage$set, 'urlData' + localCount, dataObj), _defineProperty(_storage$set, 'globalCount', localCount), _storage$set), function () {
+            storage.set((_storage$set = {}, _defineProperty(_storage$set, localCount + '_' + 'urlData', dataObj), _defineProperty(_storage$set, 'globalCount', localCount), _storage$set), function () {
                 console.log('Saved to storage: ', dataObj, localCount);
             });
             var notificationMsg = {
                 type: "basic",
                 title: "Url shortener",
-                message: "Url shortened and it's data sent to storage",
+                message: "Shortened url copied to clipboard, and it's data sent to storage",
                 iconUrl: "icons/icon128.png"
             };
             chrome.notifications.create('success', notificationMsg, function () {
@@ -3366,9 +3426,9 @@ function urlHistory() {
             });
         }
     }
-
+    // write shortened-urls data to history <table></table>
     function urlData(o) {
-        Object.keys(o).map(function (e) {
+        Object.keys(o).sort(collator.compare).map(function (e) {
             if ('' + o[e].url && '' + o[e].title) {
                 title = '' + o[e].title;
                 url = '' + o[e].url;
@@ -3401,21 +3461,20 @@ function urlHistory() {
     }
 
     // -----------------------------------------------------------------
-    document.body.onload = function () {
-        // clearStorage();
-        showAllData();
-        main().then(function (x) {
-            console.log(x[0]); // stored Urls Object
-            console.log(x[1] + ' globalCount');
-            console.log(x[2] + ' storedUrlsCount');
-            urlData(x[0]);
-            getDataCount(x[1]);
-            storageCount = x[2];
-            createDataArray(x[0]);
-        }).catch(function (err) {
-            return console.error(err);
-        });
-    };
+
+    // clearStorage();
+    showAllData();
+    main().then(function (x) {
+        console.log(x[0]); // stored Urls Object
+        console.log(x[1] + ' globalCount');
+        console.log(x[2] + ' storedUrlsCount');
+        urlData(x[0]);
+        getDataCount(x[1]);
+        storageCount = x[2];
+        createDataArray(x[0]);
+    }).catch(function (err) {
+        return console.error(err);
+    });
 
     // Listen for change in short-url-info div with custom jQuery event
     $('.shortUrlInfo').on('contentChanged', function () {
@@ -3428,6 +3487,15 @@ function urlHistory() {
             console.log(localCount);
         });
     });
+
+    $('#clear-history').on('click', function () {
+        if (confirm('Are you sure you want to delete data from database?')) {
+            clearStorage();
+            console.log('Storage cleared');
+        } else {
+            // Do nothing!
+        }
+    });
 }
 
 exports.default = urlHistory;
@@ -3439,99 +3507,26 @@ exports.default = urlHistory;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
+var _jquery = __webpack_require__(1);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// http://bit.ly/2veWndP
+(0, _jquery2.default)(document).ready(function () {
+    (0, _jquery2.default)('ul.tabs li').click(function () {
+        var tab_id = (0, _jquery2.default)(this).attr('data-tab'); // grab the data-tab attribute and assign the same to tab_id variable
+        (0, _jquery2.default)('ul.tabs li').removeClass('active'); // remove the current class from all list elements and our DIV.tab-content elements  
+        (0, _jquery2.default)('.tab-content').removeClass('active');
+        (0, _jquery2.default)(this).addClass('active'); // add the “active” class to the clicked list element and DIV tab with the grabbed data-tab ID
+        (0, _jquery2.default)("#" + tab_id).addClass('active');
+
+        if ((0, _jquery2.default)(this).attr('data-tab') == 'urlShortenerDiv') {
+            (0, _jquery2.default)(document).trigger('urlShortenerTriggered');
+        };
+    });
 });
-
-var _constants = __webpack_require__(0);
-
-var ColorPicker = {
-
-    /*
-     @func -> adds message listeners
-     -> message from "scroll" captures and resends the screen to the tab
-     => the messages is consumed by the content script
-     */
-
-    add_message_listeners: function add_message_listeners() {
-        chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-            if (message["from"] == "position" || message["from"] == "mousemove") {}
-            if (message["from"] == "scroll") {
-                capture_canvas();
-            }
-        });
-    },
-
-    /*
-     @func adds message for action listeners
-     -> listens for tab changes
-     -> listens for tabs creates
-     => the messages is consumed by the content script
-     */
-    add_action_listners: function add_action_listners() {
-        chrome.tabs.onActivated.addListener(function () {
-            chrome.runtime.sendMessage({ "from": "tab-changed" });
-        });
-
-        chrome.tabs.onCreated.addListener(function () {
-            chrome.runtime.sendMessage({ "from": "tab-created" });
-        });
-    },
-
-    /*
-     @func injects a content script in the current tab
-     @param (script) -> name of the file that is to be injected
-      if the file is not in the same folder as the manifest, a relative path is needed
-     -> gets the id of the current tab
-     -> runs the content is script in the current tab
-     */
-    inject_script_current_tab: function inject_script_current_tab(script) {
-        chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-            console.log(script);
-            chrome.tabs.executeScript(tabs[0].id, { file: script });
-        });
-    },
-
-    /*
-     @func captures the visible tab and sends it in a message
-     -> gets the id of the current tab
-     -> captures the visible tab
-     -> sends a JSON object with the fields "from": "color-picker" - identifier
-        and "image" which is the captured screen
-     => the messages is consumed by the content script
-     */
-    capture_screen: function capture_screen() {
-        chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-            chrome.tabs.captureVisibleTab(null, {}, function (img) {
-                chrome.tabs.sendMessage(tabs[0].id, {
-                    "from": "color-picker",
-                    "image": img
-                });
-            });
-        });
-    },
-
-    /*
-     @func initialises the color picker
-     -> adds all the message listners
-     -> runs the content script in the current tab
-     -> captures the screen and sends it in a message to the current tab
-     => this function is used in the main App.js file as an event listner to the click of the color picker button in the popup
-     */
-
-    init: function init() {
-        this.add_message_listeners();
-        this.add_action_listners();
-        this.inject_script_current_tab(_constants.COLOR_PICKER_CONTENT_SCRIPT);
-        this.capture_screen();
-    }
-
-}; /**
-    * Created by Tudor on 8/9/2017.
-   
-    */
-
-exports.default = ColorPicker;
 
 /***/ }),
 /* 12 */
@@ -3543,11 +3538,173 @@ exports.default = ColorPicker;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+function colorInfo() {
+    document.body.className = "minimized";
+}
+
+exports.default = colorInfo;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _constants = __webpack_require__(3);
+
+var _App = __webpack_require__(0);
+
+/*
+
+@prop   - insures that the content scrip is ran only once
+        -> used in @func inject_script_current_tab
+ */
+
+/**
+ * Created by Tudor on 8/9/2017.
+
+ */
+
+var contentScriptExecuted = false;
+
+/*
+ @func -> adds message listeners
+ -> message from "scroll" captures and resends the screen to the tab
+ => the messages is consumed by the content script
+ */
+
+function add_message_listeners() {
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        try {
+            if (message["from"] == "position" || message["from"] == "mousemove") {
+                var selectedColor = message["value"];
+                (0, _App.showSelectedColor)(selectedColor);
+            }
+            if (message["from"] == "scroll") {
+                console.log("scroll in tab");
+                //capture_screen();
+                chrome.tabs.captureVisibleTab(null, { "format": "png" }, function (img) {
+                    sendResponse({ "image": img });
+                });
+                return true;
+            }
+        } catch (e) {
+            console.log("errOR: " + e.message);
+        }
+
+        // notification for colorpicker
+        if (message["from"] == "colorPicked") {
+            var notificationMsgg = {
+                type: "basic",
+                title: "Color",
+                message: "Hex color code copied to clipboard, and it's data sent to color history",
+                iconUrl: "icons/icon128.png"
+            };
+            chrome.notifications.create('done', notificationMsgg, function () {
+                setTimeout(function () {
+                    chrome.notifications.clear('done', function () {});
+                }, 2000);
+            });
+        }
+        return true;
+    });
+}
+
+/*
+ @func adds message for action listeners
+ -> listens for tab changes
+ -> listens for tabs creates
+ => the messages is consumed by the content script
+ */
+function add_action_listners() {
+    chrome.tabs.onActivated.addListener(function () {
+        chrome.runtime.sendMessage({ "from": "tab-changed" });
+    });
+
+    chrome.tabs.onCreated.addListener(function () {
+        chrome.runtime.sendMessage({ "from": "tab-created" });
+    });
+}
+
+/*
+ @func injects a content script in the current tab
+ @param (script) -> name of the file that is to be injected
+ if the file is not in the same folder as the manifest, a relative path is needed
+ -> gets the id of the current tab
+ -> runs the content is script in the current tab
+ */
+function inject_script_current_tab(script) {
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        console.log(script);
+
+        if (!contentScriptExecuted) {
+            chrome.tabs.executeScript(tabs[0].id, { file: script });
+        }
+
+        contentScriptExecuted = true;
+    });
+}
+
+/*
+ @func captures the visible tab and sends it in a message
+ -> gets the id of the current tab
+ -> captures the visible tab
+ -> sends a JSON object with the fields "from": "color-picker" - identifier
+ and "image" which is the captured screen
+ => the messages is consumed by the content script
+ */
+function capture_screen() {
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        chrome.tabs.captureVisibleTab(null, {}, function (img) {
+            chrome.tabs.sendMessage(tabs[0].id, {
+                "from": "color-picker",
+                "image": img
+            });
+        });
+    });
+}
+
+/*
+ @func initialises the color picker
+ -> adds all the message listners
+ -> runs the content script in the current tab
+ -> captures the screen and sends it in a message to the current tab
+ => this function is used in the main App.js file as an event listner to the click of the color picker button in the popup
+ */
+
+function colorPickerInit() {
+    add_message_listeners();
+    add_action_listners();
+    inject_script_current_tab(_constants.COLOR_PICKER_CONTENT_SCRIPT);
+    capture_screen();
+}
+
+exports.default = colorPickerInit;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 exports.storeColorPickerData = storeColorPickerData;
 exports.printHistoryColor = printHistoryColor;
 exports.printNewHistoryColor = printNewHistoryColor;
+exports.printSelectedColor = printSelectedColor;
 
-var _constants = __webpack_require__(0);
+var _constants = __webpack_require__(3);
+
+var _getPalette = __webpack_require__(2);
 
 function storeColorPickerData(color, onColorClick) {
 
@@ -3557,11 +3714,11 @@ function storeColorPickerData(color, onColorClick) {
         var historyColors = result.historyColors || [];
 
         //add check for duplicates    
-        var dublicate = historyColors.length !== 0 && historyColors.filter(function (hColor) {
+        var duplicate = historyColors.length !== 0 && historyColors.filter(function (hColor) {
             return hColor == color;
         }).length !== 0;
 
-        if (!dublicate) {
+        if (!duplicate) {
 
             if (historyColors.length >= _constants.STORAGE_LIMIT) {
                 historyColors.shift();
@@ -3590,7 +3747,7 @@ function printHistoryColor(onColorClick) {
                 if (columns == _constants.NUM_COLUMNS) {
                     content += "<tr>";
                 }
-                content += "<td  color='" + result.historyColors[i] + "'style='background-color:" + result.historyColors[i] + "'></td>";
+                content += "<td  color='" + result.historyColors[i] + "' style='border: 2px solid white; background-color:" + result.historyColors[i] + "'></td>";
                 columns--;
                 if (columns == 0) {
                     content += "</tr>";
@@ -3616,7 +3773,7 @@ function printNewHistoryColor(color, onColorClick) {
     var checkcolumnSize = $("#color-history-elements tbody")[0] ? $("#color-history-elements tbody")[0].lastElementChild.children.length : 0;
 
     if (checkcolumnSize == 2 || checkcolumnSize == 0) {
-        content += "<tr><td color='" + color + "'style='background-color:" + color + "'></td></tr>";
+        content += "<tr><td color='" + color + "'style='border: 2px solid white; background-color:" + color + "'></td></tr>";
         if ($("#color-history-elements").length == 0) {
             content += "</table>";
             $("#color-history").append(content);
@@ -3624,7 +3781,7 @@ function printNewHistoryColor(color, onColorClick) {
             $("#color-history-elements").append(content);
         }
     } else if (checkcolumnSize == 1) {
-        content = "<td color='" + color + "' style='background-color:" + color + "'></td>";
+        content = "<td color='" + color + "' style=' border: 2px solid white; background-color:" + color + "'></td>";
         $($("#color-history-elements tbody")[0].lastElementChild).append(content);
     }
 
@@ -3632,6 +3789,12 @@ function printNewHistoryColor(color, onColorClick) {
     $("#color-history-elements tr:last-child td:last-child").on("click", function (e) {
         onColorClick(e.currentTarget.attributes.color.value);
     });
+}
+function printSelectedColor(color) {
+    $('.selectedColor').css('background-color', "#" + color);
+    $('.scHex').text("#" + color);
+    var rgbValues = (0, _getPalette.hexToRgb)("#" + color);
+    $('.scRGB').text("rgb(" + parseInt(rgbValues[1], 16) + "," + parseInt(rgbValues[2], 16) + "," + parseInt(rgbValues[3], 16) + ")");
 }
 
 /***/ })
