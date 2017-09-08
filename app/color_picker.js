@@ -107,8 +107,8 @@
             document.body.appendChild(debugText);
         }
 
-
-        if (img == null) {
+        console.log(img);
+        if (img == null || img == "undefined") {
             //document.body.style.cursor = "url(" + chrome.extension.getURL("cursor.png") + ")";
             //document.body.style.cursor = "none";
             img = document.createElement("img");
@@ -161,13 +161,17 @@
             storeColorPickerData(pixelValue);
             document.body.removeChild(canvasWrapper);
             document.body.removeChild(debugText);
-            document.body.removeChild(img);
             debugText = null;
             canvasWrapper = null;
-            document.removeEventListener("mousemove", mouseMoveListener);
-            document.removeEventListener("click", clickListener);
             document.body.style.cursor = "auto";
         }
+
+        if (document.body.contains(img)) {
+            document.body.removeChild(img);
+            img = null;
+        }
+        document.removeEventListener("mousemove", mouseMoveListener, true);
+        document.removeEventListener("click", clickListener, true);
     }
 
     function copyToClipboard(item) {
@@ -181,7 +185,7 @@
         document.body.removeChild(input);
     };
 
-    document.addEventListener("click", clickListener);
+    document.addEventListener("click", clickListener, true);
 
     window.onscroll = function () {
         if (canvasWrapper != null || canvasWrapper != undefined) {
@@ -205,7 +209,7 @@
         }
     };
 
-    document.addEventListener("mousemove", mouseMoveListener);
+    document.addEventListener("mousemove", mouseMoveListener, true);
 
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
