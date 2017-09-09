@@ -4,9 +4,9 @@
 
 > Chrome extension with extended color picker and URL shortening functionality.
 
-This extension provides a quick and simple way of picking color from web page and generating a pallette of recommended colors based on picked color automagically. It also saves picked color to history, so you can review colors that You have picked before alongside with their own pallettes.
+This extension provides a quick and simple way of picking color from web page and generating a pallette of recommended colors based on picked color automagically. It also saves picked color to history, so you can review colors that You have picked before, alongside with their own pallettes.
 
-There is also a URL shortening functionality, where you can shorten link on current webpage in just two clicks. Shortened URLs are saved to history, so You can review your previously shortened links anytime You want.
+There is also a URL shortening functionality, where you can shorten link of current webpage in just two clicks. Shortened URLs are saved to history, so You can review your previously shortened links anytime You want.
 
 ## Installing / Getting started
 
