@@ -10,7 +10,7 @@ There is also a URL shortening functionality, where you can shorten link on curr
 
 ## Installing / Getting started
 
-Go to [Chrome Store](	http://bit.ly/2wBTrLY), and click on Add to Chrome.
+Go to [Chrome Store](http://bit.ly/2vVN1Z4), and click on Add to Chrome.
 
 Thats it, once installed extension will be ready to use, no registering and no annoying ads.
 
