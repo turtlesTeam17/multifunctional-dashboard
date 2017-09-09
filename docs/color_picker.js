@@ -296,8 +296,16 @@ function getRGB(str){
 
 /* ========== HELPER FUNCTIONS ========== */
 
+/*
+ @func stores the hex color in chrome storage and copies it to the clipboard
+ @param color -> hex color
+ -> gets the color from chrome storage
+ -> checks if the color is a duplicate
+    -> if it's not duplicate it adds it to historyColors and updates the chrome storage
+    -> calls copyToClipboard to copy the color to the clipboard
+ => used in the click event to send the selected color to the storage
+ */
 function storeColorPickerData(color) {
-
     chrome.storage.sync.get(null, function (result) {
         // the input argument is ALWAYS an object containing the queried keys
         // so we select the key we need
@@ -318,7 +326,6 @@ function storeColorPickerData(color) {
             chrome.storage.sync.set({
                 historyColors: historyColors
             }, function () {
-                console.log(color);
                 // copy selected color to clipboard
                 copyToClipboard(color);
                 // send message to eventpage
@@ -332,6 +339,17 @@ function storeColorPickerData(color) {
     });
 }
 
+/*
+ @func copies a string to the clipboard
+ @param item -> the color that will be copied to the clipboard
+ -> creates an input element
+ -> styles the input to be hidden
+ -> sets the value of the input to the item value
+ -> selects the input value
+ -> copies the selection
+ -> removes the input
+ => used in storeColorPickerData to copy the color to the clipboard
+ */
 function copyToClipboard(item) {
     const input = document.createElement("input");
     input.style.position = "fixed";
@@ -343,6 +361,10 @@ function copyToClipboard(item) {
     document.body.removeChild(input);
 }
 
+/*
+ @func initialisation function
+ -> initialises the event listeners
+ */
 function init() {
     addEventListeners();
 }
