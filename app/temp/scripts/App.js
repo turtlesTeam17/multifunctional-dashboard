@@ -110,6 +110,7 @@ var _colorHistory = __webpack_require__(14);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _jquery2.default)(document).ready(function () {
+    //checkProtocol();
     (0, _colorHistory.printHistoryColor)(onColorClick);
     getLastColor().then(function (selectedColor) {
         (0, _getPalette2.default)(selectedColor.substring(1));
@@ -118,11 +119,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
     (0, _jquery2.default)("#eyeDropper").on('click', function () {
         console.log("pick color!");
-        (0, _colorPicker2.default)();
-        (0, _jquery2.default)('.options').addClass('invisible');
-        (0, _jquery2.default)('#colorPickerDiv').addClass('invisible');
-        (0, _jquery2.default)('.colorInfo').removeClass('invisible');
-        (0, _colorInfoBlock2.default)();
+        (0, _colorPicker2.default)(function () {
+            (0, _jquery2.default)('.options').addClass('invisible');
+            (0, _jquery2.default)('#colorPickerDiv').addClass('invisible');
+            (0, _jquery2.default)('.colorInfo').removeClass('invisible');
+            console.log("aa");
+            (0, _colorInfoBlock2.default)();
+        });
     });
     (0, _jquery2.default)('#shrinkMe').click(function () {
         // or any other event
@@ -3545,6 +3548,7 @@ exports.default = colorInfo;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.checkProtocol = checkProtocol;
 
 var _constants = __webpack_require__(3);
 
@@ -3660,6 +3664,22 @@ function capture_screen() {
     });
 }
 
+function checkProtocol() {
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        isHttp(tabs[0].url);
+    });
+}
+
+function isHttp(url) {
+    var urlSplitByColon = url.split(":");
+    var protocol = urlSplitByColon[0];
+    if (protocol == "http" || protocol == "https") {
+        console.log("allowed");
+    } else {
+        console.log("denied");
+    }
+}
+
 /*
  @func initialises the color picker
  -> adds all the message listners
@@ -3668,11 +3688,33 @@ function capture_screen() {
  => this function is used in the main App.js file as an event listner to the click of the color picker button in the popup
  */
 
-function colorPickerInit() {
-    add_message_listeners();
-    add_action_listners();
-    inject_script_current_tab(_constants.COLOR_PICKER_CONTENT_SCRIPT);
-    capture_screen();
+function colorPickerInit(cb) {
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        var url = tabs[0].url;
+        var urlSplitByColon = url.split(":");
+        var protocol = urlSplitByColon[0];
+        if (protocol == "http" || protocol == "https") {
+            console.log("allowed");
+            add_message_listeners();
+            add_action_listners();
+            inject_script_current_tab(_constants.COLOR_PICKER_CONTENT_SCRIPT);
+            capture_screen();
+            cb();
+        } else {
+            console.log("denied");
+            var notificationMesage = {
+                type: "basic",
+                title: "Not allowed",
+                message: "The color picker functionallity is not allowed on this website, try to pick a color on a http or https protocol",
+                iconUrl: "icons/icon128.png"
+            };
+            chrome.notifications.create('done', notificationMesage, function () {
+                setTimeout(function () {
+                    chrome.notifications.clear('done', function () {});
+                }, 4000);
+            });
+        }
+    });
 }
 
 exports.default = colorPickerInit;

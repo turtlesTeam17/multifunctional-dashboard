@@ -11,9 +11,11 @@ import './modules/tabs';
 import colorInfo from './modules/colorInfoBlock';
 
 import colorPickerInit from './modules/colorPicker';
+import  checkProtocol from './modules/colorPicker';
 import { storeColorPickerData, printNewHistoryColor, printHistoryColor, printSelectedColor } from './modules/colorHistory';
 
 $(document).ready(function() {
+    //checkProtocol();
      printHistoryColor(onColorClick);
      getLastColor().then((selectedColor) => { 
         printPalette(selectedColor.substring(1));
@@ -22,11 +24,15 @@ $(document).ready(function() {
     
     $("#eyeDropper").on('click', function() {
         console.log("pick color!");
-        colorPickerInit();
-        $('.options').addClass('invisible');
-        $('#colorPickerDiv').addClass('invisible');
-        $('.colorInfo').removeClass('invisible');
-        colorInfo();
+        colorPickerInit(function() {
+            $('.options').addClass('invisible');
+            $('#colorPickerDiv').addClass('invisible');
+            $('.colorInfo').removeClass('invisible');
+            console.log("aa");
+            colorInfo();
+        });
+
+
     });
     $('#shrinkMe').click(function(){ // or any other event
         $(this).toggleClass('shrink');

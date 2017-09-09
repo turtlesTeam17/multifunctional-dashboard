@@ -118,6 +118,22 @@ function capture_screen() {
     });
 }
 
+export function checkProtocol() {
+    chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
+        isHttp(tabs[0].url);
+    });
+}
+
+function isHttp(url) {
+    var urlSplitByColon = url.split(":");
+    var protocol = urlSplitByColon[0];
+    if (protocol == "http" || protocol == "https") {
+        console.log("allowed");
+    } else {
+        console.log("denied");
+    }
+}
+
 /*
  @func initialises the color picker
  -> adds all the message listners
@@ -126,11 +142,34 @@ function capture_screen() {
  => this function is used in the main App.js file as an event listner to the click of the color picker button in the popup
  */
 
-function colorPickerInit() {
-    add_message_listeners();
-    add_action_listners();
-    inject_script_current_tab(COLOR_PICKER_CONTENT_SCRIPT);
-    capture_screen();
+function colorPickerInit(cb) {
+    chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
+        var url = tabs[0].url;
+        var urlSplitByColon = url.split(":");
+        var protocol = urlSplitByColon[0];
+        if (protocol == "http" || protocol == "https") {
+            console.log("allowed");
+            add_message_listeners();
+            add_action_listners();
+            inject_script_current_tab(COLOR_PICKER_CONTENT_SCRIPT);
+            capture_screen();
+            cb();
+        } else {
+            console.log("denied");
+            var notificationMesage = {
+                type: "basic",
+                title: "Not allowed",
+                message: "The color picker functionallity is not allowed on this website, try to pick a color on a http or https protocol",
+                iconUrl: "icons/icon128.png"
+            };
+            chrome.notifications.create('done', notificationMesage, function () {
+                setTimeout(function () {
+                    chrome.notifications.clear('done', function () {});
+                }, 4000);
+            });
+        }
+
+    });
 }
 
 export default colorPickerInit;

@@ -37,59 +37,7 @@
     }
 
     function mouseMoveListener(e) {
-        /*
-         if (div == null) {
-             div = document.createElement("div");
-             div.style.width = "110px";
-             div.style.height = "43px";
-             div.style.position = "absolute";
-             //div.style.background = "#232323";
-             div.style.backgroundImage = chrome.extension.getURL("eyedropper.png");
-             document.body.appendChild(div);
 
-
-
-
-             colorDiv = document.createElement("div");
-             colorDiv.style.width = "13px";
-             colorDiv.style.height = "13px";
-             colorDiv.style.position = "relative";
-             colorDiv.style.top = "10px";
-             colorDiv.style.left = "10px";
-             div.appendChild(colorDiv);
-
-
-         }
-
-
-
-         if (img == null) {
-             //document.body.style.cursor = "url(" + chrome.extension.getURL("cursor.png") + ")";
-             //document.body.style.cursor = "none";
-             img = document.createElement("img");
-             img.src = chrome.extension.getURL("eyedropper.png");
-             img.style.width = "20px";
-             img.style.height = "20px";
-             img.style.maxHeight = "100%";
-             img.style.maxWidth = "100%";
-             img.style.position = "absolute";
-             document.body.appendChild(img);
-         }
-
-         div.style.top = e.pageY - 20 +"px";
-         div.style.left = e.pageX + 20 + "px";
-
-         img.style.top = e.pageY +"px";
-         img.style.left = e.pageX + "px";
-
-
-         var position = {clientX: e.clientX, clientY: e.clientY, width: window.innerWidth, height: window.innerHeight};
-
-         var msg = {"position": position, "from": "mousemove"};
-
-         chrome.runtime.sendMessage(msg);
-
-         */
         var pixelValue = getPixel(canvas.getContext("2d"), e.clientX, e.clientY);
         var msg = {
             "value": pixelValue,
@@ -109,8 +57,6 @@
 
         console.log(img);
         if (img == null || img == "undefined") {
-            //document.body.style.cursor = "url(" + chrome.extension.getURL("cursor.png") + ")";
-            //document.body.style.cursor = "none";
             img = document.createElement("img");
             img.src = chrome.extension.getURL("assets/images/color-picker.png");
             img.style.width = "25px";
@@ -192,11 +138,17 @@
             canvasWrapper.style.visibility = "hidden";
             debugText.style.visibility = "hidden";
         }
+
+        if(img != null || img != undefined) {
+            img.style.visibility = "hidden";
+        }
+
         chrome.runtime.sendMessage({
             "from": "scroll"
         }, function (response) {
             drawScreenShot(response["image"]);
             canvasWrapper.style.visibility = "visible";
+            img.style.visibility = "visible";
             return true;
         });
     };
@@ -209,7 +161,7 @@
         }
     };
 
-    document.addEventListener("mousemove", mouseMoveListener, true);
+
 
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
@@ -230,6 +182,7 @@
         if (message["from"] == "color-picker") {
 
             drawScreenShot(message["image"]);
+            document.addEventListener("mousemove", mouseMoveListener, true);
             return true;
 
         }
@@ -298,30 +251,6 @@
         canvasWrapper.innerHTML = "<canvas id='canvas' width='" + window.innerWidth + "' height='" + window.innerHeight + "'></canvas>";
 
         canvas = document.getElementById("canvas");
-
-
-
-
-        //console.log(message["image"]);
-        //canvas = document.createElement("canvas");
-        //canvas.width = window.innerWidth;
-        //canvas.height = window.innerHeight;
-        //canvas.style.width  = window.innerWidth + "px !important";
-        //canvas.style.height = window.innerHeight + "px !important";
-        //canvas.style.margin = "0px !important";
-        //canvas.style.padding = "0px !important";
-        //canvas.style.position = "absolute";
-        //canvas.style.top = Math.round(window.pageYOffset) + "px";
-        //canvas.style.left = "0px";
-        //canvas.style.zIndex = "9999";
-
-        //var context = canvas.getContext("2d");
-        //context.mozImageSmoothingEnabled = true;
-        //context.mzImageSmoothingEnabled = true;
-        //context.imageSmoothingEnabled = true;
-        //document.body.appendChild(canvas);
-
-        //context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
         draw_image_on_canvas(image, canvas);
     }
