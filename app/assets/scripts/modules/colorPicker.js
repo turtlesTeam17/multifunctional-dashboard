@@ -118,27 +118,19 @@ function capture_screen() {
     });
 }
 
-export function checkProtocol() {
-    chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
-        isHttp(tabs[0].url);
-    });
-}
-
-function isHttp(url) {
-    var urlSplitByColon = url.split(":");
-    var protocol = urlSplitByColon[0];
-    if (protocol == "http" || protocol == "https") {
-        console.log("allowed");
-    } else {
-        console.log("denied");
-    }
-}
 
 /*
  @func initialises the color picker
- -> adds all the message listners
- -> runs the content script in the current tab
- -> captures the screen and sends it in a message to the current tab
+ @param (cb) -> function that is called if the protocol is http or https
+ -> gets the current tab url
+ -> checks if the protocol is http or https
+    -> if if the protocol is http or https
+        -> adds all the message listners
+        -> runs the content script in the current tab
+        -> captures the screen and sends it in a message to the current tab
+        -> executes the cb function
+    -> if not
+        -> sends a notification to inform the user and leaves the popup intact
  => this function is used in the main App.js file as an event listner to the click of the color picker button in the popup
  */
 
