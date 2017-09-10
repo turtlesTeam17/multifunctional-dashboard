@@ -3684,6 +3684,7 @@ function colorPickerInit(cb) {
         var urlSplitByColon = url.split(":");
         var protocol = urlSplitByColon[0];
         if (protocol == "http" || protocol == "https") {
+            console.log(urlSplitByColon);
             console.log("allowed");
             add_message_listeners();
             add_action_listners();

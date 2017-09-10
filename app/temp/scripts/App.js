@@ -3683,7 +3683,24 @@ function colorPickerInit(cb) {
         var url = tabs[0].url;
         var urlSplitByColon = url.split(":");
         var protocol = urlSplitByColon[0];
-        if (protocol == "http" || protocol == "https") {
+        var urlSplitByPeriod = urlSplitByColon[1].split(".");
+
+        if (urlSplitByPeriod[0] == "//chrome") {
+            console.log("denied chrome subdomain");
+            var notificationMesageChrome = {
+                type: "basic",
+                title: "Not allowed",
+                message: 'This application cannot be used o a "chrome" subdomain!',
+                iconUrl: "icons/icon128.png"
+            };
+            chrome.notifications.create('done', notificationMesageChrome, function () {
+                setTimeout(function () {
+                    chrome.notifications.clear('done', function () {});
+                }, 4000);
+            });
+        } else if (protocol == "http" || protocol == "https") {
+            console.log(urlSplitByColon);
+            console.log(urlSplitByPeriod[0]);
             console.log("allowed");
             add_message_listeners();
             add_action_listners();
@@ -3691,14 +3708,14 @@ function colorPickerInit(cb) {
             capture_screen();
             cb();
         } else {
-            console.log("denied");
-            var notificationMesage = {
+            console.log("denied protocol");
+            var notificationMesageProtocol = {
                 type: "basic",
                 title: "Not allowed",
                 message: "The color picker functionallity is not allowed on this website, try to pick a color on a http or https protocol",
                 iconUrl: "icons/icon128.png"
             };
-            chrome.notifications.create('done', notificationMesage, function () {
+            chrome.notifications.create('done', notificationMesageProtocol, function () {
                 setTimeout(function () {
                     chrome.notifications.clear('done', function () {});
                 }, 4000);
