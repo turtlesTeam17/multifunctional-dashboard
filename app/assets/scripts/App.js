@@ -11,6 +11,11 @@ import './modules/tabs';
 import colorInfo from './modules/colorInfoBlock';
 
 import colorPickerInit from './modules/colorPicker';
+
+import initializeQuote from './modules/quote-scripts/initialize.js';
+
+import * as quotes from './modules/quote-scripts/background.js';
+
 import { storeColorPickerData, printNewHistoryColor, printHistoryColor, printSelectedColor } from './modules/colorHistory';
 
 $(document).ready(function() {

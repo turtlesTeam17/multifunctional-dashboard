@@ -111,9 +111,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 (0, _jquery2.default)(document).ready(function () {
     (0, _colorHistory.printHistoryColor)(onColorClick);
-    var selectedColor = getLastColor();
-    (0, _getPalette2.default)(selectedColor.substring(1));
-    (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
+    getLastColor().then(function (selectedColor) {
+        (0, _getPalette2.default)(selectedColor.substring(1));
+        (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
+    });
+
     (0, _jquery2.default)("#eyeDropper").on('click', function () {
         console.log("pick color!");
         (0, _colorPicker2.default)();
@@ -128,13 +130,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     });
 });
 
-(0, _jquery2.default)("#colorPicker").on("change", function (e) {
-    var selectedColor = e.currentTarget.value;
-    (0, _colorHistory.storeColorPickerData)(selectedColor, onColorClick);
-    (0, _getPalette2.default)(selectedColor.substring(1));
-    (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
-});
-
 function showSelectedColor(selectedColor) {
     (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
     (0, _getPalette2.default)(selectedColor.substring(1));
@@ -145,19 +140,14 @@ function onColorClick(selectedColor) {
     (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
 }
 
-// $("#toggle-wrapper").on('click', function () {
-//     $("#contentWrapper").toggle();
-//     $(".options").toggle();
-// });
-
 (0, _jquery2.default)(document).one('urlShortenerTriggered', function () {
     (0, _shortenTabUrl2.default)();
     (0, _urlHistory2.default)();
 });
 
 async function getLastColor() {
-    var historyColors = await chrome.storage.sync.get('historyColors');
-    return historyColors[historyColors.length - 1];
+    var history = await chrome.storage.sync.get('historyColors');
+    return history.historyColors[history.historyColors.length - 1];
 }
 
 /***/ }),

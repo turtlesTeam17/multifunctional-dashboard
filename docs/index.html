@@ -6,7 +6,7 @@
     <title>Multidash</title>
     <meta name="description" content="">
     <script src="assets/scripts/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="assets/styles/main-871a300fca.css"/>
+    <link rel="stylesheet" href="assets/styles/main-4782944cc5.css"/>
     <script src="assets/scripts/Vendor.js"></script>
 </head>
 
@@ -19,73 +19,91 @@
             <li class="tab" data-tab="settings">Settings</li>
         </ul>
     </div>
-        <div class="colorInfo invisible">
-            <p class="selectedColor"></p>
-            <div class="scHex">#FFFFFF</div>
-            <div class="scRGB">rgb(255,255,255)</div>
-        </div>
-
-        <div id="urlShortenerDiv" class="url-shortener tab-content">
-            <div class="url-shortener__input">
-                <!-- <input id="longUrl_input" type="text" name="longUrl_input"> -->
-                <!-- <input id="shortenButton" type="submit" name="shortenButton" value="Shorten"> -->
-                <div class="url-shortener__info">
-                    <div class="shortUrlInfo"></div>
-                </div>
-                <div class="url-shortener__qrcode">
-                </div>
+    <div class="colorInfo invisible">
+        <p class="selectedColor"></p>
+        <div class="scHex">#FFFFFF</div>
+        <div class="scRGB">rgb(255,255,255)</div>
+    </div>
+    <div id="urlShortenerDiv" class="url-shortener tab-content">
+        <div class="url-shortener__input">
+            <!-- <input id="longUrl_input" type="text" name="longUrl_input"> -->
+            <!-- <input id="shortenButton" type="submit" name="shortenButton" value="Shorten"> -->
+            <div class="url-shortener__info">
+                <div class="shortUrlInfo"></div>
             </div>
-            <div class="url-shortener__history">
-                <table id="urlHistory">
-
-                </table>
+            <div class="url-shortener__qrcode">
             </div>
         </div>
-        <div id="colorPickerDiv" class="color-picker-popup tab-content active">
-            <div class="table">
-                <div class="row">
-                    <div class="col">
-                        <div class="row">
-                            <h2 class="cTitle">Color palettes</h2>
-                            <div>
-                                <button id="eyeDropper">Pick Color </button>
-
-                                <p class="selectedColor"></p>
-                                <div><span class="selectedTitle">Selected Color</span></div>
-                                <div class="scHex">#FFFFFF</div>
-                                <div class="scRGB">rgb(255,255,255)</div>
-                            </div>
-                        </div>
-
-                        <label class="collapse Chevron" for="_2">History</label>
-                        <input id="_2" type="checkbox" checked>
+        <div class="url-shortener__history">
+            <table id="urlHistory">
+            </table>
+        </div>
+    </div>
+    <div>
+        <table id="quotes">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Time</th>
+                    <th>Quote</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div id="qGTextArea">Some text </div>
+        <form id="Quote">
+            <p>
+                <label>Description:
+                    <input type="text" name="comment" />
+                    <button id="addQuoteBtn" name="commit">Add quote</button>
+                </label>
+            </p>
+        </form>
+        <div id="btns">
+            <button id="removeQuoteBtn">Remove quote</button>
+            <button id="listQuotesBtn">List quotes</button>
+        </div>
+    </div>
+    <div id="colorPickerDiv" class="color-picker-popup tab-content active">
+        <div class="table">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <h2 class="cTitle">Color palettes</h2>
                         <div>
-                            <div class="row">
-                                <div id="color-history"></div>
-                            </div>
+                            <button id="eyeDropper">Pick Color </button>
+                            <p class="selectedColor"></p>
+                            <div><span class="selectedTitle">Selected Color</span></div>
+                            <div class="scHex">#FFFFFF</div>
+                            <div class="scRGB">rgb(255,255,255)</div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div id="palette">
+                    <label class="collapse Chevron" for="_2">History</label>
+                    <input id="_2" type="checkbox" checked>
+                    <div>
+                        <div class="row">
+                            <div id="color-history"></div>
                         </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="palette">
                     </div>
                 </div>
             </div>
         </div>
-        <!-- <div id="quoteGrabber"></div> -->
-        <div id="settings">
-            <div class="urlS-settings">
-                <h3>Url Shortener Settings</h3>
-                <form>
-                    <label for="clear-history">Clear url storage: </label>
-                    <input id="clear-history" type="submit" name="clear-history" value="Clear">
-                </form>
-            </div>
-
+    </div>
+    <!-- <div id="quoteGrabber"></div> -->
+    <div id="settings">
+        <div class="urlS-settings">
+            <h3>Url Shortener Settings</h3>
+            <form>
+                <label for="clear-history">Clear url storage: </label>
+                <input id="clear-history" type="submit" name="clear-history" value="Clear">
+            </form>
         </div>
-
-
-
+    </div>
     <script src="assets/scripts/App.js"></script>
 </body>
 

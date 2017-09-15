@@ -1,0 +1,81 @@
+// body {
+//  background-color: #222222;
+//  margin: 0;
+//   padding: 0px;
+//   overflow: hidden;
+//   min-height: 600px;
+//   min-width: 600px;
+//   max-height: 600px;
+//   max-width: 600px;  }
+
+/* quoteGrabber styling */
+
+#quoteGrabber {
+    height: 100vh;
+}
+
+div:first-child {
+    margin-top: 0px;
+}
+
+.sidePanel {
+    cursor: pointer;
+    text-align: center;
+    /* padding: 30px 15px;  */
+    font-family: sans-serif;
+    font-size: 1.1em;
+    width: 120px;
+    height: 120px;
+    margin-top: 1px;
+    background: #222222;
+    color: whitesmoke;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidePanel:hover {
+    background: #333333;
+}
+
+
+
+/* quoteGrabber styling */
+
+#quotes {
+    /* float: right; */
+    height: 400px;
+    width: 550px;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 1.1em;
+    /* visibility: visible; */
+    background: rgba(34, 34, 34, 0.39);
+    color: whitesmoke;
+    display: block;
+    align-items: center;
+    justify-content: center;
+}
+
+#quote,
+#btns,
+form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+td {
+    width: 25%;
+}
+
+form {
+    color: white;
+}
+
+button {
+    margin: 0 15px;
+}
+
+
+/* end of grabber styling */
