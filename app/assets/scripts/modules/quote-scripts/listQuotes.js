@@ -2,6 +2,8 @@
  *                      listQuote use case
  ******************************************************************/
 
+import {ql} from './initialize.js';
+import {Quote} from './quotes.js';
 ql.view.listQuotes = {
     setupUserInterface: function () {
       var listButton = document.getElementById('listQuotesBtn');

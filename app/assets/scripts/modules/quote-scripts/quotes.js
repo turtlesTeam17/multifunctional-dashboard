@@ -1,12 +1,10 @@
 /*constructor with attribute definitions*/
 
-
-function Quote(slots) {
+export function Quote(slots) {
     this.comment = slots.comment; //isbn
     this.timeStamp = slots.timeStamp;
     this.url = slots.url; //title
     this.quoteText = slots.quoteText; //year
-
 };
 
 //initiate empty array

@@ -12,17 +12,19 @@ import colorInfo from './modules/colorInfoBlock';
 
 import colorPickerInit from './modules/colorPicker';
 
-import initializeQuote from './modules/quote-scripts/initialize.js';
-
-import * as quotes from './modules/quote-scripts/background.js';
+import * as createQuote from './modules/quote-scripts/createquote.js';
+import * as listQuotes from './modules/quote-scripts/listQuotes.js';
+import * as setupInterface from './modules/quote-scripts/setupInterface.js';
 
 import { storeColorPickerData, printNewHistoryColor, printHistoryColor, printSelectedColor } from './modules/colorHistory';
 
 $(document).ready(function() {
      printHistoryColor(onColorClick);
      getLastColor().then((selectedColor) => { 
-        printPalette(selectedColor.substring(1));
-        printSelectedColor(selectedColor.substring(1));
+        if(selectedColor){
+            printPalette(selectedColor.substring(1));
+            printSelectedColor(selectedColor.substring(1));
+        }
     });
     
     $("#eyeDropper").on('click', function() {
@@ -55,5 +57,9 @@ $(document).one('urlShortenerTriggered', function () {
 
 async function getLastColor(){
     var history = await chrome.storage.sync.get('historyColors');
-    return history.historyColors[history.historyColors.length-1];
+    if(history.historyColors){
+        return history.historyColors[history.historyColors.length-1];    
+    }
+    else return null;
+    
 }

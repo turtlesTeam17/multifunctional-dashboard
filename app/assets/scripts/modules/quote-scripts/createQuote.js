@@ -1,6 +1,8 @@
 /***********************************************
 ***  Methods for the use case createQuote  ******
 ************************************************/
+import {ql} from './initialize.js';
+import {Quote} from './quotes.js';
 ql.view.createQuote = {
     setupUserInterface: function () {
       

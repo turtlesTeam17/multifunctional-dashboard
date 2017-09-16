@@ -1,3 +1,5 @@
+//import * as initialize from './initialize.js';
+
 var ql = { model:{}, view:{}, ctrl:{} };
 
 /*constructor with attribute definitions*/
@@ -109,7 +111,7 @@ ql.view.createQuote = {
     },
     // save user input data
     insertSelection: function () {
-    /*
+    
       chrome.runtime.onConnect.addListener(function(port) {
         console.assert(port.name == "knockknock");
         port.onMessage.addListener(function(msg) {
@@ -129,7 +131,7 @@ ql.view.createQuote = {
       });
     }
 
-      */
+      
         alert("click!");
 
         var formEl = document.forms['Quote'];
