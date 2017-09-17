@@ -1,6 +1,6 @@
 /*constructor with attribute definitions*/
 
-export function Quote(slots) {
+function Quote(slots) {
     this.comment = slots.comment; //isbn
     this.timeStamp = slots.timeStamp;
     this.url = slots.url; //title

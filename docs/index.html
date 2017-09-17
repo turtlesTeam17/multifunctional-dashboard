@@ -6,7 +6,7 @@
     <title>Multidash</title>
     <meta name="description" content="">
     <script src="assets/scripts/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="assets/styles/main-4782944cc5.css"/>
+    <link rel="stylesheet" href="assets/styles/main-0796d83f00.css"/>
     <script src="assets/scripts/Vendor.js"></script>
 </head>
 
@@ -15,7 +15,7 @@
         <ul class="tabs">
             <li class="tab active" data-tab="colorPickerDiv">Color Picker</li>
             <li class="tab" data-tab="urlShortenerDiv">Url Shortener</li>
-            <!-- <li class="tab" data-tab="quoteGrabber">Quote Grabber</li> -->
+            <li class="tab" data-tab="quoteGrabber">Quote Grabber</li>
             <li class="tab" data-tab="settings">Settings</li>
         </ul>
     </div>
@@ -37,32 +37,6 @@
         <div class="url-shortener__history">
             <table id="urlHistory">
             </table>
-        </div>
-    </div>
-    <div>
-        <table id="quotes">
-            <thead>
-                <tr>
-                    <th>Description</th>
-                    <th>Time</th>
-                    <th>Quote</th>
-                    <th>URL</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <div id="qGTextArea">Some text </div>
-        <form id="Quote">
-            <p>
-                <label>Description:
-                    <input type="text" name="comment" />
-                    <button id="addQuoteBtn" name="commit">Add quote</button>
-                </label>
-            </p>
-        </form>
-        <div id="btns">
-            <button id="removeQuoteBtn">Remove quote</button>
-            <button id="listQuotesBtn">List quotes</button>
         </div>
     </div>
     <div id="colorPickerDiv" class="color-picker-popup tab-content active">
@@ -94,8 +68,33 @@
             </div>
         </div>
     </div>
-    <!-- <div id="quoteGrabber"></div> -->
-    <div id="settings">
+    <div id="quoteGrabber"  class="popup tab-content">
+        <table id="quotes">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Time</th>
+                    <th>Quote</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div id="qGTextArea">Some text </div>
+        <form id="Quote">
+            <p>
+                <label>Description:
+                    <input type="text" name="comment" />
+                    <button id="addQuoteBtn" name="commit">Add quote</button>
+                </label>
+            </p>
+        </form>
+        <div id="btns">
+            <button id="removeQuoteBtn">Remove quote</button>
+            <button id="listQuotesBtn">List quotes</button>
+        </div>
+    </div>
+    <div id="settings" class="popup tab-content">
         <div class="urlS-settings">
             <h3>Url Shortener Settings</h3>
             <form>

@@ -21,7 +21,7 @@
     "options_page":         "options.html",
     
     "background": {
-        "scripts":          ["eventpage.js"],
+        "scripts":          ["eventpage.js", "quotes.js"],
         "persistent":       false
     },
     "content_scripts": [
