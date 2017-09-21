@@ -4,11 +4,12 @@
 @import "base/basetop";
 @import "base/grids";
 
+
 @import "modules/url-shortener";
 @import "modules/pallete";
 @import "modules/options";
 @import "modules/settings";
-
+@import "modules/quotes";
 
 @import "base/basebottom";
 

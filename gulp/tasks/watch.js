@@ -21,7 +21,7 @@ gulp.task('watch', function(){
 		gulp.start('cssInject');
 	});
 
-	watch('./app/assets/scripts/**/*.js', function(){
+	watch(['./app/assets/scripts/**/*.js','./app/eventpage.js'], function(){
 		gulp.start('scriptsRefresh');
 	});
 });

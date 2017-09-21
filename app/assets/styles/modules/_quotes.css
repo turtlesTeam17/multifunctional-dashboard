@@ -1,0 +1,196 @@
+
+#quoteGrabber {
+  text-align: center;
+  top: 0;
+  left: 0;
+  
+  border-collapse: separate;
+  border-spacing: 0;
+  /* border: 2px solid #ed1c40; */
+  min-width: 600px;
+  min-height: 600px;
+  max-width: 600px;
+  max-height: 600px;
+  width: 100%;
+  height: 90vh;
+  padding-top: 40px;
+  border-radius: .25rem;
+}
+
+#quotes {
+  max-height: 400px;
+max-width: 550px;
+text-align: center;
+font-family: sans-serif;
+font-size: 0.9em;
+  
+color: whitesmoke;
+display: block;
+align-items: center;
+justify-content: center;
+/* margin: 15px auto; */
+}
+.head {
+  
+  width: 500px;
+  margin: 8px auto 5px;
+}
+
+i#clearData {
+  padding: 5px;
+}
+
+table#quotes td:first-child, table#quotes th:first-child  {
+    width: 5%;
+    padding-left: 10px;
+    
+}
+table#quotes th:last-child {
+    text-align: -webkit-center;
+    
+}
+
+table#quotes thead tr:first-child {
+  background: #3B54A3;
+  color: #fff;
+  border: none;
+  height: 30px;
+}
+
+table#quotes th:first-child,
+table#quotes td:first-child {
+  padding: 0 15px 0 20px;
+}
+
+table#quotes thead tr:last-child th {
+  border-bottom: 3px solid #ddd;
+}
+
+table#quotes tbody tr {
+  background: rgba(34, 34, 34, 0.39);
+}
+
+table#quotes tbody tr:hover {
+  background-color: #426A74;
+  cursor: default;
+  color: white;
+}
+
+table#quotes tbody tr:last-child td {
+  border: none;
+}
+
+table#quotes tbody td {
+  border-bottom: 1px solid #ddd;
+}
+  .scrollbar::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 8px;
+  background-color: #6B6B6B;
+}
+
+.scrollbar::-webkit-scrollbar
+{
+  width: 8px;
+  background-color: #414040;
+  border-radius: 12px;
+
+}
+
+.scrollbar::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #555;
+}
+
+
+
+/* scrollbar */
+
+
+
+.scrollbar
+{
+	/* margin-left: 30px; */
+	/* float: left; */
+	/* height: 300px; */
+	width: 500px;
+	/* background: #F5F5F5; */
+  overflow-y: scroll;
+  margin: auto;
+	/* margin-bottom: 25px; */
+}
+
+.force-overflow
+{
+	min-height: 450px;
+}
+
+
+/*
+ *  STYLE 1
+ */
+
+
+
+/* td:last-child {
+  text-align: right;
+  padding-right: 10px;
+} */
+
+.button {
+  color: #B9C0D6;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-top: -4px;
+}
+
+.edit:hover {
+  color: #0a79df;
+}
+
+.delete:hover {
+  color: red;
+}
+
+*/
+
+
+/* quoteGrabber styling 
+
+#quoteGrabber {
+    min-height: 600px;
+    min-width: 600px;
+    margin-top: 40px;
+
+}
+
+*/
+
+
+
+/* quoteGrabber styling */
+
+
+
+#quote,
+#btns,
+form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+
+
+
+/* 
+button {
+    margin: 0 15px;
+} */
+
+
+/* end of grabber styling */

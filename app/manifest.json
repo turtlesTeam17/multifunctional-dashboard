@@ -3,28 +3,39 @@
 
     "name":                 "Multidash",
     "description":          "A chrome extension with multiple features",
-    "version":              "0.9",
+    "version":              "1.0",
 
     "browser_action": {
-        "default_icon":     "icons/icon48.png",
+        "default_icon":     "icons/48.png",
         "default_title":    "A chrome extension with multiple features",
         "default_popup":    "index.html"
     },
 
     "icons": 
 	{ 
-		"16": 				          "icons/icon16.png",
-		"48": 				          "icons/icon48.png",
-		"128": 				          "icons/icon128.png"
+		"16": 				          "icons/16.png",
+		"48": 				          "icons/48.png",
+		"128": 				          "icons/128.png"
 	},
 
     "options_page":         "options.html",
     
     "background": {
-        "scripts":          ["eventpage.js"],
+        "scripts":          ["eventpage.js", "quotes.js"],
         "persistent":       false
     },
-
+    "content_scripts": [
+      {
+        "matches": [
+            "<all_urls>"
+        ],
+        "js": [
+            "selection.js"
+        ],
+        "run_at": "document_start",
+        "all_frames": true
+      }
+    ],
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
@@ -45,6 +56,7 @@
                             "notifications",
                             "contextMenus",
                             "clipboardWrite",
-                            "activeTab"
+                            "activeTab",
+                            "tabs"
     ]
 }
