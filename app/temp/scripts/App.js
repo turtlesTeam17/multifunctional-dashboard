@@ -3448,12 +3448,12 @@ function urlHistory() {
                 type: "basic",
                 title: "Url shortener",
                 message: "Shortened url copied to clipboard, and it's data sent to storage",
-                iconUrl: "icons/icon128.png"
+                iconUrl: "icons/128.png"
             };
             chrome.notifications.create('success', notificationMsg, function () {
                 setTimeout(function () {
                     chrome.notifications.clear('success', function () {});
-                }, 2000);
+                }, 3500);
             });
         }
     }
@@ -3635,7 +3635,7 @@ function add_message_listeners() {
                 type: "basic",
                 title: "Color",
                 message: "Hex color code copied to clipboard, and it's data sent to color history",
-                iconUrl: "icons/icon128.png"
+                iconUrl: "icons/128.png"
             };
             chrome.notifications.create('done', notificationMsgg, function () {
                 setTimeout(function () {

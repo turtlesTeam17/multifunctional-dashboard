@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
       title: "Color",
       message:
         "Hex color code copied to clipboard, and it's data sent to color history",
-      iconUrl: "icons/icon128.png"
+      iconUrl: "icons/128.png"
     };
     chrome.notifications.create("done", notificationMsgg, function() {
       setTimeout(function() {
@@ -51,7 +51,24 @@ chrome.contextMenus.onClicked.addListener(function(clickData) {
               if (response) {
                 console.log("received response");
                 console.log(response);
-
+                if (response.data === "") {
+                  var notificationMesgg = {
+                    type: "basic",
+                    title: "Empty data",
+                    message: "This site don't allow to copy text. :((",
+                    iconUrl: "icons/128.png"
+                  };
+                  chrome.notifications.create(
+                    "boing",
+                    notificationMesgg,
+                    function() {
+                      setTimeout(function() {
+                        chrome.notifications.clear("boing", function() {});
+                      }, 3000);
+                    }
+                  );
+                  return false;
+                }
                 var today = new Date();
                 var index = today.toTimeString();
                 index = index.split(" ")[0];
@@ -63,12 +80,24 @@ chrome.contextMenus.onClicked.addListener(function(clickData) {
                   url: tab[0].url,
                   quoteText: response.data
                 };
+                var notificationMsgg = {
+                  type: "basic",
+                  title: "Quote",
+                  message:
+                    "Added quote to local storage.",
+                  iconUrl: "icons/128.png",
+                  
+                };
                 //add object as new table instance
                 Quote.create(slots);
-                //remove text from input element
-                //formEl.reset();
                 //save new object from memory to local storage
                 Quote.saveAll();
+                //send notification with timeout
+                chrome.notifications.create("bang", notificationMsgg, function() {
+                  setTimeout(function() {
+                    chrome.notifications.clear("bang", function() {});
+                  }, 2800);
+                });
               }
             } catch (error) {
               alert("No response from selection.js, due to: " + error);
