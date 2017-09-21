@@ -1619,7 +1619,7 @@ display: block;
 }
 
 .head {
-  
+
   width: 500px;
   margin: 8px auto 5px;
 }
@@ -1628,7 +1628,7 @@ i#clearData {
   padding: 5px;
 }
 
-table#quotes td:first-child, table#quotes th:first-child  {
+table#quotes td:first-child, th:first-child  {
     width: 5%;
     padding-left: 10px;
     
@@ -1639,14 +1639,14 @@ table#quotes th:last-child {
     
 }
 
-table#quotes thead tr:first-child {
+thead tr:first-child {
   background: #3B54A3;
   color: #fff;
   border: none;
   height: 30px;
 }
 
-table#quotes th:first-child,
+th:first-child,
 table#quotes td:first-child {
   padding: 0 15px 0 20px;
 }
