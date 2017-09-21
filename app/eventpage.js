@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
       title: "Color",
       message:
         "Hex color code copied to clipboard, and it's data sent to color history",
-      iconUrl: "icons/icon128.png"
+      iconUrl: "icons/128.png"
     };
     chrome.notifications.create("done", notificationMsgg, function() {
       setTimeout(function() {
