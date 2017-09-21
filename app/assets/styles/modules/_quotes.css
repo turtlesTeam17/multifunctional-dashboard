@@ -35,53 +35,76 @@ justify-content: center;
   width: 500px;
   margin: 8px auto 5px;
 }
+
 i#clearData {
   padding: 5px;
 }
 
-td:first-child, th:first-child  {
+table#quotes td:first-child, table#quotes th:first-child  {
     width: 5%;
     padding-left: 10px;
     
 }
-th:last-child {
+table#quotes th:last-child {
     text-align: -webkit-center;
     
 }
 
-thead tr:first-child {
+table#quotes thead tr:first-child {
   background: #3B54A3;
   color: #fff;
   border: none;
   height: 30px;
 }
 
-th:first-child,
-td:first-child {
+table#quotes th:first-child,
+table#quotes td:first-child {
   padding: 0 15px 0 20px;
 }
 
-thead tr:last-child th {
+table#quotes thead tr:last-child th {
   border-bottom: 3px solid #ddd;
 }
 
-tbody tr {
+table#quotes tbody tr {
   background: rgba(34, 34, 34, 0.39);
 }
 
-tbody tr:hover {
+table#quotes tbody tr:hover {
   background-color: #426A74;
   cursor: default;
   color: white;
 }
 
-tbody tr:last-child td {
+table#quotes tbody tr:last-child td {
   border: none;
 }
 
-tbody td {
+table#quotes tbody td {
   border-bottom: 1px solid #ddd;
 }
+  .scrollbar::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 8px;
+  background-color: #6B6B6B;
+}
+
+.scrollbar::-webkit-scrollbar
+{
+  width: 8px;
+  background-color: #414040;
+  border-radius: 12px;
+
+}
+
+.scrollbar::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #555;
+}
+
 
 
 /* scrollbar */
@@ -109,28 +132,6 @@ tbody td {
 /*
  *  STYLE 1
  */
-
-.scrollbar::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 8px;
-	background-color: #6B6B6B;
-}
-
-.scrollbar::-webkit-scrollbar
-{
-	width: 8px;
-  background-color: #414040;
-  border-radius: 12px;
-
-}
-
-.scrollbar::-webkit-scrollbar-thumb
-{
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #555;
-}
 
 
 

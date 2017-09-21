@@ -138,18 +138,12 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _jquery2.default)(document).ready(function () {
-    //checkProtocol();
     (0, _colorHistory.printHistoryColor)(onColorClick);
     getLastColor().then(function (selectedColor) {
-<<<<<<< HEAD
         if (selectedColor) {
             (0, _getPalette2.default)(selectedColor.substring(1));
             (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
         }
-=======
-        (0, _getPalette2.default)(selectedColor.substring(1));
-        (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
->>>>>>> 0d1423e6d7891986bdea48fe446823d6cdab6aa3
     });
 
     (0, _jquery2.default)("#eyeDropper").on('click', function () {
@@ -185,13 +179,9 @@ function onColorClick(selectedColor) {
 
 async function getLastColor() {
     var history = await chrome.storage.sync.get('historyColors');
-<<<<<<< HEAD
     if (history.historyColors) {
         return history.historyColors[history.historyColors.length - 1];
     } else return null;
-=======
-    return history.historyColors[history.historyColors.length - 1];
->>>>>>> 0d1423e6d7891986bdea48fe446823d6cdab6aa3
 }
 
 /***/ }),
@@ -3731,8 +3721,24 @@ function colorPickerInit(cb) {
         var url = tabs[0].url;
         var urlSplitByColon = url.split(":");
         var protocol = urlSplitByColon[0];
-        if (protocol == "http" || protocol == "https") {
+        var urlSplitByPeriod = urlSplitByColon[1].split(".");
+
+        if (urlSplitByPeriod[0] == "//chrome") {
+            console.log("denied chrome subdomain");
+            var notificationMesageChrome = {
+                type: "basic",
+                title: "Not allowed",
+                message: 'This application cannot be used o a "chrome" subdomain!',
+                iconUrl: "icons/icon128.png"
+            };
+            chrome.notifications.create('done', notificationMesageChrome, function () {
+                setTimeout(function () {
+                    chrome.notifications.clear('done', function () {});
+                }, 4000);
+            });
+        } else if (protocol == "http" || protocol == "https") {
             console.log(urlSplitByColon);
+            console.log(urlSplitByPeriod[0]);
             console.log("allowed");
             add_message_listeners();
             add_action_listners();
@@ -3740,14 +3746,14 @@ function colorPickerInit(cb) {
             capture_screen();
             cb();
         } else {
-            console.log("denied");
-            var notificationMesage = {
+            console.log("denied protocol");
+            var notificationMesageProtocol = {
                 type: "basic",
                 title: "Not allowed",
                 message: "The color picker functionallity is not allowed on this website, try to pick a color on a http or https protocol",
                 iconUrl: "icons/icon128.png"
             };
-            chrome.notifications.create('done', notificationMesage, function () {
+            chrome.notifications.create('done', notificationMesageProtocol, function () {
                 setTimeout(function () {
                     chrome.notifications.clear('done', function () {});
                 }, 4000);
@@ -3769,24 +3775,15 @@ var _initialize = __webpack_require__(0);
 
 _initialize.ql.view.createQuote = {
   setupUserInterface: function setupUserInterface() {
-
-    //location.reload(true);
     console.log("UI set up!");
-    //   var saveButton = document.getElementById('addQuoteBtn');
+    var clearButton = document.getElementById("clear-quotes");
 
-    //Quote.loadAll();
-    // Set an event handler for the save/submit button
-    var saveButton = document.getElementById('addQuoteBtn');
-    var clearButton = document.getElementById('clearData');
-    saveButton.addEventListener("click", _initialize.ql.view.createQuote.insertSelection);
     clearButton.addEventListener("click", _initialize.ql.view.createQuote.clearLocalStorage);
   },
   // save user input data
   insertSelection: function insertSelection() {
-
-    var formEl = document.forms['Quote'];
+    var formEl = document.forms["Quote"];
     chrome.tabs.query({ active: true, windowId: chrome.windows.WINDOW_ID_CURRENT }, function (tab) {
-
       console.log("Right about to send message!");
       chrome.tabs.sendMessage(tab[0].id, { method: "sendingRequest" }, function (response) {
         try {
@@ -3795,11 +3792,13 @@ _initialize.ql.view.createQuote = {
             console.log(response);
             console.log("Description text: " + formEl.comment.value);
             var today = new Date();
-            //create new object 
-            var slots = { comment: formEl.comment.value,
+            //create new object
+            var slots = {
+              comment: formEl.comment.value,
               timeStamp: today.toLocaleDateString(),
               url: tab[0].url,
-              quoteText: response.data };
+              quoteText: response.data
+            };
             //add object as new table instance
             Quote.create(slots);
             //remove text from input element
@@ -3816,7 +3815,6 @@ _initialize.ql.view.createQuote = {
   clearLocalStorage: function clearLocalStorage() {
     Quote.clearData();
   }
-
 }; /***********************************************
    ***  Methods for the use case createQuote  ******
    ************************************************/
@@ -3832,8 +3830,6 @@ var _initialize = __webpack_require__(0);
 
 _initialize.ql.view.listQuotes = {
   setupUserInterface: function setupUserInterface() {
-    var listButton = document.getElementById('listQuotesBtn');
-    listButton.addEventListener("click", _initialize.ql.view.listQuotes.setupUserInterface);
     var tableBodyEl = document.querySelector("table#quotes>tbody");
     var keys = [],
         key = "",
@@ -3849,9 +3845,9 @@ _initialize.ql.view.listQuotes = {
       Quote.instances[key].quoteIndex = counter;
       row = tableBodyEl.insertRow();
       row.insertCell(-1).textContent = Quote.instances[key].quoteIndex;
-      //row.insertCell(-1).textContent = Quote.instances[key].timeStamp;  
+      //row.insertCell(-1).textContent = Quote.instances[key].timeStamp;
       row.insertCell(-1).textContent = Quote.instances[key].quoteText;
-      row.insertCell(-1).innerHTML = '<i class="material-icons button delete" id="clearData">delete</i>';
+      //row.insertCell(-1).innerHTML = '<i class="material-icons button delete" id="deleteRow">delete</i>';
       //row.insertCell(-1).textContent = Quote.instances[key].url;
     }
     Quote.saveAll();

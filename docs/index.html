@@ -6,9 +6,9 @@
     <title>Multidash</title>
     <meta name="description" content="">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    
+
     <script src="assets/scripts/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="assets/styles/main-8147fde7d1.css"/>
+    <link rel="stylesheet" href="assets/styles/main-e0941b7189.css"/>
     <script src="assets/scripts/Vendor.js"></script>
 </head>
 
@@ -17,7 +17,7 @@
         <ul class="tabs">
             <li class="tab active" data-tab="colorPickerDiv">Color Picker</li>
             <li class="tab" data-tab="urlShortenerDiv">Url Shortener</li>
-            <li class="tab" data-tab="quoteGrabber">Quote Grabber</li>
+            <li class="tab" data-tab="quoteGrabber" id="qg">Quote Grabber</li>
             <li class="tab" data-tab="settings">Settings</li>
         </ul>
     </div>
@@ -69,44 +69,26 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
     </div>
-    <div id="quoteGrabber"  class="tab-content">
-        <table id="quotes">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Quote</th>
-                    <th><i class="material-icons button delete" id="clearData">delete</i></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        
-        <form id="Quote">
-            <p>
-                <label>Description:
-                    <input type="text" name="comment" />
-                    <button id="addQuoteBtn" name="commit">Add quote</button>
-                </label>
-            </p>
-        </form>
-        <div id="btns">
-            <button id="removeQuoteBtn">Remove quote</button>
-            <button id="listQuotesBtn">List quotes</button>
-=======
-        <!-- <div id="quoteGrabber"></div> -->
-        <div id="settings">
-            <div class="urlS-settings">
-                <h3>Storage Settings</h3>
-                <form>
-                    <label for="clear-history">Clear storage: </label>
-                    <input id="clear-history" type="submit" name="clear-history" value="Clear">
-                </form>
-            </div>
-
->>>>>>> 0d1423e6d7891986bdea48fe446823d6cdab6aa3
+    <div id="quoteGrabber" class="tab-content ">
+        <div class="head">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Quote</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
+        <div class="scrollbar">
+            <div class="force-overflow">
+                <table id="quotes">
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
     <div id="settings" class="popup tab-content">
         <div class="urlS-settings">
@@ -114,6 +96,13 @@
             <form>
                 <label for="clear-history">Clear url storage: </label>
                 <input id="clear-history" type="submit" name="clear-history" value="Clear">
+            </form>
+        </div>
+        <div class="urlS-settings">
+            <h3>Quote grabber settings</h3>
+            <form>
+                <label for="clear-history">Clear quotes history: </label>
+                <input id="clear-quotes" type="submit" name="clear-quotes" value="Clear">
             </form>
         </div>
     </div>
