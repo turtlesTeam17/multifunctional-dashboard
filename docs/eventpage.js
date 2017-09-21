@@ -48,10 +48,13 @@ chrome.contextMenus.onClicked.addListener(function(clickData){
                     if(response){
                       console.log("received response");
                       console.log(response);
-                      console.log("Description text set to 1");
+                      
                       var today = new Date();
+                      var index = today.toTimeString();
+                      index = index.split(' ')[0];
+                      console.log("Description text set to: " + index);
                       //create new object 
-                      var slots = {comment: 1,
+                      var slots = {comment: index,
                                   timeStamp: today.toLocaleDateString(),
                                   url: tab[0].url,
                                   quoteText: response.data};

@@ -1,10 +1,11 @@
 /*constructor with attribute definitions*/
 
 function Quote(slots) {
-    this.comment = slots.comment; //isbn
+    this.comment = slots.comment; //index for localstorage
     this.timeStamp = slots.timeStamp;
-    this.url = slots.url; //title
-    this.quoteText = slots.quoteText; //year
+    this.url = slots.url; 
+    this.quoteText = slots.quoteText;
+    this.quoteIndex = slots.quoteIndex; //popup table index added while listing
 };
 
 //initiate empty array
@@ -55,7 +56,7 @@ Quote.create = function (slots) {
 
 //deleting Quote
 Quote.destroy = function (comment) {
-    if (Book.instances[comment]) {
+    if (Quote.instances[comment]) {
       console.log("Quote: \"" + comment + "\" deleted.");
       delete Quote.instances[comment];
     } else {

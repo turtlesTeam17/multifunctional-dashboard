@@ -3735,7 +3735,9 @@ _initialize.ql.view.createQuote = {
     //Quote.loadAll();
     // Set an event handler for the save/submit button
     var saveButton = document.getElementById('addQuoteBtn');
+    var clearButton = document.getElementById('clearData');
     saveButton.addEventListener("click", _initialize.ql.view.createQuote.insertSelection);
+    clearButton.addEventListener("click", _initialize.ql.view.createQuote.clearLocalStorage);
   },
   // save user input data
   insertSelection: function insertSelection() {
@@ -3768,6 +3770,9 @@ _initialize.ql.view.createQuote = {
         }
       });
     });
+  },
+  clearLocalStorage: function clearLocalStorage() {
+    Quote.clearData();
   }
 
 }; /***********************************************
@@ -3798,12 +3803,16 @@ _initialize.ql.view.listQuotes = {
     // for each quote, create a table row with a cell for each attribute
     for (i = 0; i < keys.length; i++) {
       key = keys[i];
+      var counter = i + 1;
+      Quote.instances[key].quoteIndex = counter;
       row = tableBodyEl.insertRow();
-      row.insertCell(-1).textContent = Quote.instances[key].comment;
-      row.insertCell(-1).textContent = Quote.instances[key].timeStamp;
+      row.insertCell(-1).textContent = Quote.instances[key].quoteIndex;
+      //row.insertCell(-1).textContent = Quote.instances[key].timeStamp;  
       row.insertCell(-1).textContent = Quote.instances[key].quoteText;
-      row.insertCell(-1).textContent = Quote.instances[key].url;
+      row.insertCell(-1).innerHTML = '<i class="material-icons button delete" id="clearData">delete</i>';
+      //row.insertCell(-1).textContent = Quote.instances[key].url;
     }
+    Quote.saveAll();
   }
 }; /*******************************************************************
     *                      listQuote use case

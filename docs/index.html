@@ -5,8 +5,10 @@
     <meta charset="utf-8">
     <title>Multidash</title>
     <meta name="description" content="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
     <script src="assets/scripts/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="assets/styles/main-0796d83f00.css"/>
+    <link rel="stylesheet" href="assets/styles/main-8147fde7d1.css"/>
     <script src="assets/scripts/Vendor.js"></script>
 </head>
 
@@ -68,19 +70,18 @@
             </div>
         </div>
     </div>
-    <div id="quoteGrabber"  class="popup tab-content">
+    <div id="quoteGrabber"  class="tab-content">
         <table id="quotes">
             <thead>
                 <tr>
-                    <th>Description</th>
-                    <th>Time</th>
+                    <th>#</th>
                     <th>Quote</th>
-                    <th>URL</th>
+                    <th><i class="material-icons button delete" id="clearData">delete</i></th>
                 </tr>
             </thead>
             <tbody></tbody>
         </table>
-        <div id="qGTextArea">Some text </div>
+        
         <form id="Quote">
             <p>
                 <label>Description:

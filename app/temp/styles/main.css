@@ -15,11 +15,11 @@
             width: 100%;
 }
 #settings input[type="submit"] {
-        // color: black;
-        background: crimson;
-        margin-left: 15px;
-        border: none;
-        outline: none;
+    // color: black;
+    background: crimson;
+    margin-left: 15px;
+    border: none;
+    outline: none;
 }
 .options .url-shortener-tab {
         background: rgba(255, 255, 255, 0.25);
@@ -782,15 +782,10 @@ we can specify global variable to use flexbox as default instead of floats
 	width: 100%; /* must be declared on parent*/
 }
 
-.grid-one:before { /* must be declared on parent*/
-	content: '';
-	display: table;
+.grid-one:before { /* must be declared on parent*/ content: ''; display: table;
 }
 
-.grid-one:after { /* must be declared on parent*/
-	content: '';
-	display: table;
-	clear: both;
+.grid-one:after { /* must be declared on parent*/ content: ''; display: table; clear: both;
 }
 
 .grid-one div {
@@ -798,22 +793,22 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .grid-one div:nth-child(1n) {
-	float: left;
-	margin-right: 30px;
-	clear: none
+            float: left;
+            margin-right: 30px;
+            clear: none
 }
 
 .grid-one div:last-child {
-	margin-right: 0
+            margin-right: 0
 }
 
 .grid-one div:nth-child(1n) {
-	margin-right: 0;
-	float: right
+            margin-right: 0;
+            float: right
 }
 
 .grid-one div:nth-child(1n + 1) {
-	clear: both
+            clear: both
 }
 
 @media (min-width: 576px) {
@@ -821,19 +816,19 @@ we can specify global variable to use flexbox as default instead of floats
 		width: calc(99.9% * 1/2 - (30px - 30px * 1/2));
             }
             .grid-one div:nth-child(1n) {
-		float: left;
-		margin-right: 30px;
-		clear: none;
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
             }
             .grid-one div:last-child {
-		margin-right: 0;
+                        margin-right: 0;
             }
             .grid-one div:nth-child(2n) {
-		margin-right: 0;
-		float: right;
+                        margin-right: 0;
+                        float: right;
             }
             .grid-one div:nth-child(2n + 1) {
-		clear: both;
+                        clear: both;
             }
 	}
 
@@ -842,19 +837,19 @@ we can specify global variable to use flexbox as default instead of floats
 		width: calc(99.9% * 1/3 - (30px - 30px * 1/3));
             }
             .grid-one div:nth-child(1n) {
-		float: left;
-		margin-right: 30px;
-		clear: none;
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
             }
             .grid-one div:last-child {
-		margin-right: 0;
+                        margin-right: 0;
             }
             .grid-one div:nth-child(3n) {
-		margin-right: 0;
-		float: right;
+                        margin-right: 0;
+                        float: right;
             }
             .grid-one div:nth-child(3n + 1) {
-		clear: both;
+                        clear: both;
             }
 	}
 
@@ -863,19 +858,19 @@ we can specify global variable to use flexbox as default instead of floats
 		width: calc(99.9% * 1/6 - (30px - 30px * 1/6));
             }
             .grid-one div:nth-child(1n) {
-		float: left;
-		margin-right: 30px;
-		clear: none;
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
             }
             .grid-one div:last-child {
-		margin-right: 0;
+                        margin-right: 0;
             }
             .grid-one div:nth-child(6n) {
-		margin-right: 0;
-		float: right;
+                        margin-right: 0;
+                        float: right;
             }
             .grid-one div:nth-child(6n + 1) {
-		clear: both;
+                        clear: both;
             }
 	}
 
@@ -908,28 +903,28 @@ we can specify global variable to use flexbox as default instead of floats
 
 .grid-two:before {
 	/* we can use lost center instead of lost utility: clearfix. Also second propertY in this is for padding(left, right)*/
-	content:'';
-	display:table;
+	content: '';
+	display: table;
 }
 
 .grid-two:after {
 	/* we can use lost center instead of lost utility: clearfix. Also second propertY in this is for padding(left, right)*/
-	content:'';
-	display:table;
-	clear:both;
+	content: '';
+	display: table;
+	clear: both;
 }
 
 .grid-two:before {
 	/* we can use lost center instead of lost utility: clearfix. Also second propertY in this is for padding(left, right)*/
-	content:'';
-	display:table;
+	content: '';
+	display: table;
 }
 
 .grid-two:after {
 	/* we can use lost center instead of lost utility: clearfix. Also second propertY in this is for padding(left, right)*/
-	content:'';
-	display:table;
-	clear:both;
+	content: '';
+	display: table;
+	clear: both;
 }
 
 .grid-two div {
@@ -977,25 +972,25 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .grid-three:before {
-	content: '';
-	display: table;
+            content: '';
+            display: table;
 }
 
 .grid-three:after {
-	content: '';
-	display: table;
-	clear: both;
+            content: '';
+            display: table;
+            clear: both;
 }
 
 .grid-three:before {
-	content: '';
-	display: table;
+            content: '';
+            display: table;
 }
 
 .grid-three:after {
-	content: '';
-	display: table;
-	clear: both;
+            content: '';
+            display: table;
+            clear: both;
 }
 
 .grid-three div {
@@ -1005,22 +1000,22 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .grid-three div:nth-child(1n) {
-	float: left;
-	margin-right: 30px;
-	clear: none
+            float: left;
+            margin-right: 30px;
+            clear: none
 }
 
 .grid-three div:last-child {
-	margin-right: 0
+            margin-right: 0
 }
 
 .grid-three div:nth-child(1n) {
-	margin-right: 0;
-	float: right
+            margin-right: 0;
+            float: right
 }
 
 .grid-three div:nth-child(1n + 1) {
-	clear: both
+            clear: both
 }
 
 @media (min-width: 576px) {
@@ -1028,19 +1023,19 @@ we can specify global variable to use flexbox as default instead of floats
 		width: calc(99.9% * 1/2 - (30px - 30px * 1/2));
             }
             .grid-three div:nth-child(1n) {
-		float: left;
-		margin-right: 30px;
-		clear: none;
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
             }
             .grid-three div:last-child {
-		margin-right: 0;
+                        margin-right: 0;
             }
             .grid-three div:nth-child(2n) {
-		margin-right: 0;
-		float: right;
+                        margin-right: 0;
+                        float: right;
             }
             .grid-three div:nth-child(2n + 1) {
-		clear: both;
+                        clear: both;
             }
 	}
 
@@ -1049,19 +1044,19 @@ we can specify global variable to use flexbox as default instead of floats
 		width: calc(99.9% * 1/3 - (30px - 30px * 1/3));
             }
             .grid-three div:nth-child(1n) {
-		float: left;
-		margin-right: 30px;
-		clear: none;
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
             }
             .grid-three div:last-child {
-		margin-right: 0;
+                        margin-right: 0;
             }
             .grid-three div:nth-child(3n) {
-		margin-right: 0;
-		float: right;
+                        margin-right: 0;
+                        float: right;
             }
             .grid-three div:nth-child(3n + 1) {
-		clear: both;
+                        clear: both;
             }
 	}
 
@@ -1071,23 +1066,23 @@ we can specify global variable to use flexbox as default instead of floats
 		height: calc(99.9% * 1/4 - (30px - 30px * 1/4));
             }
             .grid-three div:nth-child(1n) {
-		float: left;
-		margin-right: 30px;
-		margin-bottom: 30px;
-		clear: none;
+                        float: left;
+                        margin-right: 30px;
+                        margin-bottom: 30px;
+                        clear: none;
             }
             .grid-three div:last-child {
-		margin-right: 0;
-		margin-bottom: 0;
+                        margin-right: 0;
+                        margin-bottom: 0;
             }
             .grid-three div:nth-child(4n) {
-		margin-right: 0;
+                        margin-right: 0;
             }
             .grid-three div:nth-child(4n + 1) {
-		clear: both;
+                        clear: both;
             }
             .grid-three div:nth-last-child(-n + 4) {
-		margin-bottom: 0;
+                        margin-bottom: 0;
             }
 	}
 
@@ -1119,22 +1114,22 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .grid-four div:nth-child(1n) {
-	float: left;
-	margin-right: 30px;
-	clear: none
+            float: left;
+            margin-right: 30px;
+            clear: none
 }
 
 .grid-four div:last-child {
-	margin-right: 0
+            margin-right: 0
 }
 
 .grid-four div:nth-child(1n) {
-	margin-right: 0;
-	float: right
+            margin-right: 0;
+            float: right
 }
 
 .grid-four div:nth-child(1n + 1) {
-	clear: both
+            clear: both
 }
 
 @media (min-width: 576px) {
@@ -1142,19 +1137,19 @@ we can specify global variable to use flexbox as default instead of floats
 		width: calc(99.9% * 1/2 - (30px - 30px * 1/2));
             }
             .grid-four div:nth-child(1n) {
-		float: left;
-		margin-right: 30px;
-		clear: none;
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
             }
             .grid-four div:last-child {
-		margin-right: 0;
+                        margin-right: 0;
             }
             .grid-four div:nth-child(2n) {
-		margin-right: 0;
-		float: right;
+                        margin-right: 0;
+                        float: right;
             }
             .grid-four div:nth-child(2n + 1) {
-		clear: both;
+                        clear: both;
             }
 	}
 
@@ -1163,19 +1158,19 @@ we can specify global variable to use flexbox as default instead of floats
 		width: calc(99.9% * 1/3 - (30px - 30px * 1/3));
             }
             .grid-four div:nth-child(1n) {
-		float: left;
-		margin-right: 30px;
-		clear: none;
+                        float: left;
+                        margin-right: 30px;
+                        clear: none;
             }
             .grid-four div:last-child {
-		margin-right: 0;
+                        margin-right: 0;
             }
             .grid-four div:nth-child(3n) {
-		margin-right: 0;
-		float: right;
+                        margin-right: 0;
+                        float: right;
             }
             .grid-four div:nth-child(3n + 1) {
-		clear: both;
+                        clear: both;
             }
 	}
 
@@ -1184,19 +1179,18 @@ we can specify global variable to use flexbox as default instead of floats
 		flex-grow: 0;
 		flex-shrink: 0;
 		flex-basis: calc(99.9% * 1/4 - (30px - 30px * 1/4));
-		max-width: calc(99.9% * 1/4 - (30px - 30px * 1/4));
 		width: calc(99.9% * 1/4 - (30px - 30px * 1/4));
             }
             .grid-four div:nth-child(1n) {
-		margin-right: 30px;
-		margin-left: 0;
+                        margin-right: 30px;
+                        margin-left: 0;
             }
             .grid-four div:last-child {
-		margin-right: 0;
+                        margin-right: 0;
             }
             .grid-four div:nth-child(4n) {
-		margin-right: 0;
-		margin-left: auto;
+                        margin-right: 0;
+                        margin-left: auto;
             }
 	}
 
@@ -1327,7 +1321,7 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 .url-shortener__input:last-child {
-        margin-bottom: 0;
+            margin-bottom: 0;
 }
 
 .url-shortener__input input[type="text"] {
@@ -1554,98 +1548,209 @@ we can specify global variable to use flexbox as default instead of floats
 }
 
 #settings {
-    max-width: 600px;
-    max-height: 600px;
-    min-width: 600px;
-    min-height: 600px;
-    background: #3E606F;
-    margin: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    position: relative;
-    color: aliceblue;
-    padding: 10%
+  max-width: 600px;
+  max-height: 600px;
+  min-width: 600px;
+  min-height: 600px;
+  background: #3e606f;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  position: relative;
+  color: aliceblue;
+  padding: 10%
 }
 
 #settings .urlS-settings {
-        border: 1px solid white;
-        border-radius: 15px;
-        padding: 20px;
+    border: 1px solid white;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px;
+    min-width: 250px;
 }
 
 #settings .urlS-settings h3 {
-            margin: 0;
-            padding: 0;
-            margin-bottom: 15px;
+      margin: 0;
+      padding: 0;
+      margin-bottom: 15px;
 }
-
-// body {
-//  background-color: #222222;
-//  margin: 0;
-//   padding: 0px;
-//   overflow: hidden;
-//   min-height: 600px;
-//   min-width: 600px;
-//   max-height: 600px;
-//   max-width: 600px;  }
-
-/* quoteGrabber styling */
 
 #quoteGrabber {
-    height: 100vh;
+  text-align: center;
+  top: 0;
+  left: 0;
+  
+  border-collapse: separate;
+  border-spacing: 0;
+  /* border: 2px solid #ed1c40; */
+  min-width: 600px;
+  min-height: 600px;
+  max-width: 600px;
+  max-height: 600px;
+  width: 100%;
+  height: 90vh;
+  padding-top: 40px;
+  border-radius: .25rem;
 }
 
-div:first-child {
-    margin-top: 0px;
+#quotes {
+  max-height: 400px;
+max-width: 550px;
+text-align: center;
+font-family: sans-serif;
+font-size: 0.9em;
+  
+color: whitesmoke;
+display: block;
+-webkit-box-align: center;
+    -ms-flex-align: center;
+        align-items: center;
+-webkit-box-pack: center;
+    -ms-flex-pack: center;
+        justify-content: center;
+/* margin: 15px auto; */
 }
 
-.sidePanel {
-    cursor: pointer;
-    text-align: center;
-    /* padding: 30px 15px;  */
-    font-family: sans-serif;
-    font-size: 1.1em;
-    width: 120px;
-    height: 120px;
-    margin-top: 1px;
-    background: #222222;
-    color: whitesmoke;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+.head {
+  
+  width: 500px;
+  margin: 8px auto 5px;
 }
 
-.sidePanel:hover {
-    background: #333333;
+i#clearData {
+  padding: 5px;
 }
+
+td:first-child, th:first-child  {
+    width: 5%;
+    padding-left: 10px;
+    
+}
+
+th:last-child {
+    text-align: -webkit-center;
+    
+}
+
+thead tr:first-child {
+  background: #3B54A3;
+  color: #fff;
+  border: none;
+  height: 30px;
+}
+
+th:first-child,
+td:first-child {
+  padding: 0 15px 0 20px;
+}
+
+thead tr:last-child th {
+  border-bottom: 3px solid #ddd;
+}
+
+tbody tr {
+  background: rgba(34, 34, 34, .39);
+}
+
+tbody tr:hover {
+  background-color: #426A74;
+  cursor: default;
+  color: white;
+}
+
+tbody tr:last-child td {
+  border: none;
+}
+
+tbody td {
+  border-bottom: 1px solid #ddd;
+}
+
+/* scrollbar */
+
+.scrollbar
+{
+	/* margin-left: 30px; */
+	/* float: left; */
+	/* height: 300px; */
+	width: 500px;
+	/* background: #F5F5F5; */
+  overflow-y: scroll;
+  margin: auto;
+	/* margin-bottom: 25px; */
+}
+
+.force-overflow
+{
+	min-height: 450px;
+}
+
+/*
+ *  STYLE 1
+ */
+
+.scrollbar::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+	border-radius: 8px;
+	background-color: #6B6B6B;
+}
+
+.scrollbar::-webkit-scrollbar
+{
+	width: 8px;
+  background-color: #414040;
+  border-radius: 12px;
+
+}
+
+.scrollbar::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+	background-color: #555;
+}
+
+/* td:last-child {
+  text-align: right;
+  padding-right: 10px;
+} */
+
+.button {
+  color: #B9C0D6;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-top: -4px;
+}
+
+.edit:hover {
+  color: #0a79df;
+}
+
+.delete:hover {
+  color: red;
+}
+
+*/
+
+
+/* quoteGrabber styling 
+
+#quoteGrabber {
+    min-height: 600px;
+    min-width: 600px;
+    margin-top: 40px;
+
+}
+
+*/
+
+
 
 /* quoteGrabber styling */
 
-#quotes {
-    /* float: right; */
-    height: 400px;
-    width: 550px;
-    text-align: center;
-    font-family: sans-serif;
-    font-size: 1.1em;
-    /* visibility: visible; */
-    background: rgba(34, 34, 34, .39);
-    color: whitesmoke;
-    display: block;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-}
+
 
 #quote,
 #btns,
@@ -1659,19 +1764,13 @@ form {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-}
-
-td {
-    width: 25%;
-}
-
-form {
     color: white;
 }
 
+/* 
 button {
     margin: 0 15px;
-}
+} */
 
 /* end of grabber styling */
 

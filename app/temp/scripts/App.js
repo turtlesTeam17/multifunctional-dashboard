@@ -3727,22 +3727,15 @@ var _initialize = __webpack_require__(0);
 
 _initialize.ql.view.createQuote = {
   setupUserInterface: function setupUserInterface() {
-
-    //location.reload(true);
     console.log("UI set up!");
-    //   var saveButton = document.getElementById('addQuoteBtn');
+    var clearButton = document.getElementById("clear-quotes");
 
-    //Quote.loadAll();
-    // Set an event handler for the save/submit button
-    var saveButton = document.getElementById('addQuoteBtn');
-    saveButton.addEventListener("click", _initialize.ql.view.createQuote.insertSelection);
+    clearButton.addEventListener("click", _initialize.ql.view.createQuote.clearLocalStorage);
   },
   // save user input data
   insertSelection: function insertSelection() {
-
-    var formEl = document.forms['Quote'];
+    var formEl = document.forms["Quote"];
     chrome.tabs.query({ active: true, windowId: chrome.windows.WINDOW_ID_CURRENT }, function (tab) {
-
       console.log("Right about to send message!");
       chrome.tabs.sendMessage(tab[0].id, { method: "sendingRequest" }, function (response) {
         try {
@@ -3751,11 +3744,13 @@ _initialize.ql.view.createQuote = {
             console.log(response);
             console.log("Description text: " + formEl.comment.value);
             var today = new Date();
-            //create new object 
-            var slots = { comment: formEl.comment.value,
+            //create new object
+            var slots = {
+              comment: formEl.comment.value,
               timeStamp: today.toLocaleDateString(),
               url: tab[0].url,
-              quoteText: response.data };
+              quoteText: response.data
+            };
             //add object as new table instance
             Quote.create(slots);
             //remove text from input element
@@ -3768,8 +3763,10 @@ _initialize.ql.view.createQuote = {
         }
       });
     });
+  },
+  clearLocalStorage: function clearLocalStorage() {
+    Quote.clearData();
   }
-
 }; /***********************************************
    ***  Methods for the use case createQuote  ******
    ************************************************/
@@ -3785,8 +3782,6 @@ var _initialize = __webpack_require__(0);
 
 _initialize.ql.view.listQuotes = {
   setupUserInterface: function setupUserInterface() {
-    var listButton = document.getElementById('listQuotesBtn');
-    listButton.addEventListener("click", _initialize.ql.view.listQuotes.setupUserInterface);
     var tableBodyEl = document.querySelector("table#quotes>tbody");
     var keys = [],
         key = "",
@@ -3798,12 +3793,16 @@ _initialize.ql.view.listQuotes = {
     // for each quote, create a table row with a cell for each attribute
     for (i = 0; i < keys.length; i++) {
       key = keys[i];
+      var counter = i + 1;
+      Quote.instances[key].quoteIndex = counter;
       row = tableBodyEl.insertRow();
-      row.insertCell(-1).textContent = Quote.instances[key].comment;
-      row.insertCell(-1).textContent = Quote.instances[key].timeStamp;
+      row.insertCell(-1).textContent = Quote.instances[key].quoteIndex;
+      //row.insertCell(-1).textContent = Quote.instances[key].timeStamp;
       row.insertCell(-1).textContent = Quote.instances[key].quoteText;
-      row.insertCell(-1).textContent = Quote.instances[key].url;
+      //row.insertCell(-1).innerHTML = '<i class="material-icons button delete" id="deleteRow">delete</i>';
+      //row.insertCell(-1).textContent = Quote.instances[key].url;
     }
+    Quote.saveAll();
   }
 }; /*******************************************************************
     *                      listQuote use case
