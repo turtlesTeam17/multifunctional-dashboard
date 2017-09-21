@@ -51,7 +51,24 @@ chrome.contextMenus.onClicked.addListener(function(clickData) {
               if (response) {
                 console.log("received response");
                 console.log(response);
-
+                if (response.data === "") {
+                  var notificationMesgg = {
+                    type: "basic",
+                    title: "Empty data",
+                    message: "This site don't allow to copy text. :((",
+                    iconUrl: "icons/128.png"
+                  };
+                  chrome.notifications.create(
+                    "boing",
+                    notificationMesgg,
+                    function() {
+                      setTimeout(function() {
+                        chrome.notifications.clear("boing", function() {});
+                      }, 3000);
+                    }
+                  );
+                  return false;
+                }
                 var today = new Date();
                 var index = today.toTimeString();
                 index = index.split(" ")[0];
@@ -67,7 +84,7 @@ chrome.contextMenus.onClicked.addListener(function(clickData) {
                   type: "basic",
                   title: "Quote",
                   message:
-                    "Added quote. Happy?",
+                    "Added quote to local storage.",
                   iconUrl: "icons/128.png",
                   
                 };
