@@ -118,19 +118,67 @@ function capture_screen() {
     });
 }
 
+
 /*
  @func initialises the color picker
- -> adds all the message listners
- -> runs the content script in the current tab
- -> captures the screen and sends it in a message to the current tab
+ @param (cb) -> function that is called if the protocol is http or https
+ -> gets the current tab url
+ -> checks if the protocol is http or https
+    -> if if the protocol is http or https
+        -> adds all the message listners
+        -> runs the content script in the current tab
+        -> captures the screen and sends it in a message to the current tab
+        -> executes the cb function
+    -> if not
+        -> sends a notification to inform the user and leaves the popup intact
  => this function is used in the main App.js file as an event listner to the click of the color picker button in the popup
  */
 
-function colorPickerInit() {
-    add_message_listeners();
-    add_action_listners();
-    inject_script_current_tab(COLOR_PICKER_CONTENT_SCRIPT);
-    capture_screen();
+function colorPickerInit(cb) {
+    chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
+        var url = tabs[0].url;
+        var urlSplitByColon = url.split(":");
+        var protocol = urlSplitByColon[0];
+        var urlSplitByPeriod = urlSplitByColon[1].split(".");
+
+        if (urlSplitByPeriod[0] == "//chrome") {
+            console.log("denied chrome subdomain");
+            var notificationMesageChrome = {
+                type: "basic",
+                title: "Not allowed",
+                message: 'This application cannot be used o a "chrome" subdomain!',
+                iconUrl: "icons/icon128.png"
+            };
+            chrome.notifications.create('done', notificationMesageChrome, function () {
+                setTimeout(function () {
+                    chrome.notifications.clear('done', function () {});
+                }, 4000);
+            });
+        } else if (protocol == "http" || protocol == "https") {
+            console.log(urlSplitByColon);
+            console.log(urlSplitByPeriod[0]);
+            console.log("allowed");
+            add_message_listeners();
+            add_action_listners();
+            inject_script_current_tab(COLOR_PICKER_CONTENT_SCRIPT);
+            capture_screen();
+            cb();
+        } else {
+            console.log("denied protocol");
+            var notificationMesageProtocol = {
+                type: "basic",
+                title: "Not allowed",
+                message: "The color picker functionallity is not allowed on this website, try to pick a color on a http or https protocol",
+                iconUrl: "icons/icon128.png"
+            };
+            chrome.notifications.create('done', notificationMesageProtocol, function () {
+                setTimeout(function () {
+                    chrome.notifications.clear('done', function () {});
+                }, 4000);
+            });
+        }
+
+    });
 }
 
 export default colorPickerInit;

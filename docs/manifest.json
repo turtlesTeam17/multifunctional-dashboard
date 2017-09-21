@@ -48,7 +48,7 @@
   },
 
   "web_accessible_resources": [
-    "assets/images/color-picker.png"
+    "assets/images/color-picker-black.png"
   ],
 
     "permissions": [

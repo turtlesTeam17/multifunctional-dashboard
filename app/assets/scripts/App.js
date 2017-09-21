@@ -16,6 +16,7 @@ import * as createQuote from './modules/quote-scripts/createquote.js';
 import * as listQuotes from './modules/quote-scripts/listQuotes.js';
 import * as setupInterface from './modules/quote-scripts/setupInterface.js';
 
+
 import { storeColorPickerData, printNewHistoryColor, printHistoryColor, printSelectedColor } from './modules/colorHistory';
 
 $(document).ready(function() {
@@ -29,11 +30,15 @@ $(document).ready(function() {
     
     $("#eyeDropper").on('click', function() {
         console.log("pick color!");
-        colorPickerInit();
-        $('.options').addClass('invisible');
-        $('#colorPickerDiv').addClass('invisible');
-        $('.colorInfo').removeClass('invisible');
-        colorInfo();
+        colorPickerInit(function() {
+            $('.options').addClass('invisible');
+            $('#colorPickerDiv').addClass('invisible');
+            $('.colorInfo').removeClass('invisible');
+            console.log("aa");
+            colorInfo();
+        });
+
+
     });
     $('#shrinkMe').click(function(){ // or any other event
         $(this).toggleClass('shrink');

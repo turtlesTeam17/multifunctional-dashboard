@@ -138,21 +138,29 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _jquery2.default)(document).ready(function () {
+    //checkProtocol();
     (0, _colorHistory.printHistoryColor)(onColorClick);
     getLastColor().then(function (selectedColor) {
+<<<<<<< HEAD
         if (selectedColor) {
             (0, _getPalette2.default)(selectedColor.substring(1));
             (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
         }
+=======
+        (0, _getPalette2.default)(selectedColor.substring(1));
+        (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
+>>>>>>> 0d1423e6d7891986bdea48fe446823d6cdab6aa3
     });
 
     (0, _jquery2.default)("#eyeDropper").on('click', function () {
         console.log("pick color!");
-        (0, _colorPicker2.default)();
-        (0, _jquery2.default)('.options').addClass('invisible');
-        (0, _jquery2.default)('#colorPickerDiv').addClass('invisible');
-        (0, _jquery2.default)('.colorInfo').removeClass('invisible');
-        (0, _colorInfoBlock2.default)();
+        (0, _colorPicker2.default)(function () {
+            (0, _jquery2.default)('.options').addClass('invisible');
+            (0, _jquery2.default)('#colorPickerDiv').addClass('invisible');
+            (0, _jquery2.default)('.colorInfo').removeClass('invisible');
+            console.log("aa");
+            (0, _colorInfoBlock2.default)();
+        });
     });
     (0, _jquery2.default)('#shrinkMe').click(function () {
         // or any other event
@@ -177,9 +185,13 @@ function onColorClick(selectedColor) {
 
 async function getLastColor() {
     var history = await chrome.storage.sync.get('historyColors');
+<<<<<<< HEAD
     if (history.historyColors) {
         return history.historyColors[history.historyColors.length - 1];
     } else return null;
+=======
+    return history.historyColors[history.historyColors.length - 1];
+>>>>>>> 0d1423e6d7891986bdea48fe446823d6cdab6aa3
 }
 
 /***/ }),
@@ -3701,17 +3713,47 @@ function capture_screen() {
 
 /*
  @func initialises the color picker
- -> adds all the message listners
- -> runs the content script in the current tab
- -> captures the screen and sends it in a message to the current tab
+ @param (cb) -> function that is called if the protocol is http or https
+ -> gets the current tab url
+ -> checks if the protocol is http or https
+    -> if if the protocol is http or https
+        -> adds all the message listners
+        -> runs the content script in the current tab
+        -> captures the screen and sends it in a message to the current tab
+        -> executes the cb function
+    -> if not
+        -> sends a notification to inform the user and leaves the popup intact
  => this function is used in the main App.js file as an event listner to the click of the color picker button in the popup
  */
 
-function colorPickerInit() {
-    add_message_listeners();
-    add_action_listners();
-    inject_script_current_tab(_constants.COLOR_PICKER_CONTENT_SCRIPT);
-    capture_screen();
+function colorPickerInit(cb) {
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        var url = tabs[0].url;
+        var urlSplitByColon = url.split(":");
+        var protocol = urlSplitByColon[0];
+        if (protocol == "http" || protocol == "https") {
+            console.log(urlSplitByColon);
+            console.log("allowed");
+            add_message_listeners();
+            add_action_listners();
+            inject_script_current_tab(_constants.COLOR_PICKER_CONTENT_SCRIPT);
+            capture_screen();
+            cb();
+        } else {
+            console.log("denied");
+            var notificationMesage = {
+                type: "basic",
+                title: "Not allowed",
+                message: "The color picker functionallity is not allowed on this website, try to pick a color on a http or https protocol",
+                iconUrl: "icons/icon128.png"
+            };
+            chrome.notifications.create('done', notificationMesage, function () {
+                setTimeout(function () {
+                    chrome.notifications.clear('done', function () {});
+                }, 4000);
+            });
+        }
+    });
 }
 
 exports.default = colorPickerInit;
