@@ -63,12 +63,24 @@ chrome.contextMenus.onClicked.addListener(function(clickData) {
                   url: tab[0].url,
                   quoteText: response.data
                 };
+                var notificationMsgg = {
+                  type: "basic",
+                  title: "Quote",
+                  message:
+                    "Added quote. Happy?",
+                  iconUrl: "icons/128.png",
+                  
+                };
                 //add object as new table instance
                 Quote.create(slots);
-                //remove text from input element
-                //formEl.reset();
                 //save new object from memory to local storage
                 Quote.saveAll();
+                //send notification with timeout
+                chrome.notifications.create("bang", notificationMsgg, function() {
+                  setTimeout(function() {
+                    chrome.notifications.clear("bang", function() {});
+                  }, 2800);
+                });
               }
             } catch (error) {
               alert("No response from selection.js, due to: " + error);
