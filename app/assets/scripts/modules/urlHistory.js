@@ -108,7 +108,7 @@ function urlHistory() {
             chrome.notifications.create('success', notificationMsg, function () {
                 setTimeout(function () {
                     chrome.notifications.clear('success', function () {});
-                }, 2000);
+                }, 3500);
             });
         }
     }
