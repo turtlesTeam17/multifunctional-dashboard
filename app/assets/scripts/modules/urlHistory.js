@@ -7,17 +7,30 @@ function urlHistory() {
     // https://stackoverflow.com/a/38641281 for sorting retrieved object before displaying it to history
     var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
 
-    async function main() {
-        try {
+    function main() {
+        return new Promise (function(resolve, reject){
+            try {
             var storedUrls = await storage.get(null, function (items) {});
             var globalCount = await storage.get('globalCount', function (items) {});
             var storedUrlsCount = Object.keys(storedUrls).length - 1;
 
             var results = [storedUrls, globalCount.globalCount, storedUrlsCount]
-            return results;
-        } catch (err) {
-            console.error(err);
-        }
+            resolve(results);
+
+            } catch (err) {
+                console.error(err);
+                reject(err);
+            }
+        }).then(function (x) {
+                console.log(x[0]); // stored Urls Object
+                console.log(x[1] + ' globalCount');
+                console.log(x[2] + ' storedUrlsCount');
+                urlData(x[0]);
+                getDataCount(x[1]);
+                storageCount = x[2];
+                createDataArray(x[0]);
+            })
+            .catch(err => console.error(err));
     }
 
     // get count of stored items 
@@ -150,16 +163,7 @@ function urlHistory() {
  
         // clearStorage();
         showAllData();
-        main().then(function (x) {
-                console.log(x[0]); // stored Urls Object
-                console.log(x[1] + ' globalCount');
-                console.log(x[2] + ' storedUrlsCount');
-                urlData(x[0]);
-                getDataCount(x[1]);
-                storageCount = x[2];
-                createDataArray(x[0]);
-            })
-            .catch(err => console.error(err));
+        main();
     
 
     // Listen for change in short-url-info div with custom jQuery event

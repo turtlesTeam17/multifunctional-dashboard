@@ -2,7 +2,7 @@
 
 import $ from './vendor/jquery-3.2.1.min';
 import './vendor/jquery.qrcode.min';
-import './vendor/chrome-extension-async';
+// import './vendor/chrome-extension-async';
 
 import printPalette from './modules/getPalette';
 import shortenTabUrl from './modules/shortenTabUrl';
@@ -60,11 +60,15 @@ $(document).one('urlShortenerTriggered', function () {
     urlHistory();
  })
 
-async function getLastColor(){
-    var history = await chrome.storage.sync.get('historyColors');
-    if(history.historyColors){
-        return history.historyColors[history.historyColors.length-1];    
-    }
-    else return null;
-    
+function getLastColor(){
+    return new Promise(function(resolve, reject){
+        var history = await chrome.storage.sync.get('historyColors');
+        if(history.historyColors){
+            resolve(history.historyColors[history.historyColors.length-1]);    
+        } else {
+            resolve(null);
+        }
+    }).then(function(color){
+        return(color);
+    })
 }
