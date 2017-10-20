@@ -1,33 +1,32 @@
 function urlHistory() {
     var storageCount, tabTitle, url, title;
-    var storage = chrome.storage.sync;
+    var storage = chrome.storage.local;
     var objects = [];
     var localCount = 0;
 
     // https://stackoverflow.com/a/38641281 for sorting retrieved object before displaying it to history
-    var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+    var collator = new Intl.Collator(undefined, {
+        numeric: true,
+        sensitivity: 'base'
+    });
 
     function main() {
-        return new Promise (function(resolve, reject){
-            try {
-            var storedUrls = await storage.get(null, function (items) {});
-            var globalCount = await storage.get('globalCount', function (items) {});
-            var storedUrlsCount = Object.keys(storedUrls).length - 1;
-
-            var results = [storedUrls, globalCount.globalCount, storedUrlsCount]
-            resolve(results);
-
-            } catch (err) {
-                console.error(err);
-                reject(err);
-            }
-        }).then(function (x) {
+        return new Promise(function (resolve, reject) {
+                try {
+                    storage.get(null, function (items) {
+                        var storedUrlsCount = Object.keys(items).length - 1;                                      
+                        var results = [items, items.globalCount, storedUrlsCount];
+                        resolve(results);
+                    });
+                } catch (err) {
+                    console.log(err);
+                }
+            }).then(function (x) {
                 console.log(x[0]); // stored Urls Object
                 console.log(x[1] + ' globalCount');
                 console.log(x[2] + ' storedUrlsCount');
                 urlData(x[0]);
                 getDataCount(x[1]);
-                storageCount = x[2];
                 createDataArray(x[0]);
             })
             .catch(err => console.error(err));
@@ -45,11 +44,11 @@ function urlHistory() {
 
     };
     // function for shortening title 
-    String.prototype.trimToLength = function(m) {
-        return (this.length > m) 
-          ? jQuery.trim(this).substring(0, m).split(" ").slice(0, -1).join(" ") + "..."
-          : this;
-      };
+    String.prototype.trimToLength = function (m) {
+        return (this.length > m) ?
+            jQuery.trim(this).substring(0, m).split(" ").slice(0, -1).join(" ") + "..." :
+            this;
+    };
 
     // read received data from chrome.storage.get and print it to history table
     function readData(val1, val2) {
@@ -57,7 +56,7 @@ function urlHistory() {
         if ((val1 && val2) && (val1 != 'undefined' && val2 != 'undefined')) {
             // and if longer than 50 characters
             if (val1.length >= 50) {
-                var shortenedTitle = val1.trimToLength(47);         
+                var shortenedTitle = val1.trimToLength(47);
                 $('#urlHistory').append('<tr><td title="' + val1 + '">' + shortenedTitle + '</td><td><a target="_blank" href="' + val2 + '">' + val2 + '</a></td></tr>');
             } else {
                 // if its no longer than 50 chars then display it as it is
@@ -71,7 +70,7 @@ function urlHistory() {
         var appendKeySuffix = 'urlData';
         var appendKeyCount = storageCount;
         var keys = [];
-        
+
         return new Promise((resolve, reject) => {
             $.each(e, function (key) {
                 if (key.endsWith(appendKeySuffix)) {
@@ -160,11 +159,11 @@ function urlHistory() {
     }
 
     // -----------------------------------------------------------------
- 
-        // clearStorage();
-        showAllData();
-        main();
-    
+
+    // clearStorage();
+    showAllData();
+    main();
+
 
     // Listen for change in short-url-info div with custom jQuery event
     $('.shortUrlInfo').on('contentChanged', function () {
@@ -178,14 +177,14 @@ function urlHistory() {
         });
     });
 
-    $('#clear-history').on('click', function () { 
+    $('#clear-history').on('click', function () {
         if (confirm('Are you sure you want to delete data from database?')) {
             clearStorage();
             console.log('Storage cleared');
         } else {
             // Do nothing!
         }
-     });
+    });
 
 }
 

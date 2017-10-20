@@ -12,7 +12,7 @@ import colorInfo from './modules/colorInfoBlock';
 
 import colorPickerInit from './modules/colorPicker';
 
-import * as createQuote from './modules/quote-scripts/createquote.js';
+import * as createQuote from './modules/quote-scripts/createQuote.js';
 import * as listQuotes from './modules/quote-scripts/listQuotes.js';
 import * as setupInterface from './modules/quote-scripts/setupInterface.js';
 
@@ -62,12 +62,13 @@ $(document).one('urlShortenerTriggered', function () {
 
 function getLastColor(){
     return new Promise(function(resolve, reject){
-        var history = await chrome.storage.sync.get('historyColors');
-        if(history.historyColors){
-            resolve(history.historyColors[history.historyColors.length-1]);    
-        } else {
-            resolve(null);
-        }
+        var history = chrome.storage.sync.get('historyColors', function (history) {
+            if(history.historyColors){
+                resolve(history.historyColors[history.historyColors.length-1]);    
+            } else {
+                resolve(null);
+            }
+        });
     }).then(function(color){
         return(color);
     })

@@ -95,47 +95,47 @@ var _jquery2 = _interopRequireDefault(_jquery);
 
 __webpack_require__(8);
 
-__webpack_require__(9);
-
 var _getPalette = __webpack_require__(3);
 
 var _getPalette2 = _interopRequireDefault(_getPalette);
 
-var _shortenTabUrl = __webpack_require__(10);
+var _shortenTabUrl = __webpack_require__(9);
 
 var _shortenTabUrl2 = _interopRequireDefault(_shortenTabUrl);
 
-var _urlHistory = __webpack_require__(12);
+var _urlHistory = __webpack_require__(11);
 
 var _urlHistory2 = _interopRequireDefault(_urlHistory);
 
-__webpack_require__(13);
+__webpack_require__(12);
 
-var _colorInfoBlock = __webpack_require__(14);
+var _colorInfoBlock = __webpack_require__(13);
 
 var _colorInfoBlock2 = _interopRequireDefault(_colorInfoBlock);
 
-var _colorPicker = __webpack_require__(15);
+var _colorPicker = __webpack_require__(14);
 
 var _colorPicker2 = _interopRequireDefault(_colorPicker);
 
-var _createquote = __webpack_require__(16);
+var _createQuote = __webpack_require__(15);
 
-var createQuote = _interopRequireWildcard(_createquote);
+var createQuote = _interopRequireWildcard(_createQuote);
 
-var _listQuotes = __webpack_require__(17);
+var _listQuotes = __webpack_require__(16);
 
 var listQuotes = _interopRequireWildcard(_listQuotes);
 
-var _setupInterface = __webpack_require__(18);
+var _setupInterface = __webpack_require__(17);
 
 var setupInterface = _interopRequireWildcard(_setupInterface);
 
-var _colorHistory = __webpack_require__(19);
+var _colorHistory = __webpack_require__(18);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import './vendor/chrome-extension-async';
 
 (0, _jquery2.default)(document).ready(function () {
     (0, _colorHistory.printHistoryColor)(onColorClick);
@@ -177,11 +177,18 @@ function onColorClick(selectedColor) {
     (0, _urlHistory2.default)();
 });
 
-async function getLastColor() {
-    var history = await chrome.storage.sync.get('historyColors');
-    if (history.historyColors) {
-        return history.historyColors[history.historyColors.length - 1];
-    } else return null;
+function getLastColor() {
+    return new Promise(function (resolve, reject) {
+        var history = chrome.storage.sync.get('historyColors', function (history) {
+            if (history.historyColors) {
+                resolve(history.historyColors[history.historyColors.length - 1]);
+            } else {
+                resolve(null);
+            }
+        });
+    }).then(function (color) {
+        return color;
+    });
 }
 
 /***/ }),
@@ -3034,224 +3041,11 @@ module.exports = __webpack_amd_options__;
 "use strict";
 
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-/** Wrap an API that uses callbacks with Promises
- * This expects the pattern function withCallback(arg1, arg2, ... argN, callback)
- * @author Keith Henry <keith.henry@evolutionjobs.co.uk>
- * @license MIT */
-(function () {
-    'use strict';
-
-    /** Wrap a function with a callback with a Promise.
-     * @param {function} f The function to wrap, should be pattern: withCallback(arg1, arg2, ... argN, callback).
-     * @param {function} parseCB Optional function to parse multiple callback parameters into a single object.
-     * @returns {Promise} Promise that resolves when the callback fires. */
-
-    function promisify(f, parseCB) {
-        return function () {
-            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-                args[_key] = arguments[_key];
-            }
-
-            var safeArgs = args;
-            var callback = void 0;
-            // The Chrome API functions all use arguments, so we can't use f.length to check
-
-            // If there is a last arg
-            if (args && args.length > 0) {
-
-                // ... and the last arg is a function
-                var last = args[args.length - 1];
-                if (typeof last === 'function') {
-                    // Trim the last callback arg if it's been passed
-                    safeArgs = args.slice(0, args.length - 1);
-                    callback = last;
-                }
-            }
-
-            // Return a promise
-            return new Promise(function (resolve, reject) {
-                try {
-                    // Try to run the original function, with the trimmed args list
-                    f.apply(undefined, _toConsumableArray(safeArgs).concat([function () {
-                        for (var _len2 = arguments.length, cbArgs = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-                            cbArgs[_key2] = arguments[_key2];
-                        }
-
-                        // If a callback was passed at the end of the original arguments
-                        if (callback) {
-                            // Don't allow a bug in the callback to stop the promise resolving
-                            try {
-                                callback.apply(undefined, cbArgs);
-                            } catch (cbErr) {
-                                reject(cbErr);
-                            }
-                        }
-
-                        // Chrome extensions always fire the callback, but populate chrome.runtime.lastError with exception details
-                        if (chrome.runtime.lastError)
-                            // Return as an error for the awaited catch block
-                            reject(new Error(chrome.runtime.lastError.message || 'Error thrown by API ' + chrome.runtime.lastError));else {
-                            if (parseCB) {
-                                var cbObj = parseCB.apply(undefined, cbArgs);
-                                resolve(cbObj);
-                            } else if (!cbArgs || cbArgs.length === 0) resolve();else if (cbArgs.length === 1) resolve(cbArgs[0]);else resolve(cbArgs);
-                        }
-                    }]));
-                } catch (err) {
-                    reject(err);
-                }
-            });
-        };
-    }
-
-    /** Promisify all the known functions in the map 
-     * @param {object} api The Chrome native API to extend
-     * @param {Array} apiMap Collection of sub-API and functions to promisify */
-    function applyMap(api, apiMap) {
-        if (!api)
-            // Not supported by current permissions
-            return;
-
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-            for (var _iterator = apiMap[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var funcDef = _step.value;
-
-                var funcName = void 0;
-                if (typeof funcDef === 'string') funcName = funcDef;else {
-                    funcName = funcDef.n;
-                }
-
-                if (!api.hasOwnProperty(funcName))
-                    // Member not in API
-                    continue;
-
-                var m = api[funcName];
-                if (typeof m === 'function')
-                    // This is a function, wrap in a promise
-                    api[funcName] = promisify(m, funcDef.cb);else
-                    // Sub-API, recurse this func with the mapped props
-                    applyMap(m, funcDef.props);
-            }
-        } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-        } finally {
-            try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                    _iterator.return();
-                }
-            } finally {
-                if (_didIteratorError) {
-                    throw _iteratorError;
-                }
-            }
-        }
-    }
-
-    /** Apply promise-maps to the Chrome native API.
-     * @param {object} apiMaps The API to apply. */
-    function applyMaps(apiMaps) {
-        for (var apiName in apiMaps) {
-            var callbackApi = chrome[apiName];
-            if (!callbackApi)
-                // Not supported by current permissions
-                continue;
-
-            var apiMap = apiMaps[apiName];
-            applyMap(callbackApi, apiMap);
-        }
-    }
-
-    // accessibilityFeatures https://developer.chrome.com/extensions/accessibilityFeatures
-    var knownA11ySetting = ['get', 'set', 'clear'];
-
-    // ContentSetting https://developer.chrome.com/extensions/contentSettings#type-ContentSetting
-    var knownInContentSetting = ['clear', 'get', 'set', 'getResourceIdentifiers'];
-
-    // StorageArea https://developer.chrome.com/extensions/storage#type-StorageArea
-    var knownInStorageArea = ['get', 'getBytesInUse', 'set', 'remove', 'clear'];
-
-    /** Map of API functions that follow the callback pattern that we can 'promisify' */
-    applyMaps({
-        accessibilityFeatures: [// Todo: this should extend AccessibilityFeaturesSetting.prototype instead
-        { n: 'spokenFeedback', props: knownA11ySetting }, { n: 'largeCursor', props: knownA11ySetting }, { n: 'stickyKeys', props: knownA11ySetting }, { n: 'highContrast', props: knownA11ySetting }, { n: 'screenMagnifier', props: knownA11ySetting }, { n: 'autoclick', props: knownA11ySetting }, { n: 'virtualKeyboard', props: knownA11ySetting }, { n: 'animationPolicy', props: knownA11ySetting }],
-        alarms: ['get', 'getAll', 'clear', 'clearAll'],
-        bookmarks: ['get', 'getChildren', 'getRecent', 'getTree', 'getSubTree', 'search', 'create', 'move', 'update', 'remove', 'removeTree'],
-        browser: ['openTab'],
-        browserAction: ['getTitle', 'setIcon', 'getPopup', 'getBadgeText', 'getBadgeBackgroundColor'],
-        browsingData: ['settings', 'remove', 'removeAppcache', 'removeCache', 'removeCookies', 'removeDownloads', 'removeFileSystems', 'removeFormData', 'removeHistory', 'removeIndexedDB', 'removeLocalStorage', 'removePluginData', 'removePasswords', 'removeWebSQL'],
-        commands: ['getAll'],
-        contentSettings: [// Todo: this should extend ContentSetting.prototype instead
-        { n: 'cookies', props: knownInContentSetting }, { n: 'images', props: knownInContentSetting }, { n: 'javascript', props: knownInContentSetting }, { n: 'location', props: knownInContentSetting }, { n: 'plugins', props: knownInContentSetting }, { n: 'popups', props: knownInContentSetting }, { n: 'notifications', props: knownInContentSetting }, { n: 'fullscreen', props: knownInContentSetting }, { n: 'mouselock', props: knownInContentSetting }, { n: 'microphone', props: knownInContentSetting }, { n: 'camera', props: knownInContentSetting }, { n: 'unsandboxedPlugins', props: knownInContentSetting }, { n: 'automaticDownloads', props: knownInContentSetting }],
-        contextMenus: ['create', 'update', 'remove', 'removeAll'],
-        cookies: ['get', 'getAll', 'set', 'remove', 'getAllCookieStores'],
-        debugger: ['attach', 'detach', 'sendCommand', 'getTargets'],
-        desktopCapture: ['chooseDesktopMedia'],
-        // TODO: devtools.*
-        documentScan: ['scan'],
-        downloads: ['download', 'search', 'pause', 'resume', 'cancel', 'getFileIcon', 'erase', 'removeFile', 'acceptDanger'],
-        enterprise: [{ n: 'platformKeys', props: ['getToken', 'getCertificates', 'importCertificate', 'removeCertificate'] }],
-        extension: ['isAllowedIncognitoAccess', 'isAllowedFileSchemeAccess'], // mostly deprecated in favour of runtime
-        fileBrowserHandler: ['selectFile'],
-        fileSystemProvider: ['mount', 'unmount', 'getAll', 'get', 'notify'],
-        fontSettings: ['setDefaultFontSize', 'getFont', 'getDefaultFontSize', 'getMinimumFontSize', 'setMinimumFontSize', 'getDefaultFixedFontSize', 'clearDefaultFontSize', 'setDefaultFixedFontSize', 'clearFont', 'setFont', 'clearMinimumFontSize', 'getFontList', 'clearDefaultFixedFontSize'],
-        gcm: ['register', 'unregister', 'send'],
-        history: ['search', 'getVisits', 'addUrl', 'deleteUrl', 'deleteRange', 'deleteAll'],
-        i18n: ['getAcceptLanguages', 'detectLanguage'],
-        identity: ['getAuthToken', 'getProfileUserInfo', 'removeCachedAuthToken', 'launchWebAuthFlow', 'getRedirectURL'],
-        idle: ['queryState'],
-        input: [{
-            n: 'ime', props: ['setMenuItems', 'commitText', 'setCandidates', 'setComposition', 'updateMenuItems', 'setCandidateWindowProperties', 'clearComposition', 'setCursorPosition', 'sendKeyEvents', 'deleteSurroundingText']
-        }],
-        management: ['setEnabled', 'getPermissionWarningsById', 'get', 'getAll', 'getPermissionWarningsByManifest', 'launchApp', 'uninstall', 'getSelf', 'uninstallSelf', 'createAppShortcut', 'setLaunchType', 'generateAppForLink'],
-        networking: [{ n: 'config', props: ['setNetworkFilter', 'finishAuthentication'] }],
-        notifications: ['create', 'update', 'clear', 'getAll', 'getPermissionLevel'],
-        pageAction: ['getTitle', 'setIcon', 'getPopup'],
-        pageCapture: ['saveAsMHTML'],
-        permissions: ['getAll', 'contains', 'request', 'remove'],
-        platformKeys: ['selectClientCertificates', 'verifyTLSServerCertificate', { n: "getKeyPair", cb: function cb(publicKey, privateKey) {
-                return { publicKey: publicKey, privateKey: privateKey };
-            } }],
-        runtime: ['getBackgroundPage', 'openOptionsPage', 'setUninstallURL', 'restartAfterDelay', 'sendMessage', 'sendNativeMessage', 'getPlatformInfo', 'getPackageDirectoryEntry', { n: "requestUpdateCheck", cb: function cb(status, details) {
-                return { status: status, details: details };
-            } }],
-        scriptBadge: ['getPopup'],
-        sessions: ['getRecentlyClosed', 'getDevices', 'restore'],
-        storage: [// Todo: this should extend StorageArea.prototype instead
-        { n: 'sync', props: knownInStorageArea }, { n: 'local', props: knownInStorageArea }, { n: 'managed', props: knownInStorageArea }],
-        socket: ['create', 'connect', 'bind', 'read', 'write', 'recvFrom', 'sendTo', 'listen', 'accept', 'setKeepAlive', 'setNoDelay', 'getInfo', 'getNetworkList'],
-        sockets: [{ n: 'tcp', props: ['create', 'update', 'setPaused', 'setKeepAlive', 'setNoDelay', 'connect', 'disconnect', 'secure', 'send', 'close', 'getInfo', 'getSockets'] }, { n: 'tcpServer', props: ['create', 'update', 'setPaused', 'listen', 'disconnect', 'close', 'getInfo', 'getSockets'] }, { n: 'udp', props: ['create', 'update', 'setPaused', 'bind', 'send', 'close', 'getInfo', 'getSockets', 'joinGroup', 'leaveGroup', 'setMulticastTimeToLive', 'setMulticastLoopbackMode', 'getJoinedGroups', 'setBroadcast'] }],
-        system: [{ n: 'cpu', props: ['getInfo'] }, { n: 'memory', props: ['getInfo'] }, { n: 'storage', props: ['getInfo', 'ejectDevice', 'getAvailableCapacity'] }],
-        tabCapture: ['capture', 'getCapturedTabs'],
-        tabs: ['get', 'getCurrent', 'sendMessage', 'create', 'duplicate', 'query', 'highlight', 'update', 'move', 'reload', 'remove', 'detectLanguage', 'captureVisibleTab', 'executeScript', 'insertCSS', 'setZoom', 'getZoom', 'setZoomSettings', 'getZoomSettings', 'discard'],
-        topSites: ['get'],
-        tts: ['isSpeaking', 'getVoices', 'speak'],
-        types: ['set', 'get', 'clear'],
-        vpnProvider: ['createConfig', 'destroyConfig', 'setParameters', 'sendPacket', 'notifyConnectionStateChanged'],
-        wallpaper: ['setWallpaper'],
-        webNavigation: ['getFrame', 'getAllFrames', 'handlerBehaviorChanged'],
-        windows: ['get', 'getCurrent', 'getLastFocused', 'getAll', 'create', 'update', 'remove']
-    });
-})();
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _bitlyAPIcall = __webpack_require__(11);
+var _bitlyAPIcall = __webpack_require__(10);
 
 var _bitlyAPIcall2 = _interopRequireDefault(_bitlyAPIcall);
 
@@ -3307,7 +3101,7 @@ function shortenTabUrl() {
 exports.default = shortenTabUrl;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3335,7 +3129,7 @@ function get_short_url(longUrl, func) {
 exports.default = get_short_url;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3349,24 +3143,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function urlHistory() {
     var storageCount, tabTitle, url, title;
-    var storage = chrome.storage.sync;
+    var storage = chrome.storage.local;
     var objects = [];
     var localCount = 0;
 
     // https://stackoverflow.com/a/38641281 for sorting retrieved object before displaying it to history
-    var collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+    var collator = new Intl.Collator(undefined, {
+        numeric: true,
+        sensitivity: 'base'
+    });
 
-    async function main() {
-        try {
-            var storedUrls = await storage.get(null, function (items) {});
-            var globalCount = await storage.get('globalCount', function (items) {});
-            var storedUrlsCount = Object.keys(storedUrls).length - 1;
-
-            var results = [storedUrls, globalCount.globalCount, storedUrlsCount];
-            return results;
-        } catch (err) {
-            console.error(err);
-        }
+    function main() {
+        return new Promise(function (resolve, reject) {
+            try {
+                storage.get(null, function (items) {
+                    var storedUrlsCount = Object.keys(items).length - 1;
+                    var results = [items, items.globalCount, storedUrlsCount];
+                    resolve(results);
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        }).then(function (x) {
+            console.log(x[0]); // stored Urls Object
+            console.log(x[1] + ' globalCount');
+            console.log(x[2] + ' storedUrlsCount');
+            urlData(x[0]);
+            getDataCount(x[1]);
+            createDataArray(x[0]);
+        }).catch(function (err) {
+            return console.error(err);
+        });
     }
 
     // get count of stored items 
@@ -3495,17 +3302,7 @@ function urlHistory() {
 
     // clearStorage();
     showAllData();
-    main().then(function (x) {
-        console.log(x[0]); // stored Urls Object
-        console.log(x[1] + ' globalCount');
-        console.log(x[2] + ' storedUrlsCount');
-        urlData(x[0]);
-        getDataCount(x[1]);
-        storageCount = x[2];
-        createDataArray(x[0]);
-    }).catch(function (err) {
-        return console.error(err);
-    });
+    main();
 
     // Listen for change in short-url-info div with custom jQuery event
     $('.shortUrlInfo').on('contentChanged', function () {
@@ -3532,7 +3329,7 @@ function urlHistory() {
 exports.default = urlHistory;
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3560,7 +3357,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 });
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3577,7 +3374,7 @@ function colorInfo() {
 exports.default = colorInfo;
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3765,7 +3562,7 @@ function colorPickerInit(cb) {
 exports.default = colorPickerInit;
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3820,7 +3617,7 @@ _initialize.ql.view.createQuote = {
    ************************************************/
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3857,7 +3654,7 @@ _initialize.ql.view.listQuotes = {
     ******************************************************************/
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3871,7 +3668,7 @@ document.addEventListener("DOMContentLoaded", _initialize.ql.view.listQuotes.set
 //document.onmouseup = function(){dataFromSelection = window.getSelection().toString()};
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
