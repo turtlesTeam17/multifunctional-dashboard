@@ -1,4 +1,4 @@
-![Logo of the project](./app/icons/icon128.png)
+![Logo of the project](./app/icons/icon.png)
 
 # Multidash
 
@@ -20,7 +20,7 @@ jQuery, HTML5, CSS3, with help of [Front End Started Kit](https://github.com/Pur
 
 ### Prerequisites
 
-Chrome version 55 minimum.
+Chrome version 32 minimum.
 
 ## Api Reference
 
