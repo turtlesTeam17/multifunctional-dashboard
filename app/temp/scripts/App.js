@@ -135,8 +135,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import './vendor/chrome-extension-async';
-
 (0, _jquery2.default)(document).ready(function () {
     (0, _colorHistory.printHistoryColor)(onColorClick);
     getLastColor().then(function (selectedColor) {
@@ -160,6 +158,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         // or any other event
         (0, _jquery2.default)(this).toggleClass('shrink');
     });
+
+    (0, _jquery2.default)(document).one('urlShortenerTriggered', function () {
+        (0, _shortenTabUrl2.default)();
+        (0, _urlHistory2.default)();
+    });
 });
 
 function showSelectedColor(selectedColor) {
@@ -171,11 +174,6 @@ function onColorClick(selectedColor) {
     (0, _getPalette2.default)(selectedColor.substring(1));
     (0, _colorHistory.printSelectedColor)(selectedColor.substring(1));
 }
-
-(0, _jquery2.default)(document).one('urlShortenerTriggered', function () {
-    (0, _shortenTabUrl2.default)();
-    (0, _urlHistory2.default)();
-});
 
 function getLastColor() {
     return new Promise(function (resolve, reject) {
@@ -3255,7 +3253,7 @@ function urlHistory() {
                 type: "basic",
                 title: "Url shortener",
                 message: "Shortened url copied to clipboard, and it's data sent to storage",
-                iconUrl: "icons/128.png"
+                iconUrl: "icons/icon128.png"
             };
             chrome.notifications.create('success', notificationMsg, function () {
                 setTimeout(function () {
@@ -3432,7 +3430,7 @@ function add_message_listeners() {
                 type: "basic",
                 title: "Color",
                 message: "Hex color code copied to clipboard, and it's data sent to color history",
-                iconUrl: "icons/128.png"
+                iconUrl: "icons/icon128.png"
             };
             chrome.notifications.create('done', notificationMsgg, function () {
                 setTimeout(function () {
