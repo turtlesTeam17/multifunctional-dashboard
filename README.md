@@ -20,7 +20,7 @@ jQuery, HTML5, CSS3, with help of [Front End Started Kit](https://github.com/Pur
 
 ### Prerequisites
 
-Chrome version 55 minimum.
+Chrome version 32 minimum.
 
 ## Api Reference
 

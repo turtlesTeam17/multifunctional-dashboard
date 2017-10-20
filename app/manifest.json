@@ -1,48 +1,43 @@
 {
-    "manifest_version":     2,
+  "manifest_version": 2,
 
-    "name":                 "Multidash",
-    "description":          "A chrome extension with multiple features",
-    "version":              "1.0",
+  "name": "Multidash",
+  "description": "A chrome extension with color picker, url-shortener and notes",
+  "version": "1.1",
 
-    "browser_action": {
-        "default_icon":     "icons/48.png",
-        "default_title":    "A chrome extension with multiple features",
-        "default_popup":    "index.html"
-    },
+  "browser_action": {
+    "default_icon": "icons/icon48.png",
+    "default_title": "A chrome extension with multiple features",
+    "default_popup": "index.html"
+  },
 
-    "icons": 
-	{ 
-		"16": 				          "icons/16.png",
-		"48": 				          "icons/48.png",
-		"128": 				          "icons/128.png"
-	},
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
 
-    "options_page":         "options.html",
-    
-    "background": {
-        "scripts":          ["eventpage.js", "quotes.js"],
-        "persistent":       false
-    },
-    "content_scripts": [
-      {
-        "matches": [
-            "<all_urls>"
-        ],
-        "js": [
-            "selection.js"
-        ],
-        "run_at": "document_start",
-        "all_frames": true
-      }
+  "background": {
+    "scripts": ["eventpage.js", "quotes.js"],
+    "persistent": false
+  },
+  "content_scripts": [{
+    "matches": [
+      "<all_urls>"
     ],
+    "js": [
+      "selection.js"
+    ],
+    "run_at": "document_start",
+    "all_frames": true
+  }],
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "default":          "Ctrl+Shift+E",
-        "linux":            "Ctrl+Shift+K",
-        "windows":          "Alt+Shift+P",
-        "mac":              "Alt+Shift+P"
+        "default": "Ctrl+Shift+E",
+        "linux": "Ctrl+Shift+K",
+        "windows": "Alt+Shift+P",
+        "mac": "Alt+Shift+P"
       }
     }
   },
@@ -51,12 +46,11 @@
     "assets/images/color-picker-black.png"
   ],
 
-    "permissions": [
-                            "storage",
-                            "notifications",
-                            "contextMenus",
-                            "clipboardWrite",
-                            "activeTab",
-                            "tabs"
-    ]
+  "permissions": [
+    "storage",
+    "notifications",
+    "contextMenus",
+    "clipboardWrite",
+    "activeTab"
+  ]
 }
