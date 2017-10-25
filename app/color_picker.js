@@ -88,9 +88,13 @@ function mouseMoveListener(e) {
         eyeDropperImage.style.zIndex = "9999";
         document.body.appendChild(eyeDropperImage);
     }
+    
 
+    eyeDropperImage.style.visibility = "visible";
+    eyeDropperImage.style.display = "inline-block";
     eyeDropperImage.style.top = e.pageY - 25 +"px";
     eyeDropperImage.style.left = e.pageX + "px";
+
 
     colorText.style.visibility = "visible";
     colorText.style.top = e.pageY - 55 + "px";
