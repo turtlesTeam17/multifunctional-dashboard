@@ -5,6 +5,7 @@ function urlHistory() {
     var localCount = 0;
 
     // https://stackoverflow.com/a/38641281 for sorting retrieved object before displaying it to history
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Collator
     var collator = new Intl.Collator(undefined, {
         numeric: true,
         sensitivity: 'base'
@@ -138,7 +139,7 @@ function urlHistory() {
 
     function clearStorage() {
         // clearing whole chrome storage
-        chrome.storage.sync.clear();
+        chrome.storage.local.clear();
         resetCount();
     }
 
